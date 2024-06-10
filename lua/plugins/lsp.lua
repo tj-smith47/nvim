@@ -24,11 +24,6 @@ return {
         ft = "lua", -- only load on lua files
         opts = {
           library = {
-            -- Library items can be absolute paths
-            -- "~/projects/my-awesome-lib",
-            -- Or relative, which means they will be resolved as a plugin
-            -- "LazyVim",
-            -- When relative, you can also provide a path to the library in the plugin dir
             "luvit-meta/library", -- see below
           },
         },
@@ -72,48 +67,18 @@ return {
         settings = {
           pylsp = {
             plugins = {
-              pycodestyle = {
-                ignore = { 'W391' },
-                maxLineLength = 100
-              }
+              pycodestyle = { enabled = false },
             }
           }
         }
       })
 
-      require('trouble').setup()
       require('fidget').setup({})
-
-      require('mason').setup({
-        ensure_installed = {
-          'black',
-          'goimports',
-          'gofumpt',
-        },
-      })
-      require('mason-lspconfig').setup({
-        ensure_installed = {
-          'cssls',
-          'clangd',
-          'elixirls',
-          'eslint',
-          'gopls',
-          'html',
-          'jsonls',
-          'lua_ls',
-          'pyright',
-          'pylsp',
-          'terraformls',
-          'tsserver',
-        },
-        handlers = {
-          lsp_zero.default_setup,
-        },
-      })
-
+      require('formatter').setup()
+      require('trouble').setup()
 
       require("lspconfig")["yamlls"].setup({})
-      require("nvim-dap-virtual-text").setup({})
+      -- require("nvim-dap-virtual-text").setup({})
 
       local function diag_signs(signs)
         for _, sign in ipairs(signs) do
@@ -124,7 +89,18 @@ return {
       end
 
       diag_signs({ "Error", "Warn", "Hint", "Info" })
-      vim.diagnostic.config({ float = { border = "rounded", source = true, style = "minimal" }, severity_sort = true, virtual_text = false })
+      vim.diagnostic.config({
+        float = {
+          border = "rounded",
+          source = true,
+          style = "minimal",
+        },
+        severity_sort = true,
+        underline = true,
+        update_in_insert = false,
+        virtual_text = false,
+      })
+
       vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = "rounded" })
       vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help,
         { border = "rounded" })
@@ -155,7 +131,7 @@ return {
         end
 
         nmap('<leader>rn', vim.lsp.buf.rename, '[R]e[n]ame')
-        nmap('<leader>ca', vim.lsp.buf.code_action, '[C]ode [A]ction')
+        -- nmap('<leader>ca', vim.lsp.buf.code_action, '[C]ode [A]ction')
 
         nmap('gd', vim.lsp.buf.definition, '[G]oto [D]efinition')
         nmap('gr', require('telescope.builtin').lsp_references, '[G]oto [R]eferences')
@@ -182,42 +158,36 @@ return {
         end, { desc = 'Format current buffer with LSP' })
       end
 
-
-      -- Enable the following language servers
-      --  Feel free to add/remove any LSPs that you want here. They will automatically be installed.
-      --
-      --  Add any additional override configuration in the following tables. They will be passed to
-      --  the `settings` field of the server config. You must look up that documentation yourself.
-      local servers = {
-        clangd = {},
-        gopls = {
-          -- analyses = {
-          --   unusedparams = true,
-          -- },
-          -- staticcheck = true,
-          -- gofumpt = true,
-        },
-        -- erlangls = {},
-        pyright = {},
-        tsserver = {},
-        terraformls = {},
-
-        lua_ls = {
-          -- diagnostics = {
-          --   globals = { "vim" },
-          -- },
-          Lua = {
-          },
-        },
-      }
-
       -- nvim-cmp supports additional completion capabilities, so broadcast that to servers
       local capabilities = vim.lsp.protocol.make_client_capabilities()
       capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
 
-      -- Setup mason so it can manage external tooling
-      require('formatter').setup()
+      -- Enable the following language servers
+      local servers = {
+        clangd = {},
+        gopls = {},
+        -- erlangls = {},
+        lua_ls = {},
+        pyright = {},
+        pylsp = {
+          plugins = {
+            pycodestyle = {
+              enabled = false,
+            },
+          },
+        },
+        tsserver = {},
+        terraformls = {},
+      }
 
+      -- Setup mason so it can manage external tooling
+      require('mason').setup({
+        ensure_installed = {
+          'black',
+          'goimports',
+          'gofumpt',
+        },
+      })
       -- Ensure the servers above are installed
       local mason_lspconfig = require 'mason-lspconfig'
 
@@ -232,12 +202,9 @@ return {
             on_attach = on_attach,
             settings = servers[server_name],
           }
-          --    require "lsp_signature".setup({
-          --      bind = true, -- This is mandatory, otherwise border config won't get registered.
-          --      handler_opts = {
-          --        border = "rounded"
-          --      }
-          --     })
+          require "lsp_signature".setup({
+            bind = true, -- This is mandatory, otherwise border config won't get registered.
+          })
         end,
       }
 
@@ -290,7 +257,6 @@ return {
           end, { 'i', 's' }),
         },
         sources = {
-          --{ name = "copilot", group_index = 2 },
           { name = 'nvim_lsp_signature_help' },
           { name = 'nvim_lsp' },
           { name = 'nvim_lua' },
@@ -309,12 +275,6 @@ return {
         mapping = cmp.mapping.preset.cmdline(), -- Tab for selection (arrows needed for selecting past items)
         sources = { { name = "cmdline" }, { name = "path" } }
       })
-
-      vim.diagnostic.config({
-        update_in_insert = false,
-        virtual_text = true,
-        underline = true,
-      })
     end,
   },
   { -- Autocompletion Plugins
@@ -329,7 +289,7 @@ return {
       'hrsh7th/nvim-cmp',
       'L3MON4D3/LuaSnip',
       'rcarriga/nvim-dap-ui',
-      'theHamsta/nvim-dap-virtual-text',
+      -- 'theHamsta/nvim-dap-virtual-text',
       'mfussenegger/nvim-dap',
       'rafamadriz/friendly-snippets',
       'ray-x/lsp_signature.nvim',
