@@ -21,8 +21,8 @@ end
 -- Load plugins from specifications
 -- (The leader key must be set before this)
 lazy.setup("plugins", {
-  install = { colorscheme = { 'dracula' } },
+  change_detection = { enabled = false },
   defaults = { lazy = false },
+  install = { colorscheme = { 'dracula' } },
   ui = { border = "rounded" },
-  checker = { enabled = true },
 })

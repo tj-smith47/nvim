@@ -105,7 +105,6 @@ return {
         { border = "rounded" })
       vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
         vim.lsp.diagnostic.on_publish_diagnostics, {
-          signs = true,
           underline = false,
           update_in_insert = false,
           virtual_text = false,
@@ -264,8 +263,8 @@ return {
           end, { 'i', 's' }),
         },
         sources = {
-          { name = 'nvim_lsp_signature_help' },
           { name = 'nvim_lsp' },
+          { name = 'nvim_lsp_signature_help' },
           { name = 'nvim_lua' },
           { name = 'path' },
           { name = 'luasnip' },
