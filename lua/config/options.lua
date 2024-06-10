@@ -39,5 +39,6 @@ vim.opt.termguicolors = true -- Set term gui colors
 vim.opt.undofile = true      -- Save undo history
 vim.opt.updatetime = 100     -- Decrease update time
 vim.opt.wrap = false         -- Disable line wrap
-vim.opt.wildmode = "longest:full:full"
+vim.opt.wildmode = "full"
+-- vim.opt.wildmode = "longest:full:full"
 vim.opt.wildignore = "*.docx,*.jpg,*.png,*.gif,*.pdf,*.pyc,*.exe,*.flv,*.img,*.xlsx,*DS_STORE"
