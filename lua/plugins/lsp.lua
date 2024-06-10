@@ -78,6 +78,17 @@ return {
       require('trouble').setup()
 
       require("lspconfig")["yamlls"].setup({})
+      require('lspconfig')["pylsp"].setup({
+        settings = {
+          pylsp = {
+            plugins = {
+              pycodestyle = {
+                enabled = false,
+              }
+            }
+          }
+        }
+      })
       -- require("nvim-dap-virtual-text").setup({})
 
       local function diag_signs(signs)
@@ -89,21 +100,17 @@ return {
       end
 
       diag_signs({ "Error", "Warn", "Hint", "Info" })
-      vim.diagnostic.config({
-        float = {
-          border = "rounded",
-          source = true,
-          style = "minimal",
-        },
-        severity_sort = true,
-        underline = true,
-        update_in_insert = false,
-        virtual_text = false,
-      })
-
       vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = "rounded" })
       vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help,
         { border = "rounded" })
+      vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
+        vim.lsp.diagnostic.on_publish_diagnostics, {
+          signs = true,
+          underline = false,
+          update_in_insert = false,
+          virtual_text = false,
+        }
+      )
       vim.lsp.handlers['workspace/diagnostic/refresh'] = function(_, _, ctx)
         local ns = vim.lsp.diagnostic.get_namespace(ctx.client_id)
         local bufnr = vim.api.nvim_get_current_buf()
@@ -274,6 +281,18 @@ return {
       cmp.setup.cmdline({ ":" }, {
         mapping = cmp.mapping.preset.cmdline(), -- Tab for selection (arrows needed for selecting past items)
         sources = { { name = "cmdline" }, { name = "path" } }
+      })
+
+      vim.diagnostic.config({
+        float = {
+          border = "rounded",
+          source = true,
+          style = "minimal",
+        },
+        severity_sort = true,
+        underline = true,
+        update_in_insert = false,
+        virtual_text = false,
       })
     end,
   },
