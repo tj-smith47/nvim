@@ -22,6 +22,10 @@ end
 -- (The leader key must be set before this)
 lazy.setup("plugins", {
   change_detection = { enabled = false },
+  checker = {
+    enabled = true,
+    notify = false,
+  },
   defaults = { lazy = false },
   install = { colorscheme = { 'dracula' } },
   ui = { border = "rounded" },
