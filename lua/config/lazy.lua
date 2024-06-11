@@ -20,7 +20,7 @@ end
 
 -- Load plugins from specifications
 -- (The leader key must be set before this)
-lazy.setup("plugins", {
+lazy.setup({ { import = "plugins" }, { import = "plugins.lsp" } }, {
   change_detection = { enabled = false },
   checker = {
     enabled = true,
