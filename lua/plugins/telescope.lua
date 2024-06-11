@@ -7,7 +7,7 @@ return {
     { -- Fuzzy Finder Algorithm
       "nvim-telescope/telescope-fzf-native.nvim",
       build = "make",
-      cond = vim.fn.executable 'make' == 1
+      cond = vim.fn.executable("make") == 1,
     },
     "nvim-tree/nvim-web-devicons",
     "folke/todo-comments.nvim",
@@ -21,8 +21,8 @@ return {
         path_display = { "smart" },
         mappings = {
           i = {
-            ['<C-u>'] = false,
-            ['<C-d>'] = false,
+            ["<C-u>"] = false,
+            ["<C-d>"] = false,
             ["<C-k>"] = actions.move_selection_previous, -- move to prev result
             ["<C-j>"] = actions.move_selection_next, -- move to next result
             ["<C-q>"] = actions.send_selected_to_qflist + actions.open_qflist,
