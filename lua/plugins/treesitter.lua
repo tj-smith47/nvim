@@ -2,7 +2,7 @@ return {
   { -- Highlight, edit, and navigate code
     "nvim-treesitter/nvim-treesitter",
     build = ":TSUpdate",
-    event = "BufReadPost",
+    event = { "BufReadPre", "BufNewFile" },
     opts = {
       ensure_installed = {
         'bash',
@@ -31,6 +31,9 @@ return {
       indent = {
         enable = true,
         disable = { 'typescript', 'tsx' },
+      },
+      autotag = {
+        enabled = true,
       },
       incremental_selection = {
         enable = false,
