@@ -4,10 +4,10 @@ return {
   version = "*",
   opts = {
     options = {
-      -- mode = "tabs",
+      mode = "tabs",
       separator_style = "slant",
       themable = true,
-      diagnostics = "nvim_lsp",
+      -- diagnostics = "nvim_lsp",
       offsets = {
         {
           filetype = "NvimTree",

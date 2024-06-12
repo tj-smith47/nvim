@@ -101,154 +101,154 @@ return {
     require("fidget").setup({})
 
     -- import mason_lspconfig plugin
-    -- local mason_lspconfig = require("mason-lspconfig")
+    local mason_lspconfig = require("mason-lspconfig")
 
-    -- -- import cmp-nvim-lsp plugin
-    -- local cmp_nvim_lsp = require("cmp_nvim_lsp")
+    -- import cmp-nvim-lsp plugin
+    local cmp_nvim_lsp = require("cmp_nvim_lsp")
 
-    -- -- used to enable autocompletion (assign to every lsp server config)
-    -- local capabilities = cmp_nvim_lsp.default_capabilities()
+    -- used to enable autocompletion (assign to every lsp server config)
+    local capabilities = cmp_nvim_lsp.default_capabilities()
 
-    -- mason_lspconfig.setup_handlers({
-    -- 	-- default handler for installed servers
-    -- 	function(server_name)
-    -- 		lspconfig[server_name].setup({
-    -- 			capabilities = capabilities,
-    -- 		})
-    -- 	end,
-    -- 	["diagnosticls"] = function()
-    -- 		lspconfig["diagnosticls"].setup({
-    -- 			capabilities = capabilities,
-    -- 			settings = {
-    -- 				pycodestyle = { enabled = false },
-    -- 				pylsp = {
-    -- 					plugins = {
-    -- 						pycodestyle = {
-    -- 							enabled = false,
-    -- 						},
-    -- 					},
-    -- 				},
-    -- 			},
-    -- 		})
-    -- 	end,
-    -- 	["svelte"] = function()
-    -- 		-- configure svelte server
-    -- 		lspconfig["svelte"].setup({
-    -- 			capabilities = capabilities,
-    -- 			on_attach = function(client, bufnr)
-    -- 				vim.api.nvim_create_autocmd("BufWritePost", {
-    -- 					pattern = { "*.js", "*.ts" },
-    -- 					callback = function(ctx)
-    -- 						-- Here use ctx.match instead of ctx.file
-    -- 						client.notify("$/onDidChangeTsOrJsFile", { uri = ctx.match })
-    -- 					end,
-    -- 				})
-    -- 			end,
-    -- 		})
-    -- 	end,
-    -- 	["graphql"] = function()
-    -- 		-- configure graphql language server
-    -- 		lspconfig["graphql"].setup({
-    -- 			capabilities = capabilities,
-    -- 			filetypes = { "graphql", "gql", "svelte", "typescriptreact", "javascriptreact" },
-    -- 		})
-    -- 	end,
-    -- 	["emmet_ls"] = function()
-    -- 		-- configure emmet language server
-    -- 		lspconfig["emmet_ls"].setup({
-    -- 			capabilities = capabilities,
-    -- 			filetypes = {
-    -- 				"html",
-    -- 				"typescriptreact",
-    -- 				"javascriptreact",
-    -- 				"css",
-    -- 				"sass",
-    -- 				"scss",
-    -- 				"less",
-    -- 				"svelte",
-    -- 			},
-    -- 		})
-    -- 	end,
-    -- 	["lua_ls"] = function()
-    -- 		-- configure lua server (with special settings)
-    -- 		lspconfig["lua_ls"].setup({
-    -- 			cmd = { "lua-language-server" },
-    -- 			capabilities = capabilities,
-    -- 			settings = {
-    -- 				Lua = {
-    -- 					-- make the language server recognize "vim" global
-    -- 					diagnostics = {
-    -- 						globals = { "vim" },
-    -- 					},
-    -- 					completion = {
-    -- 						callSnippet = "Replace",
-    -- 					},
-    -- 					runtime = {
-    -- 						version = "LuaJIT",
-    -- 						path = vim.split(package.path, ";"),
-    -- 					},
-    -- 					telemetry = { enable = false },
-    -- 					workspace = { checkThirdParty = false },
-    -- 				},
-    -- 			},
-    -- 		})
-    -- 	end,
-    -- 	["pylsp"] = function()
-    -- 		-- configure python server (with special settings)
-    -- 		lspconfig["pylsp"].setup({
-    -- 			capabilities = capabilities,
-    -- 			settings = {
-    -- 				pylsp = {
-    -- 					plugins = {
-    -- 						pycodestyle = {
-    -- 							enabled = false,
-    -- 						},
-    -- 					},
-    -- 				},
-    -- 			},
-    -- 		})
-    -- 	end,
-    -- 	["yamlls"] = function()
-    -- 		-- configure yaml server
-    -- 		lspconfig["yamlls"].setup({
-    -- 			capabilities = capabilities,
-    -- 		})
-    -- 	end,
-    -- })
+    mason_lspconfig.setup_handlers({
+      -- default handler for installed servers
+      function(server_name)
+        lspconfig[server_name].setup({
+          capabilities = capabilities,
+        })
+      end,
+      ["diagnosticls"] = function()
+        lspconfig["diagnosticls"].setup({
+          capabilities = capabilities,
+          settings = {
+            pycodestyle = { enabled = false },
+            pylsp = {
+              plugins = {
+                pycodestyle = {
+                  enabled = false,
+                },
+              },
+            },
+          },
+        })
+      end,
+      ["svelte"] = function()
+        -- configure svelte server
+        lspconfig["svelte"].setup({
+          capabilities = capabilities,
+          on_attach = function(client, bufnr)
+            vim.api.nvim_create_autocmd("BufWritePost", {
+              pattern = { "*.js", "*.ts" },
+              callback = function(ctx)
+                -- Here use ctx.match instead of ctx.file
+                client.notify("$/onDidChangeTsOrJsFile", { uri = ctx.match })
+              end,
+            })
+          end,
+        })
+      end,
+      ["graphql"] = function()
+        -- configure graphql language server
+        lspconfig["graphql"].setup({
+          capabilities = capabilities,
+          filetypes = { "graphql", "gql", "svelte", "typescriptreact", "javascriptreact" },
+        })
+      end,
+      ["emmet_ls"] = function()
+        -- configure emmet language server
+        lspconfig["emmet_ls"].setup({
+          capabilities = capabilities,
+          filetypes = {
+            "html",
+            "typescriptreact",
+            "javascriptreact",
+            "css",
+            "sass",
+            "scss",
+            "less",
+            "svelte",
+          },
+        })
+      end,
+      ["lua_ls"] = function()
+        -- configure lua server (with special settings)
+        lspconfig["lua_ls"].setup({
+          cmd = { "lua-language-server" },
+          capabilities = capabilities,
+          settings = {
+            Lua = {
+              -- make the language server recognize "vim" global
+              diagnostics = {
+                globals = { "vim" },
+              },
+              completion = {
+                callSnippet = "Replace",
+              },
+              runtime = {
+                version = "LuaJIT",
+                path = vim.split(package.path, ";"),
+              },
+              telemetry = { enable = false },
+              workspace = { checkThirdParty = false },
+            },
+          },
+        })
+      end,
+      ["pylsp"] = function()
+        -- configure python server (with special settings)
+        lspconfig["pylsp"].setup({
+          capabilities = capabilities,
+          settings = {
+            pylsp = {
+              plugins = {
+                pycodestyle = {
+                  enabled = false,
+                },
+              },
+            },
+          },
+        })
+      end,
+      ["yamlls"] = function()
+        -- configure yaml server
+        lspconfig["yamlls"].setup({
+          capabilities = capabilities,
+        })
+      end,
+    })
 
-    -- -- Change the Diagnostic symbols in the sign column (gutter)
-    -- -- (not in youtube nvim video)
-    -- local signs = { Error = " ", Warn = " ", Hint = "󰠠 ", Info = " " }
-    -- for type, icon in pairs(signs) do
-    -- 	local hl = "DiagnosticSign" .. type
-    -- 	vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = "" })
-    -- end
+    -- Change the Diagnostic symbols in the sign column (gutter)
+    -- (not in youtube nvim video)
+    local signs = { Error = " ", Warn = " ", Hint = "󰠠 ", Info = " " }
+    for type, icon in pairs(signs) do
+      local hl = "DiagnosticSign" .. type
+      vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = "" })
+    end
 
-    -- vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = "rounded" })
-    -- vim.lsp.handlers["textDocument/signatureHelp"] =
-    -- 	vim.lsp.with(vim.lsp.handlers.signature_help, { border = "rounded" })
-    -- vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
-    -- 	underline = false,
-    -- 	update_in_insert = false,
-    -- 	virtual_text = false,
-    -- })
-    -- vim.lsp.handlers["workspace/diagnostic/refresh"] = function(_, _, ctx)
-    -- 	local ns = vim.lsp.diagnostic.get_namespace(ctx.client_id)
-    -- 	local bufnr = vim.api.nvim_get_current_buf()
-    -- 	vim.diagnostic.reset(ns, bufnr)
-    -- 	return true
-    -- end
+    vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = "rounded" })
+    vim.lsp.handlers["textDocument/signatureHelp"] =
+      vim.lsp.with(vim.lsp.handlers.signature_help, { border = "rounded" })
+    vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
+      underline = false,
+      update_in_insert = false,
+      virtual_text = false,
+    })
+    vim.lsp.handlers["workspace/diagnostic/refresh"] = function(_, _, ctx)
+      local ns = vim.lsp.diagnostic.get_namespace(ctx.client_id)
+      local bufnr = vim.api.nvim_get_current_buf()
+      vim.diagnostic.reset(ns, bufnr)
+      return true
+    end
 
-    -- vim.diagnostic.config({
-    -- 	float = {
-    -- 		border = "rounded",
-    -- 		source = true,
-    -- 		style = "minimal",
-    -- 	},
-    -- 	severity_sort = true,
-    -- 	underline = true,
-    -- 	update_in_insert = false,
-    -- 	virtual_text = false,
-    -- })
+    vim.diagnostic.config({
+      float = {
+        border = "rounded",
+        source = true,
+        style = "minimal",
+      },
+      severity_sort = true,
+      underline = true,
+      update_in_insert = false,
+      virtual_text = false,
+    })
   end,
 }
