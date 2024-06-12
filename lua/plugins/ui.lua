@@ -19,7 +19,7 @@ return {
 	{ -- Visual Indentation Lines
 		"lukas-reineke/indent-blankline.nvim",
 		main = "ibl",
-		-- events = { "VimEnter", "BufReadPre", "BufNewFile" },
+		events = { "VimEnter", "BufReadPre", "BufNewFile" },
 		opts = {
 			indent = {
 				char = "┊",

@@ -7,13 +7,13 @@ vim.g.loaded_ruby_provider = 0 -- Don't load ruby LSP Provider
 vim.g.python3_host_prog = vim.fn.expand("~/.asdf/shims/python3")
 vim.g.netrw_nogx = 1 -- Disable netrw 'gx' mapping
 
+vim.cmd("let g:netrw_liststyle = 3")
 local opt = vim.opt -- for conciseness
 
 -- [[ System Options ]]
 -- vim.opt.cmdheight = 0 -- Height of the command bar
 opt.clipboard:append("unnamedplus") -- use system clipboard as default register
 opt.completeopt = "menu,menuone,noselect" -- Set completeopt for a custom experience
-opt.list = true -- Show some invisible characters
 opt.mouse = "a" -- Enable mouse mode
 opt.path = "**/**" -- Search in subdirectories
 opt.syntax = "enable" -- Enable syntax highlighting
@@ -62,7 +62,7 @@ opt.hlsearch = false -- Disable highlight on search
 opt.incsearch = true -- Incremental search
 
 -- misc
--- vim.opt.sessionoptions = "buffers,curdir,folds,help,tabpages,terminal,globals"
+opt.sessionoptions = "buffers,curdir,folds,help,tabpages,terminal,globals"
 vim.opt.updatetime = 100 -- Decrease update time
 vim.opt.wildmode = "longest:full:full"
 vim.opt.wildignore = "*.docx,*.jpg,*.png,*.gif,*.pdf,*.pyc,*.exe,*.flv,*.img,*.xlsx,*DS_STORE"

@@ -4,9 +4,18 @@ return {
   version = "*",
   opts = {
     options = {
-      mode = "tabs",
+      -- mode = "tabs",
       separator_style = "slant",
-      underline = "true",
+      themable = true,
+      diagnostics = "nvim_lsp",
+      offsets = {
+        {
+          filetype = "NvimTree",
+          text = "File Explorer",
+          text_align = "center",
+          separator = true,
+        },
+      },
     },
   },
 }

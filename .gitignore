@@ -4,3 +4,5 @@
 !lua/**/*
 !init.lua
 !.gitignore
+!.stylua.toml
+!.luarc.json
