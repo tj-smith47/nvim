@@ -1,5 +1,15 @@
 return {
   -- Vim UX Plugins
+  { -- Format on Save
+    "elentok/format-on-save.nvim",
+    config = function()
+      require("format-on-save").setup({
+        experiments = {
+          partial_update = "diff", -- or 'line-by-line'
+        },
+      })
+    end,
+  },
   { -- Open URL under cursor w/ `gx`
     "sontungexpt/url-open",
     event = "VeryLazy",
