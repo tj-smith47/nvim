@@ -1,13 +1,13 @@
 return {
   { -- Go plugins
-    'ray-x/go.nvim',
+    "ray-x/go.nvim",
     dependencies = {
-      'ray-x/guihua.lua',
-      'neovim/nvim-lspconfig',
-      'nvim-treesitter/nvim-treesitter',
+      "ray-x/guihua.lua",
+      "neovim/nvim-lspconfig",
+      "nvim-treesitter/nvim-treesitter",
     },
     event = "CmdlineEnter",
-    ft = { "go", 'gomod' },
+    ft = { "go", "gomod" },
     opts = {
       goimports = "goimports",
       gofmt = "gofumpt",
@@ -22,9 +22,9 @@ return {
         staticcheck = false,
       },
     },
-    setup = function(_, opts)
+    config = function(_, opts)
       -- checkhealth doesn't like this
-      require('go').setup(opts)
+      require("go").setup(opts)
     end,
-  }
+  },
 }

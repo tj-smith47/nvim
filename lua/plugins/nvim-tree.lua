@@ -1,0 +1,11 @@
+return {
+  { -- File Explorer
+    "nvim-tree/nvim-tree.lua",
+    dependencies = { "nvim-tree/nvim-web-devicons" },
+    config = function()
+      require("nvim-tree").setup({
+        disable_netrw = true,
+      })
+    end,
+  },
+}
