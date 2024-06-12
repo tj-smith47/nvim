@@ -216,6 +216,21 @@ return {
       end,
     })
 
+    local set_config = function()
+      vim.diagnostic.config({
+        float = {
+          border = "rounded",
+          style = "minimal",
+        },
+        severity_sort = true,
+        underline = true,
+        update_in_insert = false,
+        virtual_text = false,
+      })
+    end
+
+    set_config()
+
     -- Change the Diagnostic symbols in the sign column (gutter)
     -- (not in youtube nvim video)
     local signs = { Error = " ", Warn = " ", Hint = "󰠠 ", Info = " " }
@@ -236,19 +251,8 @@ return {
       local ns = vim.lsp.diagnostic.get_namespace(ctx.client_id)
       local bufnr = vim.api.nvim_get_current_buf()
       vim.diagnostic.reset(ns, bufnr)
+      set_config()
       return true
     end
-
-    vim.diagnostic.config({
-      float = {
-        border = "rounded",
-        source = true,
-        style = "minimal",
-      },
-      severity_sort = true,
-      underline = true,
-      update_in_insert = false,
-      virtual_text = false,
-    })
   end,
 }
