@@ -83,6 +83,7 @@ return {
       clangd = {},
       cssls = {},
       gopls = {},
+      graphql = {},
       diagnosticls = {
         plugins = {
           pylsp = {
@@ -95,6 +96,7 @@ return {
         },
       },
       -- erlangls = {},
+      html = {},
       lua_ls = {},
       pyright = {},
       pylsp = {
@@ -104,6 +106,7 @@ return {
           },
         },
       },
+      ruff_lsp = {},
       tailwindcss = {},
       tsserver = {},
       terraformls = {},
@@ -120,27 +123,10 @@ return {
           on_attach = on_attach,
           settings = servers[server_name],
         })
-        require("lsp_signature").setup({
-          bind = true, -- This is mandatory, otherwise border config won't get registered.
-        })
+        -- require("lsp_signature").setup({
+        --   bind = true, -- This is mandatory, otherwise border config won't get registered.
+        -- })
       end,
-    })
-
-    mason_lspconfig.setup({
-      -- list of servers for mason to install
-      ensure_installed = {
-        "cssls",
-        "diagnosticls",
-        "emmet_ls",
-        "graphql",
-        "html",
-        "lua_ls",
-        "prismals",
-        "pyright",
-        "ruff_lsp",
-        "tailwindcss",
-        "tsserver",
-      },
     })
 
     local mason_tool_installer = require("mason-tool-installer")
