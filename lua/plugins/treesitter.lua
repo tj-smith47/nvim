@@ -5,12 +5,12 @@ return {
     dependencies = { -- Additional text objects via treesitter
       "nvim-treesitter/nvim-treesitter-textobjects",
       "nvim-treesitter/nvim-treesitter-refactor",
-      "theHamsta/nvim-dap-virtual-text",
       {
         "rcarriga/nvim-dap-ui",
         dependencies = {
           "mfussenegger/nvim-dap",
           "mfussenegger/nvim-dap-python",
+          "theHamsta/nvim-dap-virtual-text",
           "nvim-neotest/nvim-nio",
         },
       },
