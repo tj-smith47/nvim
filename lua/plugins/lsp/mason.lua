@@ -103,7 +103,7 @@ return {
         },
       },
       docker_compose_language_service = {},
-      -- dockerls = {},
+      dockerls = {},
       elixirls = {},
       emmet_ls = {},
       erlangls = {},
