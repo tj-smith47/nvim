@@ -1,4 +1,5 @@
 return {
+  -- TODO: Dedupe this with the other mason config
   "williamboman/mason.nvim",
   dependencies = {
     "williamboman/mason-lspconfig.nvim",
@@ -51,7 +52,7 @@ return {
       end
 
       nmap("<leader>rn", vim.lsp.buf.rename, "[R]e[n]ame")
-      -- nmap('<leader>ca', vim.lsp.buf.code_action, '[C]ode [A]ction')
+      nmap("<leader>ca", vim.lsp.buf.code_action, "[C]ode [A]ction")
 
       nmap("gd", vim.lsp.buf.definition, "[G]oto [D]efinition")
       nmap("gr", require("telescope.builtin").lsp_references, "[G]oto [R]eferences")
@@ -80,10 +81,16 @@ return {
 
     -- Enable the following language servers
     local servers = {
+      angularls = {},
+      arduino_language_server = {},
+      awk_ls = {},
+      bashls = {},
       clangd = {},
+      cmake = {},
+      csharp_ls = {},
+      css_variables = {},
       cssls = {},
-      gopls = {},
-      graphql = {},
+      cssmodules_ls = {},
       diagnosticls = {
         plugins = {
           pylsp = {
@@ -95,10 +102,25 @@ return {
           },
         },
       },
-      -- erlangls = {},
+      docker_compose_language_service = {},
+      -- dockerls = {},
+      elixirls = {},
+      emmet_ls = {},
+      erlangls = {},
+      eslint = {},
+      golangci_lint_ls = {},
+      gopls = {},
+      graphql = {},
       html = {},
+      htmx = {},
+      jinja_lsp = {},
+      jqls = {},
+      jsonls = {},
       lua_ls = {},
-      pyright = {},
+      markdown_oxide = {},
+      marksman = {},
+      powershell_es = {},
+      prismals = {},
       pylsp = {
         plugins = {
           pycodestyle = {
@@ -106,10 +128,20 @@ return {
           },
         },
       },
+      pyright = {},
+      rubocop = {},
+      ruby_lsp = {},
+      ruff = {},
       ruff_lsp = {},
+      solargraph = {},
+      sorbet = {},
+      sqlls = {},
       tailwindcss = {},
-      tsserver = {},
       terraformls = {},
+      tflint = {},
+      tsserver = {},
+      vimls = {},
+      yamlls = {},
     }
 
     mason_lspconfig.setup({
@@ -133,12 +165,32 @@ return {
 
     mason_tool_installer.setup({
       ensure_installed = {
-        "black", -- python formatter
-        "eslint_d", -- js linter
-        "isort", -- python formatter
-        "prettier", -- prettier formatter
-        "ruff", -- python linter
-        "stylua", -- lua formatter
+        { "bash-language-server", auto_update = true },
+        { "black", auto_update = true },
+        { "eslint_d", auto_update = true },
+        { "editorconfig-checker", auto_update = true },
+        { "isort", auto_update = true },
+        { "gofumpt", auto_update = true },
+        { "golangci-lint", auto_update = true },
+        { "golines", auto_update = true },
+        { "gomodifytags", auto_update = true },
+        { "gopls", auto_update = true },
+        { "gotests", auto_update = true },
+        { "impl", auto_update = true },
+        { "json-to-struct", auto_update = true },
+        { "lua-language-server", auto_update = true },
+        { "luacheck", auto_update = true },
+        { "misspell", auto_update = true },
+        { "prettier", auto_update = true },
+        { "revive", auto_update = true },
+        { "ruff", auto_update = true },
+        { "stylua", auto_update = true },
+        { "shellcheck", auto_update = true },
+        { "shfmt", auto_update = true },
+        { "staticcheck", auto_update = true },
+        { "stylua", auto_update = true },
+        { "vim-language-server", auto_update = true },
+        { "vint", auto_update = true },
       },
     })
   end,

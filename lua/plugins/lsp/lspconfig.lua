@@ -25,27 +25,6 @@ return {
     { "Bilal2453/luvit-meta", lazy = true }, -- optional `vim.uv` typings
   },
   config = function()
-    -- import lspconfig plugin
-    local lspconfig = require("lspconfig")
-
-    lspconfig["lua_ls"].setup({
-      cmd = { "lua-language-server" },
-      settings = {
-        Lua = {
-          diagnostics = {
-            globals = { "vim" },
-          },
-          runtime = {
-            version = "LuaJIT",
-            path = vim.split(package.path, ";"),
-          },
-          telemetry = { enable = false },
-          workspace = { checkThirdParty = false },
-        },
-      },
-    })
-    lspconfig["yamlls"].setup({})
-
     local keymap = vim.keymap -- for conciseness
 
     vim.api.nvim_create_autocmd("LspAttach", {
@@ -99,6 +78,9 @@ return {
 
     -- Useful status updates for LSP
     require("fidget").setup({})
+
+    -- import lspconfig plugin
+    local lspconfig = require("lspconfig")
 
     -- import mason_lspconfig plugin
     local mason_lspconfig = require("mason-lspconfig")
