@@ -3,14 +3,11 @@ return {
   event = { "BufReadPre", "BufNewFile" },
   dependencies = {
     "hrsh7th/cmp-nvim-lsp",
-    { "antosha417/nvim-lsp-file-operations", config = true },
     {
-      "williamboman/mason.nvim",
-      opts = function(_, opts)
-        opts.ensure_installed = opts.ensure_installed or {}
-        vim.list_extend(opts.ensure_installed, { "ruff", "black", "goimports", "gofumpt" })
-      end,
+      "antosha417/nvim-lsp-file-operations",
+      config = true,
     },
+    "williamboman/mason.nvim",
     "williamboman/mason-lspconfig.nvim",
     {
       "folke/lazydev.nvim",
@@ -18,11 +15,18 @@ return {
       opts = {
         library = {
           "luvit-meta/library", -- see below
+          plugins = {
+            { "nvim-dap-ui" },
+            types = true,
+          },
         },
       },
     },
+    {
+      "Bilal2453/luvit-meta",
+      lazy = true,
+    }, -- optional `vim.uv` typings
     "j-hui/fidget.nvim",
-    { "Bilal2453/luvit-meta", lazy = true }, -- optional `vim.uv` typings
   },
   config = function()
     local keymap = vim.keymap -- for conciseness

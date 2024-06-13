@@ -5,6 +5,15 @@ return {
     dependencies = { -- Additional text objects via treesitter
       "nvim-treesitter/nvim-treesitter-textobjects",
       "nvim-treesitter/nvim-treesitter-refactor",
+      "theHamsta/nvim-dap-virtual-text",
+      {
+        "rcarriga/nvim-dap-ui",
+        dependencies = {
+          "mfussenegger/nvim-dap",
+          "mfussenegger/nvim-dap-python",
+          "nvim-neotest/nvim-nio",
+        },
+      },
     },
     event = { "BufReadPre", "BufNewFile" },
     opts = {
@@ -110,6 +119,9 @@ return {
     },
     config = function(_, opts)
       require("nvim-treesitter.configs").setup(opts)
+      require("dap-python").setup("~/.asdf/shims/python3")
+      require("nvim-dap-virtual-text").setup()
+      require("dapui").setup()
     end,
   },
   "norcalli/nvim-colorizer.lua",
