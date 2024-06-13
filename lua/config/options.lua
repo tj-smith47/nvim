@@ -2,78 +2,72 @@
 --  NOTE: Must happen before plugins are required (otherwise wrong leader will be used)
 vim.g.mapleader = " "
 vim.g.maplocalleader = ","
-vim.g.loaded_perl_provider = 0 -- Don't load perl LSP Provider
-vim.g.loaded_ruby_provider = 0 -- Don't load ruby LSP Provider
+vim.g.loaded_perl_provider = 0 -- don't load perl LSP Provider
+vim.g.loaded_ruby_provider = 0 -- don't load ruby LSP Provider
 -- vim.g.python3_host_prog = vim.fn.expand("~/.asdf/shims/python3")
-vim.g.netrw_nogx = 1 -- Disable netrw 'gx' mapping
+vim.g.netrw_nogx = 1 -- disable netrw 'gx' mapping
 
-vim.cmd("let g:netrw_liststyle = 3")
-local opt = vim.opt -- for conciseness
+local opt = vim.opt
 
--- [[ System Options ]]
--- vim.opt.cmdheight = 0 -- Height of the command bar
-opt.clipboard:append("unnamedplus") -- use system clipboard as default register
-opt.completeopt = "menu,menuone,noselect" -- Set completeopt for a custom experience
-opt.mouse = "a" -- Enable mouse mode
-opt.path = "**/**" -- Search in subdirectories
-opt.syntax = "enable" -- Enable syntax highlighting
-opt.undofile = true -- Save undo history
-opt.swapfile = false -- Disable swap file
+-- [[ Options ]]
+-- backspace
+opt.backspace = "indent,eol,start" -- allow backspace on indent, end of line or insert mode start position
 
--- [[ General Options ]]
--- UI
-opt.background = "dark" -- colorschemes that can be light or dark will be made dark
-opt.pumheight = 10 -- Pop-up menu height
-opt.signcolumn = "yes" -- show sign column so that text doesn't shift
-opt.termguicolors = true
+-- command line
+-- vim.opt.cmdheight = 0 -- height of the command bar
 
 -- context
-opt.scrolloff = 8 -- Lines of context
 opt.number = true -- shows absolute line numbers
+opt.path = "**/**" -- search in subdirectories
+opt.scrolloff = 8 -- lines of context
+
+-- cursor line
+opt.cursorline = true -- highlight the current cursor line
+
+-- folding
+-- opt.expandtab = true                      -- use spaces instead of tabs
+-- opt.foldlevel = 99
+-- opt.foldcolumn = "1"
+-- opt.foldlevelstart = 99
+-- opt.foldmethod = "expr"
+-- opt.foldexpr = "nvim_treesitter#foldexpr()"
+-- opt.foldenable = true
+
+-- line wrapping
+opt.wrap = false -- disable line wrapping
+
+-- misc
+opt.clipboard:append("unnamedplus") -- use system clipboard as default register
+opt.completeopt = "menu,menuone,noselect" -- set completeopt for a custom experience
+opt.mouse = "a" -- enable mouse mode
+opt.swapfile = false -- disable swap file
+opt.sessionoptions = "buffers,curdir,folds,help,tabpages,terminal,globals"
+opt.undofile = true -- save undo history
+opt.updatetime = 100 -- decrease update time
+opt.wildmode = "longest:full:full"
+opt.wildignore = "*.docx,*.jpg,*.png,*.gif,*.pdf,*.pyc,*.exe,*.flv,*.img,*.xlsx,*DS_STORE"
 
 -- tabs & indentation
 opt.autoindent = true -- copy indent from current line when starting new one
 opt.breakindent = true -- enable break indent
 opt.expandtab = true -- expand tab to spaces
 opt.shiftwidth = 2 -- 2 spaces for indent width
-opt.tabstop = 2 -- 2 spaces for tabs (prettier default)
 opt.softtabstop = 2 -- Number of spaces tabs count for
--- vim.opt.shiftwidth = 2       -- Size of an indent
-
--- line wrapping
-opt.wrap = false -- disable line wrapping
+opt.tabstop = 2 -- 2 spaces for tabs (prettier default)
 
 -- search settings
+opt.hlsearch = false -- disable highlight on search
 opt.ignorecase = true -- ignore case when searching
+opt.incsearch = true -- incremental search
 opt.smartcase = true -- if you include mixed case in your search, assumes you want case-sensitive
 
--- cursor line
-opt.cursorline = true -- highlight the current cursor line
-
--- backspace
-opt.backspace = "indent,eol,start" -- allow backspace on indent, end of line or insert mode start position
-
 -- split windows
-opt.splitright = true -- split vertical window to the right
 opt.splitbelow = true -- split horizontal window to the bottom
+opt.splitright = true -- split vertical window to the right
 
--- search options
-opt.hlsearch = false -- Disable highlight on search
-opt.incsearch = true -- Incremental search
-
--- misc
-opt.sessionoptions = "buffers,curdir,folds,help,tabpages,terminal,globals"
-vim.opt.updatetime = 100 -- Decrease update time
-vim.opt.wildmode = "longest:full:full"
-vim.opt.wildignore = "*.docx,*.jpg,*.png,*.gif,*.pdf,*.pyc,*.exe,*.flv,*.img,*.xlsx,*DS_STORE"
-
--- folding
--- vim.opt.expandtab = true                      -- Use spaces instead of tabs
--- vim.opt.foldlevel = 99
--- vim.o.foldcolumn = "1"
--- -- vim.o.foldlevelstart = 99
--- vim.opt.foldmethod = "expr"
--- vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
--- vim.opt.foldenable = true
-
-vim.diagnostic.virtual_text = false
+-- ui
+opt.background = "dark" -- colorschemes that can be light or dark will be made dark
+opt.pumheight = 10 -- pop-up menu height
+opt.signcolumn = "yes" -- show sign column so that text doesn't shift
+opt.syntax = "enable" -- enable syntax highlighting
+opt.termguicolors = true
