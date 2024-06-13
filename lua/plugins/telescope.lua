@@ -20,7 +20,6 @@ return {
     local trouble = require("trouble")
     local trouble_telescope = require("trouble.sources.telescope")
 
-    -- or create your custom action
     local custom_actions = transform_mod({
       open_trouble_qflist = function(prompt_bufnr)
         trouble.toggle("quickfix")

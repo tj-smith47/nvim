@@ -237,7 +237,7 @@ return {
       local ns = vim.lsp.diagnostic.get_namespace(ctx.client_id)
       local bufnr = vim.api.nvim_get_current_buf()
       vim.diagnostic.reset(ns, bufnr)
-      set_config()
+      -- set_config()
       return true
     end
   end,
