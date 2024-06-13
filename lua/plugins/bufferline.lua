@@ -5,9 +5,12 @@ return {
   opts = {
     options = {
       mode = "tabs",
-      separator_style = "slant",
-      themable = true,
-      -- diagnostics = "nvim_lsp",
+      diagnostics = "nvim_lsp",
+      name_formatter = function(buf)
+        if buf.name == "NvimTree_1" then
+          return vim.split(vim.fn.getcwd(), "/")[#vim.split(vim.fn.getcwd(), "/")]
+        end
+      end,
       offsets = {
         {
           filetype = "NvimTree",
@@ -16,6 +19,8 @@ return {
           separator = true,
         },
       },
+      separator_style = "slant",
+      themable = true,
     },
   },
 }
