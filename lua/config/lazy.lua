@@ -27,6 +27,6 @@ lazy.setup({ { import = "plugins" }, { import = "plugins.lsp" } }, {
     notify = false,
   },
   defaults = { lazy = false },
-  install = { colorscheme = { 'dracula' } },
+  install = { colorscheme = { "dracula" } },
   ui = { border = "rounded" },
 })

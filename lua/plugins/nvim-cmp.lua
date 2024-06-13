@@ -9,6 +9,7 @@ return {
     "hrsh7th/cmp-nvim-lsp-signature-help",
     "hrsh7th/cmp-nvim-lua",
     "mfussenegger/nvim-dap",
+    "mfussenegger/nvim-dap-python",
     "rcarriga/nvim-dap-ui",
     "hrsh7th/nvim-cmp",
     "hrsh7th/cmp-path", -- source for file system paths
@@ -20,9 +21,9 @@ return {
       build = "make install_jsregexp",
     },
     "ray-x/lsp_signature.nvim",
-    "saadparwaiz1/cmp_luasnip",     -- for autocompletion
+    "saadparwaiz1/cmp_luasnip", -- for autocompletion
     "rafamadriz/friendly-snippets", -- useful snippets
-    "onsails/lspkind.nvim",         -- vs-code like pictograms
+    "onsails/lspkind.nvim", -- vs-code like pictograms
   },
   config = function()
     local cmp = require("cmp")
@@ -32,7 +33,7 @@ return {
     local lspkind = require("lspkind")
 
     -- loads vscode style snippets from installed plugins (e.g. friendly-snippets)
-    -- require("luasnip.loaders.from_vscode").lazy_load()
+    require("luasnip.loaders.from_vscode").lazy_load()
     require("dapui").setup()
 
     cmp.setup({
@@ -51,7 +52,7 @@ return {
       mapping = cmp.mapping.preset.insert({
         ["<C-k>"] = cmp.mapping.select_prev_item(), -- previous suggestion
         ["<C-j>"] = cmp.mapping.select_next_item(), -- next suggestion
-        ["<C-e>"] = cmp.mapping.abort(),            -- close completion window
+        ["<C-e>"] = cmp.mapping.abort(), -- close completion window
         ["<C-d>"] = cmp.mapping.scroll_docs(-4),
         ["<C-f>"] = cmp.mapping.scroll_docs(4),
         ["<C-g>"] = cmp.mapping(function(fallback)
@@ -90,14 +91,16 @@ return {
       -- sources for autocompletion
       sources = cmp.config.sources({
         { name = "nvim_lsp_signature_help" },
-        { name = "nvim_dap" },
-        { name = "nvim_dap_ui" },
-        { name = "lazydev" },
         { name = "nvim_lsp" },
+        { name = "friendly" },
+        { name = "lazydev" },
+        -- { name = "nvim_dap_ui" },
+        { name = "nvim_dap_python" },
+        { name = "nvim_dap" },
         { name = "nvim_lua" },
-        { name = "path" },    -- file system paths
+        { name = "path" }, -- file system paths
         { name = "luasnip" }, -- snippets
-        { name = "buffer" },  -- text within current buffer
+        { name = "buffer" }, -- text within current buffer
       }),
 
       experimental = {

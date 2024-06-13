@@ -4,7 +4,7 @@ vim.g.mapleader = " "
 vim.g.maplocalleader = ","
 vim.g.loaded_perl_provider = 0 -- Don't load perl LSP Provider
 vim.g.loaded_ruby_provider = 0 -- Don't load ruby LSP Provider
-vim.g.python3_host_prog = vim.fn.expand("~/.asdf/shims/python3")
+-- vim.g.python3_host_prog = vim.fn.expand("~/.asdf/shims/python3")
 vim.g.netrw_nogx = 1 -- Disable netrw 'gx' mapping
 
 vim.cmd("let g:netrw_liststyle = 3")
