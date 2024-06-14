@@ -26,16 +26,6 @@ vim.api.nvim_create_autocmd({ "BufWritePre" }, {
   end,
 })
 
--- [[ Custom autocmd for gitStream config files ]]
-vim.api.nvim_create_autocmd({ "BufEnter", "BufWritePre", "InsertLeave" }, {
-  group = augroup("cm_yaml"),
-  callback = function()
-    vim.o.filetype = "yaml"
-    vim.o.syntax = "yaml"
-  end,
-  pattern = "*.cm",
-})
-
 -- [[ Highlight on yank ]]
 vim.api.nvim_create_autocmd("TextYankPost", {
   group = augroup("highlight_yank"),

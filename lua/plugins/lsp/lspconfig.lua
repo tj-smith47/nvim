@@ -39,8 +39,11 @@ return {
         local opts = { buffer = ev.buf, silent = true }
 
         -- set keybinds
-        opts.desc = "Show LSP references"
-        keymap.set("n", "gR", "<cmd>Telescope lsp_references<CR>", opts) -- show definition, references
+        opts.desc = "Go to reference"
+        keymap.set("n", "gr", "<cmd>Telescope lsp_references<CR>", opts) -- show definition, references
+
+        opts.desc = "Go to definition"
+        keymap.set("n", "gd", vim.lsp.buf.definition, opts) -- go to definition
 
         opts.desc = "Go to declaration"
         keymap.set("n", "gD", vim.lsp.buf.declaration, opts) -- go to declaration
@@ -53,6 +56,9 @@ return {
 
         opts.desc = "Show LSP type definitions"
         keymap.set("n", "gt", "<cmd>Telescope lsp_type_definitions<CR>", opts) -- show lsp type definitions
+
+        opts.desc = "Show general type definition"
+        keymap.set("n", "<leader>D", vim.lsp.buf.type_definition, opts) -- show general type definition
 
         opts.desc = "See available code actions"
         keymap.set({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, opts) -- see available code actions, in visual mode will apply to selection
@@ -77,157 +83,49 @@ return {
 
         opts.desc = "Restart LSP"
         keymap.set("n", "<leader>rs", ":LspRestart<CR>", opts) -- mapping to restart lsp if necessary
+
+        opts.desc = "Rename"
+        keymap.set("n", "<leader>rn", vim.lsp.buf.rename, opts) -- rename
+
+        opts.desc = "Show signature help"
+        keymap.set({ "n", "i" }, "<C-k>", vim.lsp.buf.signature_help, opts) -- show signature help
+
+        opts.desc = "Show document symbols"
+        keymap.set("n", "<leader>ds", "<cmd>Telescope lsp_document_symbols<CR>", opts) -- show document symbols
+
+        opts.desc = "Show workspace symbols"
+        keymap.set("n", "<leader>ws", "<cmd>Telescope lsp_workspace_symbols<CR>", opts) -- show workspace symbols
+
+        opts.desc = "Hover Documentation"
+        keymap.set("n", "K", vim.lsp.buf.hover, opts) -- hover documentation
+
+        opts.desc = "Workspace add folder"
+        keymap.set("n", "<leader>wa", vim.lsp.buf.add_workspace_folder, opts) -- workspace add folder
+
+        opts.desc = "Workspace remove folder"
+        keymap.set("n", "<leader>wr", vim.lsp.buf.remove_workspace_folder, opts) -- workspace remove folder
+
+        opts.desc = "Workspace list folders"
+        keymap.set("n", "<leader>wl", function()
+          print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
+        end, opts) -- workspace list folders
+
+        -- Create a command `:Format` local to the LSP buffer
+        -- vim.api.nvim_buf_create_user_command(bufnr, "Format", function(_)
+        --   vim.lsp.buf.format()
+        -- end, { desc = "Format current buffer with LSP" })
       end,
     })
 
-    -- Useful status updates for LSP
+    -- Useful LSP Updates
     require("fidget").setup({})
 
-    -- import lspconfig plugin
-    local lspconfig = require("lspconfig")
-
-    -- import mason_lspconfig plugin
-    local mason_lspconfig = require("mason-lspconfig")
-
-    -- import cmp-nvim-lsp plugin
-    local cmp_nvim_lsp = require("cmp_nvim_lsp")
-
-    -- used to enable autocompletion (assign to every lsp server config)
-    local capabilities = cmp_nvim_lsp.default_capabilities()
-
-    mason_lspconfig.setup_handlers({
-      -- default handler for installed servers
-      function(server_name)
-        lspconfig[server_name].setup({
-          capabilities = capabilities,
-        })
-      end,
-      ["diagnosticls"] = function()
-        lspconfig["diagnosticls"].setup({
-          capabilities = capabilities,
-          settings = {
-            pycodestyle = { enabled = false },
-            pylsp = {
-              plugins = {
-                pycodestyle = {
-                  enabled = false,
-                },
-              },
-            },
-          },
-        })
-      end,
-      ["svelte"] = function()
-        -- configure svelte server
-        lspconfig["svelte"].setup({
-          capabilities = capabilities,
-          on_attach = function(client, bufnr)
-            vim.api.nvim_create_autocmd("BufWritePost", {
-              pattern = { "*.js", "*.ts" },
-              callback = function(ctx)
-                -- Here use ctx.match instead of ctx.file
-                client.notify("$/onDidChangeTsOrJsFile", { uri = ctx.match })
-              end,
-            })
-          end,
-        })
-      end,
-      ["graphql"] = function()
-        -- configure graphql language server
-        lspconfig["graphql"].setup({
-          capabilities = capabilities,
-          filetypes = { "graphql", "gql", "svelte", "typescriptreact", "javascriptreact" },
-        })
-      end,
-      ["emmet_ls"] = function()
-        -- configure emmet language server
-        lspconfig["emmet_ls"].setup({
-          capabilities = capabilities,
-          filetypes = {
-            "html",
-            "typescriptreact",
-            "javascriptreact",
-            "css",
-            "sass",
-            "scss",
-            "less",
-            "svelte",
-          },
-        })
-      end,
-      ["lua_ls"] = function()
-        -- configure lua server (with special settings)
-        lspconfig["lua_ls"].setup({
-          cmd = { "lua-language-server" },
-          capabilities = capabilities,
-          settings = {
-            Lua = {
-              -- make the language server recognize "vim" global
-              diagnostics = {
-                globals = { "vim" },
-              },
-              completion = {
-                callSnippet = "Replace",
-              },
-              runtime = {
-                version = "LuaJIT",
-                path = vim.split(package.path, ";"),
-              },
-              telemetry = { enable = false },
-              workspace = { checkThirdParty = false },
-            },
-          },
-        })
-      end,
-      ["pylsp"] = function()
-        -- configure python server (with special settings)
-        lspconfig["pylsp"].setup({
-          capabilities = capabilities,
-          settings = {
-            pylsp = {
-              plugins = {
-                pycodestyle = {
-                  enabled = false,
-                },
-              },
-            },
-          },
-        })
-      end,
-      ["yamlls"] = function()
-        -- configure yaml server
-        lspconfig["yamlls"].setup({
-          capabilities = capabilities,
-        })
-      end,
-    })
-
-    local set_config = function()
-      vim.diagnostic.config({
-        float = {
-          border = "rounded",
-          style = "minimal",
-        },
-        severity_sort = true,
-        underline = true,
-        update_in_insert = false,
-        virtual_text = false,
-      })
-    end
-
-    set_config()
-
-    -- Change the Diagnostic symbols in the sign column (gutter)
-    -- (not in youtube nvim video)
-    local signs = { Error = " ", Warn = " ", Hint = "󰠠 ", Info = " " }
-    for type, icon in pairs(signs) do
-      local hl = "DiagnosticSign" .. type
-      vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = "" })
-    end
-
+    -- Setup Handlers
     vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = "rounded" })
     vim.lsp.handlers["textDocument/signatureHelp"] =
       vim.lsp.with(vim.lsp.handlers.signature_help, { border = "rounded" })
+
+    -- Setup Diagnostics
     vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
       underline = false,
       update_in_insert = false,
@@ -237,8 +135,26 @@ return {
       local ns = vim.lsp.diagnostic.get_namespace(ctx.client_id)
       local bufnr = vim.api.nvim_get_current_buf()
       vim.diagnostic.reset(ns, bufnr)
-      -- set_config()
       return true
     end
+
+    -- Change the Diagnostic symbols in the sign column (gutter)
+    local signs = { Error = " ", Warn = " ", Hint = "󰠠 ", Info = " " }
+    for type, icon in pairs(signs) do
+      local hl = "DiagnosticSign" .. type
+      vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = "" })
+    end
+
+    -- Set User Config
+    vim.diagnostic.config({
+      float = {
+        border = "rounded",
+        style = "minimal",
+      },
+      severity_sort = true,
+      underline = true,
+      update_in_insert = false,
+      virtual_text = false,
+    })
   end,
 }

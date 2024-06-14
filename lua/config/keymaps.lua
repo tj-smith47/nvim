@@ -1,11 +1,18 @@
 -- [[ Keymaps for a better default experience ]]
+-- local nmap = function(keys, func, desc)
+--   if desc then
+--     desc = "LSP: " .. desc
+--   end
+--   vim.keymap.set("n", keys, func, { buffer = bufnr, desc = desc })
+-- end
+
 vim.keymap.set({ "n", "v" }, "<Space>", "<Nop>", { silent = true })
 
 -- Diagnostic keymaps
 vim.keymap.set("n", "[d", vim.diagnostic.goto_prev)
 vim.keymap.set("n", "]d", vim.diagnostic.goto_next)
 vim.keymap.set("n", "<leader>e", vim.diagnostic.open_float)
-vim.keymap.set("n", "<leader>q", vim.diagnostic.setloclist)
+-- vim.keymap.set("n", "<leader>q", vim.diagnostic.setloclist)
 
 -- Nvim Tree keymaps
 vim.keymap.set("n", "<leader>t", require("nvim-tree.api").tree.toggle, { desc = "Nvim [T]ree Toggle" })
