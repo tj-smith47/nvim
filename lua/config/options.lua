@@ -69,5 +69,5 @@ opt.splitright = true -- split vertical window to the right
 opt.background = "dark" -- colorschemes that can be light or dark will be made dark
 opt.pumheight = 10 -- pop-up menu height
 opt.signcolumn = "yes" -- show sign column so that text doesn't shift
-opt.syntax = "enable" -- enable syntax highlighting
 opt.termguicolors = true
+

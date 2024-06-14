@@ -27,10 +27,10 @@ vim.api.nvim_create_autocmd({ "BufWritePre" }, {
 })
 
 -- [[ Custom autocmd for gitStream config files ]]
-vim.api.nvim_create_autocmd({ "BufRead" }, {
+vim.api.nvim_create_autocmd({ "BufEnter", "BufReadPre", "UIEnter" }, {
   group = augroup("cm_yaml"),
   callback = function()
-    vim.bo.filetype = "yaml"
+    vim.o.filetype = "yaml"
   end,
   pattern = "*.cm",
 })
