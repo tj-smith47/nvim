@@ -19,10 +19,12 @@ return {
       version = "v2.*", -- Replace <CurrentMajor> by the latest released major (first number of latest release)
       -- install jsregexp (optional!).
       build = "make install_jsregexp",
+      dependencies = {
+        "saadparwaiz1/cmp_luasnip", -- for autocompletion
+        "rafamadriz/friendly-snippets", -- useful snippets
+      },
     },
     "ray-x/lsp_signature.nvim",
-    "saadparwaiz1/cmp_luasnip", -- for autocompletion
-    "rafamadriz/friendly-snippets", -- useful snippets
     "onsails/lspkind.nvim", -- vs-code like pictograms
   },
   config = function()
@@ -50,11 +52,19 @@ return {
         end,
       },
       mapping = cmp.mapping.preset.insert({
-        ["<C-k>"] = cmp.mapping.select_prev_item(), -- previous suggestion
-        ["<C-j>"] = cmp.mapping.select_next_item(), -- next suggestion
         ["<C-e>"] = cmp.mapping.abort(), -- close completion window
+        ["<Shift-Shift>"] = cmp.mapping.close(),
+        ["<C-C"] = cmp.mapping.complete(),
+        ["<CR>"] = cmp.mapping.confirm({
+          behavior = cmp.ConfirmBehavior.Replace,
+          select = true,
+        }),
         ["<C-d>"] = cmp.mapping.scroll_docs(-4),
         ["<C-f>"] = cmp.mapping.scroll_docs(4),
+        ["<C-k>"] = cmp.mapping.select_prev_item(), -- previous suggestion
+        ["<C-j>"] = cmp.mapping.select_next_item(), -- next suggestion
+
+        -- Copilot integration
         ["<C-g>"] = cmp.mapping(function(fallback)
           vim.api.nvim_feedkeys(
             vim.fn["copilot#Accept"](vim.api.nvim_replace_termcodes("<Tab>", true, true, true)),
@@ -62,12 +72,8 @@ return {
             true
           )
         end),
-        ["<C-C"] = cmp.mapping.complete(),
-        ["<CR>"] = cmp.mapping.confirm({
-          behavior = cmp.ConfirmBehavior.Replace,
-          select = true,
-        }),
-        ["<Shift-Shift>"] = cmp.mapping.close(),
+
+        -- Custom Mappings
         ["<PageDown>"] = cmp.mapping(function(fallback)
           if cmp.visible() then
             cmp.select_next_item()
@@ -90,16 +96,15 @@ return {
 
       -- sources for autocompletion
       sources = cmp.config.sources({
-        { name = "nvim_lsp_signature_help" },
         { name = "nvim_lsp" },
-        { name = "friendly" },
-        { name = "lazydev" },
-        -- { name = "nvim_dap_ui" },
-        { name = "nvim_dap_python" },
-        { name = "nvim_dap" },
-        { name = "nvim_lua" },
-        { name = "path" }, -- file system paths
         { name = "luasnip" }, -- snippets
+        { name = "nvim_lsp_signature_help" },
+        { name = "lazydev" },
+        { name = "nvim_dap" },
+        { name = "nvim_dap_python" },
+        { name = "nvim_lua" },
+      }, {
+        { name = "path" }, -- file system paths
         { name = "buffer" }, -- text within current buffer
       }),
 

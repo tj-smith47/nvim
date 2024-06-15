@@ -63,7 +63,7 @@ opt.smartcase = true -- if you include mixed case in your search, assumes you wa
 
 -- split windows
 opt.splitbelow = true -- split horizontal window to the bottom
-opt.splitright = true -- split vertical window to the right
+-- opt.splitright = true -- split vertical window to the right
 
 -- ui
 opt.background = "dark" -- colorschemes that can be light or dark will be made dark
@@ -71,3 +71,4 @@ opt.pumheight = 10 -- pop-up menu height
 opt.signcolumn = "yes" -- show sign column so that text doesn't shift
 opt.termguicolors = true
 
+-- vim.loader.enable()
