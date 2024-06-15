@@ -1,4 +1,5 @@
 return {
+  -- Inspiration from: https://github.com/goolord/alpha-nvim/discussions/16
   "goolord/alpha-nvim",
   event = "VimEnter",
   dependencies = {
@@ -10,9 +11,10 @@ return {
     require("alpha.term")
 
     -- [[ Configuration ]]
-    local dash_theme = "startify"
+    local dash_theme = "standard"
     local header_type = "slanted"
-    local menu_type = "standard"
+    local menu_type = "extended"
+    local user = "TJ Smith"
 
     -- [[ Themes ]]
     local function set_theme(type)
@@ -20,6 +22,8 @@ return {
         return require("alpha.themes.dashboard")
       elseif type == "startify" then
         return require("alpha.themes.startify")
+      elseif type == "theta" then
+        return require("alpha.themes.theta")
       end
     end
 
@@ -260,7 +264,7 @@ return {
         -- dash.button("SPC j", "󰈚   Restore Session", ":SessionRestore<cr>"),
         dash.button("e", "   New File", ":ene <BAR> startinsert <CR>"),
         dash.button("f", "   Find File", ":cd $HOME/dotfiles | Telescope find_files<CR>"),
-        dash.button("p", " > Find Projects", ":Telescope project<CR>"),
+        dash.button("p", " > Find Projects", "<cmd>Telescope projects<CR>"),
         dash.button("g", "󰱼   Find Word", ":Telescope live_grep<CR>"),
         dash.button("r", "   Recent", ":Telescope oldfiles<CR>"),
         dash.button("c", "   Config", ":e $MYVIMRC <CR>"),
@@ -337,13 +341,10 @@ return {
     else
       -- disable MRU
       -- dashboard.section.mru.val = { { type = "padding", val = 0 } }
+      -- dashboard.opts.opts = { margin = 25 }
     end
 
-    -- dashboard.opts.opts.noautocmd = true
-    local opts = dashboard.opts
-    opts.opts = { margin = 25 }
-
-    alpha.setup(opts)
+    alpha.setup(dashboard.opts)
     -- alpha.setup({
     --   layout = {
     --     { type = "padding", val = 4 },
@@ -373,7 +374,7 @@ return {
           -- Rows
           local row1 = "⚡ Neovim loaded " .. stats.loaded .. "/" .. stats.count .. " plugins in " .. ms .. "ms"
           local row2 = "  " .. date .. " | " .. "  " .. time
-          local row3 = "Welcome, TJ Smith!"
+          local row3 = "Welcome, " .. user .. "!"
 
           local row1_width = vim.fn.strdisplaywidth(row1)
           local row2Padded = string.rep(" ", (row1_width - vim.fn.strdisplaywidth(row2)) / 2) .. row2
@@ -392,176 +393,4 @@ return {
     -- Disable folding on alpha buffer
     vim.cmd([[autocmd FileType alpha setlocal nofoldenable]])
   end,
-  -- {
-  --   "nvimdev/dashboard-nvim",
-  --   event = "VimEnter",
-  --   opts = function()
-  --     local logo = [[
-  --                                                     
-  --              ████ ██████           █████      ██
-  --             ███████████             █████ 
-  --             █████████ ███████████████████ ███   ███████████
-  --            █████████  ███    █████████████ █████ ██████████████
-  --           █████████ ██████████ █████████ █████ █████ ████ █████
-  --         ███████████ ███    ███ █████████ █████ █████ ████ █████
-  --        ██████  █████████████████████ ████ █████ █████ ████ ██████
-  --     ]]
-
-  --     logo = string.rep("\n", 8) .. logo .. "\n\n"
-
-  --     local opts = {
-  --       theme = "doom",
-  --       hide = {
-  --         -- this is taken care of by lualine
-  --         -- enabling this messes up the actual laststatus setting after loading a file
-  --         statusline = false,
-  --       },
-  --       config = {
-  --         header = vim.split(logo, "\n"),
-  --         -- stylua: ignore
-  --         center = {
-  --           { action = "Telescope find_files", desc = " Find file", icon = " ", key = "f" },
-  --           { action = "ene | startinsert", desc = " New file", icon = " ", key = "n" },
-  --           { action = "Telescope oldfiles", desc = " Recent files", icon = " ", key = "r" },
-  --           { action = "Telescope live_grep", desc = " Find text", icon = " ", key = "g" },
-  --           {
-  --             action = [[lua require("lazyvim.util").telescope.config_files()()]],
-  --             desc = " Config",
-  --             icon = " ",
-  --             key = "c"
-  --           },
-  --           { action = 'lua require("persistence").load()', desc = " Restore Session", icon = " ", key = "s" },
-  --           { action = "LazyExtras", desc = " Lazy Extras", icon = " ", key = "x" },
-  --           { action = "Lazy", desc = " Lazy", icon = "󰒲 ", key = "l" },
-  --           { action = "qa", desc = " Quit", icon = " ", key = "q" },
-  --         },
-  --         footer = function()
-  --           local stats = require("lazy").stats()
-  --           local ms = (math.floor(stats.startuptime * 100 + 0.5) / 100)
-  --           return { "⚡ Neovim loaded " .. stats.loaded .. "/" .. stats.count .. " plugins in " .. ms .. "ms" }
-  --         end,
-  --       },
-  --     }
-
-  --     for _, button in ipairs(opts.config.center) do
-  --       button.desc = button.desc .. string.rep(" ", 43 - #button.desc)
-  --       button.key_format = "  %s"
-  --     end
-
-  --     -- close Lazy and re-open when the dashboard is ready
-  --     if vim.o.filetype == "lazy" then
-  --       vim.cmd.close()
-  --       vim.api.nvim_create_autocmd("User", {
-  --         pattern = "DashboardLoaded",
-  --         callback = function()
-  --           require("lazy").show()
-  --         end,
-  --       })
-  --     end
-
-  --     return opts
-  --   end,
-  -- }
-  -- return {
-  --   "goolord/alpha-nvim",
-  --   event = "VimEnter",
-  --   enabled = true,
-  --   init = false,
-  --   opts = function()
-  --     local dashboard = require("alpha.themes.dashboard")
-  --     -- Define and set highlight groups for each logo line
-  --     vim.api.nvim_set_hl(0, "NeovimDashboardLogo1", { fg = "#311B92" }) -- Indigo
-  --     vim.api.nvim_set_hl(0, "NeovimDashboardLogo2", { fg = "#512DA8" }) -- Deep Purple
-  --     vim.api.nvim_set_hl(0, "NeovimDashboardLogo3", { fg = "#673AB7" }) -- Deep Purple
-  --     vim.api.nvim_set_hl(0, "NeovimDashboardLogo4", { fg = "#9575CD" }) -- Medium Purple
-  --     vim.api.nvim_set_hl(0, "NeovimDashboardLogo5", { fg = "#B39DDB" }) -- Light Purple
-  --     vim.api.nvim_set_hl(0, "NeovimDashboardLogo6", { fg = "#D1C4E9" }) -- Very Light Purple
-  --     vim.api.nvim_set_hl(0, "NeovimDashboardUsername", { fg = "#D1C4E9" }) -- light purple
-  --     dashboard.section.header.type = "group"
-  --     dashboard.section.header.val = {
-  --       {
-  --         type = "text",
-  --         val = "   ███╗   ██╗███████╗ ██████╗ ██╗   ██╗██╗███╗   ███╗ ",
-  --         opts = { hl = "NeovimDashboardLogo1", shrink_margin = false, position = "center" },
-  --       },
-  --       {
-  --         type = "text",
-  --         val = "   ████╗  ██║██╔════╝██╔═══██╗██║   ██║██║████╗ ████║ ",
-  --         opts = { hl = "NeovimDashboardLogo2", shrink_margin = false, position = "center" },
-  --       },
-  --       {
-  --         type = "text",
-  --         val = "   ██╔██╗ ██║█████╗  ██║   ██║██║   ██║██║██╔████╔██║ ",
-  --         opts = { hl = "NeovimDashboardLogo3", shrink_margin = false, position = "center" },
-  --       },
-  --       {
-  --         type = "text",
-  --         val = "   ██║╚██╗██║██╔══╝  ██║   ██║╚██╗ ██╔╝██║██║╚██╔╝██║ ",
-  --         opts = { hl = "NeovimDashboardLogo4", shrink_margin = false, position = "center" },
-  --       },
-  --       {
-  --         type = "text",
-  --         val = "   ██║ ╚████║███████╗╚██████╔╝ ╚████╔╝ ██║██║ ╚═╝ ██║ ",
-  --         opts = { hl = "NeovimDashboardLogo5", shrink_margin = false, position = "center" },
-  --       },
-  --       {
-  --         type = "text",
-  --         val = "   ╚═╝  ╚═══╝╚══════╝ ╚═════╝   ╚═══╝  ╚═╝╚═╝     ╚═╝ ",
-  --         opts = { hl = "NeovimDashboardLogo6", shrink_margin = false, position = "center" },
-  --       },
-  --       {
-  --         type = "padding",
-  --         val = 1,
-  --       },
-  --       {
-  --         type = "text",
-  --         val = "𝙾𝚑 𝚝𝚑𝚎 𝚓𝚘𝚢 𝚘𝚏 𝚑𝚊𝚟𝚒𝚗𝚐 𝚢𝚘𝚞𝚛 𝚘𝚠𝚗 𝚌𝚞𝚜𝚝𝚘𝚖 𝚝𝚎𝚡𝚝 𝚎𝚍𝚒𝚝𝚘𝚛 :)",
-  --         opts = { hl = "NeovimDashboardUsername", shrink_margin = false, position = "center" },
-  --       },
-  --     }
-  --     -- stylua: ignore
-  --     dashboard.section.buttons.val = {
-  --       dashboard.button("f", " " .. " Find file",       "<cmd> Telescope find_files <cr>"),
-  --       dashboard.button("n", " " .. " New file",        "<cmd> ene <BAR> startinsert <cr>"),
-  --       dashboard.button("r", " " .. " Recent files",    "<cmd> Telescope oldfiles <cr>"),
-  --       dashboard.button("g", " " .. " Find text",       "<cmd> Telescope live_grep <cr>"),
-  --       dashboard.button("Z", " " .. " Open Directories", "<cmd> lua require('telescope').extensions.zoxide.list() <cr>"),
-  --       dashboard.button("c", " " .. " Config",          "<cmd> lua require('lazyvim.util').telescope.config_files()() <cr>"),
-  --       dashboard.button("s", " " .. " Restore Session", [[<cmd> lua require("persistence").load() <cr>]]),
-  --     --dashboard.button("x", " " .. " Lazy Extras",     "<cmd> LazyExtras <cr>"),
-  --       dashboard.button("l", "󰒲 " .. " Lazy",            "<cmd> Lazy <cr>"),
-  --       dashboard.button("q", " " .. " Quit",            "<cmd> qa <cr>"),
-  --     }
-  --     vim.api.nvim_set_hl(0, "AlphaHeader", { fg = "#311B92" }) -- Dark Indigo
-  --     vim.api.nvim_set_hl(0, "AlphaButtons", { fg = "#D1C4E9" }) -- Light Purple
-  --     vim.api.nvim_set_hl(0, "AlphaShortcut", { fg = "#8BC34A" }) -- Greenish
-  --     vim.api.nvim_set_hl(0, "AlphaFooter", { fg = "#edd691" })
-  --
-  --     for _, button in ipairs(dashboard.section.buttons.val) do
-  --       button.opts.hl = "AlphaButtons"
-  --       button.opts.hl_shortcut = "AlphaShortcut"
-  --     end
-  --     dashboard.section.header.opts.hl = "AlphaHeader"
-  --     dashboard.section.buttons.opts.hl = "AlphaButtons"
-  --     dashboard.section.footer.opts.hl = "AlphaFooter"
-  --     dashboard.opts.layout[1].val = 3
-  --     return dashboard
-  --   end,
-  --   config = function(_, dashboard)
-  --     -- close Lazy and re-open when the dashboard is ready
-  --     if vim.o.filetype == "lazy" then
-  --       vim.cmd.close()
-  --       vim.api.nvim_create_autocmd("User", {
-  --         once = true,
-  --         pattern = "AlphaReady",
-  --         callback = function()
-  --           require("lazy").show()
-  --         end,
-  --       })
-  --     end
-  --
-  --     require("alpha").setup(dashboard.opts)
-  --
-  --   end,
-  -- }
 }

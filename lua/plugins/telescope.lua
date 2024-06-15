@@ -8,6 +8,19 @@ return {
       build = "make",
       cond = vim.fn.executable("make") == 1,
     },
+    {
+      "ahmedkhalf/project.nvim",
+      event = "VeryLazy",
+      opts = {
+        manual_mode = true,
+      },
+      main = "project_nvim",
+      keys = {
+        { "<leader>tR", "<cmd>ProjectRoot<CR>", desc = "Project root" },
+      },
+    },
+    "nvim-telescope/telescope-file-browser.nvim",
+    "jvgrootveld/telescope-zoxide",
     "nvim-tree/nvim-web-devicons",
     "folke/todo-comments.nvim",
     "nvim-lua/plenary.nvim",
@@ -16,6 +29,7 @@ return {
     local telescope = require("telescope")
     local actions = require("telescope.actions")
     local transform_mod = require("telescope.actions.mt").transform_mod
+    local z_utils = require("telescope._extensions.zoxide.utils")
 
     local trouble = require("trouble")
     local trouble_telescope = require("trouble.sources.telescope")
@@ -40,9 +54,33 @@ return {
           },
         },
       },
+      extensions = {
+        zoxide = {
+          prompt_title = "[ Walking on the shoulders of TJ ]",
+          mappings = {
+            default = {
+              after_action = function(selection)
+                print("Update to (" .. selection.z_score .. ") " .. selection.path)
+              end,
+            },
+            ["<C-s>"] = {
+              before_action = function(selection)
+                print("before C-s")
+              end,
+              action = function(selection)
+                vim.cmd.edit(selection.path)
+              end,
+            },
+            -- Opens the selected entry in a new split
+            ["<C-q>"] = { action = z_utils.create_basic_command("split") },
+          },
+        },
+      },
     })
 
     telescope.load_extension("fzf")
+    telescope.load_extension("zoxide")
+    telescope.load_extension("projects")
 
     -- set keymaps
     local keymap = vim.keymap -- for conciseness
@@ -51,6 +89,7 @@ return {
     keymap.set("n", "<leader>fr", "<cmd>Telescope oldfiles<cr>", { desc = "Fuzzy find recent files" })
     keymap.set("n", "<leader>fs", "<cmd>Telescope live_grep<cr>", { desc = "Find string in cwd" })
     keymap.set("n", "<leader>fc", "<cmd>Telescope grep_string<cr>", { desc = "Find string under cursor in cwd" })
+    keymap.set("n", "<leader>fp", "<cmd>Telescope projects<cr>", { desc = "Find projects" })
     keymap.set("n", "<leader>ft", "<cmd>TodoTelescope<cr>", { desc = "Find todos" })
   end,
 }
