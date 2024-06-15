@@ -264,7 +264,7 @@ return {
         -- dash.button("SPC j", "󰈚   Restore Session", ":SessionRestore<cr>"),
         dash.button("e", "   New File", ":ene <BAR> startinsert <CR>"),
         dash.button("f", "   Find File", ":cd $HOME/dotfiles | Telescope find_files<CR>"),
-        dash.button("p", " > Find Projects", "<cmd>Telescope projects<CR>"),
+        dash.button("p", "   Find Projects", "<cmd>Telescope projects<CR>"),
         dash.button("g", "󰱼   Find Word", ":Telescope live_grep<CR>"),
         dash.button("r", "   Recent", ":Telescope oldfiles<CR>"),
         dash.button("c", "   Config", ":e $MYVIMRC <CR>"),
