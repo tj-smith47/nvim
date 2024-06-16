@@ -16,6 +16,12 @@ return {
     local menu_type = "extended"
     local user = "TJ Smith"
 
+    local function make_greeter(row)
+      local row_width = vim.fn.strdisplaywidth(row)
+      local greeter = "Welcome, " .. user .. "!"
+      return string.rep(" ", (row_width - vim.fn.strdisplaywidth(greeter)) / 2) .. greeter
+    end
+
     -- [[ Themes ]]
     local function set_theme(type)
       if type == "standard" then
@@ -127,8 +133,10 @@ return {
     end
 
     local function set_header_slanted(dash)
+      local row1 = [[                                                                       ]]
+      local greeter = make_greeter(row1)
       dash.section.header.val = {
-        [[                                                                       ]],
+        row1,
         [[                                                                       ]],
         [[                                                                       ]],
         [[                                                                       ]],
@@ -141,14 +149,16 @@ return {
         [[  ███████████ ███    ███ █████████ █████ █████ ████ █████  ]],
         [[ ██████  █████████████████████ ████ █████ █████ ████ ██████ ]],
         [[                                                                       ]],
+        greeter,
         [[                                                                       ]],
         [[                                                                       ]],
       }
     end
 
     local function set_header_spooky(dash)
+      local row1 = "                                                                  "
+      local greeter = make_greeter(row1)
       dash.section.header.val = {
-        "                                                                  ",
         "                                                                  ",
         "                                                                  ",
         "                                                                  ",
@@ -162,12 +172,16 @@ return {
         " ▀█   █▀    ██████████  ▀██████▀   ▀██████▀  █▀    ▀█   ███   █▀  ",
         "                                                                  ",
         "                                                                  ",
+        greeter,
         "                                                                  ",
       }
     end
 
     local function set_header_standard(dash)
+      local row1 = "                                                     "
+      local greeter = make_greeter(row1)
       dash.section.header.val = {
+        "                                                     ",
         "                                                     ",
         "                                                     ",
         "  ███╗   ██╗███████╗ ██████╗ ██╗   ██╗██╗███╗   ███╗ ",
@@ -177,6 +191,7 @@ return {
         "  ██║ ╚████║███████╗╚██████╔╝ ╚████╔╝ ██║██║ ╚═╝ ██║ ",
         "  ╚═╝  ╚═══╝╚══════╝ ╚═════╝   ╚═══╝  ╚═╝╚═╝     ╚═╝ ",
         "                                                     ",
+        greeter,
         "                                                     ",
       }
     end
@@ -369,22 +384,18 @@ return {
 
           -- Date / Time / Uptime
           local time = vim.fn.strftime("%H:%M:%S")
-          local date = vim.fn.strftime("%d.%m.%Y")
+          local date = vim.fn.strftime("%m.%d.%Y")
 
           -- Rows
           local row1 = "⚡ Neovim loaded " .. stats.loaded .. "/" .. stats.count .. " plugins in " .. ms .. "ms"
           local row2 = "  " .. date .. " | " .. "  " .. time
-          local row3 = "Welcome, " .. user .. "!"
 
           local row1_width = vim.fn.strdisplaywidth(row1)
           local row2Padded = string.rep(" ", (row1_width - vim.fn.strdisplaywidth(row2)) / 2) .. row2
-          local row3Padded = string.rep(" ", (row1_width - vim.fn.strdisplaywidth(row3)) / 2) .. row3
 
-          dashboard.section.footer.val = {
-            row1,
-            row2Padded,
-            row3Padded,
-          }
+          dashboard.section.footer.val = { row1, row2Padded }
+
+          require("nvim-tree.api").tree.open()
           pcall(vim.cmd.AlphaRedraw)
         end,
       })
