@@ -35,7 +35,10 @@ return {
 
     -- [[ Headers ]]
     local function set_header_simple(dash)
+      local row1 = [[                  ]]
+      local greeter = make_greeter(row1)
       dash.section.header.val = {
+        row1,
         [[ ███       ███ ]],
         [[████      ████]],
         [[██████     █████]],
@@ -51,6 +54,7 @@ return {
         [[ ███       ███ ]],
         [[                  ]],
         [[ N  E  O  V  I  M ]],
+        greeter,
       }
 
       dash.section.header.opts.hl = {
@@ -139,7 +143,6 @@ return {
         row1,
         [[                                                                       ]],
         [[                                                                       ]],
-        [[                                                                       ]],
         [[                                                                     ]],
         [[       ████ ██████           █████      ██                     ]],
         [[      ███████████             █████                             ]],
@@ -149,9 +152,8 @@ return {
         [[  ███████████ ███    ███ █████████ █████ █████ ████ █████  ]],
         [[ ██████  █████████████████████ ████ █████ █████ ████ ██████ ]],
         [[                                                                       ]],
+        [[                                                                       ]],
         greeter,
-        [[                                                                       ]],
-        [[                                                                       ]],
       }
     end
 
@@ -159,7 +161,7 @@ return {
       local row1 = "                                                                  "
       local greeter = make_greeter(row1)
       dash.section.header.val = {
-        "                                                                  ",
+        row1,
         "                                                                  ",
         "                                                                  ",
         "███▄▄▄▄      ▄████████  ▄██████▄   ▄█    █▄   ▄█    ▄▄▄▄███▄▄▄▄   ",
@@ -173,7 +175,6 @@ return {
         "                                                                  ",
         "                                                                  ",
         greeter,
-        "                                                                  ",
       }
     end
 
@@ -181,7 +182,7 @@ return {
       local row1 = "                                                     "
       local greeter = make_greeter(row1)
       dash.section.header.val = {
-        "                                                     ",
+        row1,
         "                                                     ",
         "                                                     ",
         "  ███╗   ██╗███████╗ ██████╗ ██╗   ██╗██╗███╗   ███╗ ",
@@ -191,8 +192,8 @@ return {
         "  ██║ ╚████║███████╗╚██████╔╝ ╚████╔╝ ██║██║ ╚═╝ ██║ ",
         "  ╚═╝  ╚═══╝╚══════╝ ╚═════╝   ╚═══╝  ╚═╝╚═╝     ╚═╝ ",
         "                                                     ",
-        greeter,
         "                                                     ",
+        greeter,
       }
     end
 

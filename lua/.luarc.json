@@ -1,5 +1,5 @@
 {
   "$schema": "https://raw.githubusercontent.com/sumneko/vscode-lua/master/setting/schema.json",
-  "diagnostics.disable": ["missing-parameter"],
+  "diagnostics.disable": ["missing-parameter", "missing-fields"],
   "diagnostics.globals": ["vim"]
 }

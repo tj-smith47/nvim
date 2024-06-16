@@ -1,15 +1,26 @@
 -- [[ Globals ]]
---  NOTE: Must happen before plugins are required (otherwise wrong leader will be used)
-vim.g.mapleader = " "
-vim.g.maplocalleader = ","
-vim.g.loaded_perl_provider = 0 -- don't load perl LSP Provider
-vim.g.loaded_ruby_provider = 0 -- don't load ruby LSP Provider
--- vim.g.python3_host_prog = vim.fn.expand("~/.asdf/shims/python3")
-vim.g.netrw_nogx = 1 -- disable netrw 'gx' mapping
+local global = vim.g
 
-local opt = vim.opt
+-- Set leader keys
+--  NOTE: Must happen before plugins are required (otherwise wrong leader will be used)
+global.mapleader = " "
+global.maplocalleader = ","
+
+-- Language Server Settings
+global.loaded_perl_provider = 0 -- don't load perl LSP Provider
+global.loaded_ruby_provider = 0 -- don't load ruby LSP Provider
+-- global.python3_host_prog = vim.fn.expand("~/.asdf/shims/python3")
+
+-- Disable default gx mapping
+global.netrw_nogx = 1 -- disable netrw 'gx' mapping
+
+-- Disable netrw
+global.loaded_netrw = 1 -- disable netrw
+global.loaded_netrwPlugin = 1 -- disable netrw
 
 -- [[ Options ]]
+local opt = vim.opt
+
 -- backspace
 opt.backspace = "indent,eol,start" -- allow backspace on indent, end of line or insert mode start position
 
@@ -63,12 +74,9 @@ opt.smartcase = true -- if you include mixed case in your search, assumes you wa
 
 -- split windows
 opt.splitbelow = true -- split horizontal window to the bottom
--- opt.splitright = true -- split vertical window to the right
 
 -- ui
 opt.background = "dark" -- colorschemes that can be light or dark will be made dark
 opt.pumheight = 10 -- pop-up menu height
 opt.signcolumn = "yes" -- show sign column so that text doesn't shift
 opt.termguicolors = true
-
--- vim.loader.enable()
