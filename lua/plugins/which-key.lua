@@ -4,7 +4,8 @@ return {
   init = function()
     vim.o.timeout = true
     vim.o.timeoutlen = 500
-
+  end,
+  config = function()
     local status_ok, which_key = pcall(require, "which-key")
     if not status_ok then
       return
@@ -89,7 +90,7 @@ return {
 
       -- Added Alpha Keybinding
       ["a"] = { "<cmd>Alpha<cr>", "Alpha" },
-      ["e"] = { "<cmd>NvimTreeToggle<cr>", "Explorer" }, -- File Explorer
+      ["t"] = { require("nvim-tree.api").tree.toggle, "nvim Tree Toggle" },
       ["k"] = { "<cmd>bdelete<CR>", "Kill Buffer" }, -- Close current file
       ["p"] = { "<cmd>Lazy<CR>", "Plugin Manager" }, -- Invoking plugin manager
       ["q"] = { "<cmd>wqall!<CR>", "Quit" }, -- Quit Neovim after saving the file

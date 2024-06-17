@@ -15,7 +15,7 @@ vim.keymap.set("n", "<leader>e", vim.diagnostic.open_float)
 -- vim.keymap.set("n", "<leader>q", vim.diagnostic.setloclist)
 
 -- Nvim Tree keymaps
-vim.keymap.set("n", "<leader>t", require("nvim-tree.api").tree.toggle, { desc = "Nvim [T]ree Toggle" })
+-- vim.keymap.set("n", "<leader>t", require("nvim-tree.api").tree.toggle, { desc = "Nvim [T]ree Toggle" })
 
 -- Open URL (custom)
 vim.keymap.set({ "n", "v" }, "gx", "<esc>:URLOpenUnderCursor<cr>")
