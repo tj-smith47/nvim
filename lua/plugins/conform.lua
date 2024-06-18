@@ -18,7 +18,7 @@ return {
           javascriptreact = { "prettierd", "prettier" },
           json = { "fixjson", "jq" },
           lua = { "stylua" },
-          markdown = { "mdformat" },
+          -- markdown = { "mdformat" },
           python = function(bufnr)
             if require("conform").get_formatter_info("ruff_format", bufnr).available then
               return { "ruff_organize_imports", "ruff_format" }
@@ -38,15 +38,15 @@ return {
         },
         format_on_save = {
           lsp_format = "fallback",
-          timeout_ms = 500,
+          timeout_ms = 1000,
           -- quiet = true,
         },
       })
 
       vim.keymap.set({ "n", "v" }, "<leader>mp", function()
         conform.format({
-          lsp_fallback = true,
-          timeout_ms = 500,
+          lsp_format = "fallback",
+          timeout_ms = 1000,
         })
       end, { desc = "Format file or range (in visual mode)" })
     end,
@@ -56,6 +56,7 @@ return {
     event = { "BufReadPre", "BufWritePre" },
     config = function()
       require("trim").setup({
+        python = false,
         patterns = {
           [[%s/\(\n\n\)\n\+/\1/]], -- replace multiple blank lines with a single line
         },

@@ -52,14 +52,16 @@ return {
       cssls = {},
       cssmodules_ls = {},
       diagnosticls = {
-        pycodestyle = {
-          enabled = false,
-        },
-        plugins = {
-          pylsp = {
-            plugins = {
-              pycodestyle = {
-                enabled = false,
+        init_options = {
+          linters = {
+            pycodestyle = {
+              enabled = false,
+            },
+            pylsp = {
+              plugins = {
+                pycodestyle = {
+                  enabled = false,
+                },
               },
             },
           },
@@ -95,18 +97,19 @@ return {
           workspace = { checkThirdParty = false },
         },
       },
-      markdown_oxide = {},
+      -- markdown_oxide = {},
       marksman = {},
       powershell_es = {},
       prismals = {},
       pylsp = {
-        plugins = {
-          pycodestyle = {
-            enabled = false,
+        pylsp = {
+          plugins = {
+            pycodestyle = {
+              enabled = false,
+            },
           },
         },
       },
-      pyright = {},
       rubocop = {},
       ruby_lsp = {},
       ruff = {},
