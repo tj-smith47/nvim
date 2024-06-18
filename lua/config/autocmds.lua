@@ -26,6 +26,13 @@ vim.api.nvim_create_autocmd({ "BufWritePre" }, {
   end,
 })
 
+-- [[ Disable format-on-save for *.cm files ]]
+vim.api.nvim_create_autocmd({ "BufReadPre", "BufWritePre" }, {
+  group = augroup("disable_format_on_save"),
+  command = "setlocal formatprg=",
+  pattern = { "*.cm", ".cm/*.cm" },
+})
+
 -- [[ Highlight on yank ]]
 vim.api.nvim_create_autocmd("TextYankPost", {
   group = augroup("highlight_yank"),
@@ -39,10 +46,12 @@ vim.api.nvim_create_autocmd("TextYankPost", {
 vim.api.nvim_create_autocmd({ "VimEnter" }, {
   callback = function(data)
     if vim.fn.isdirectory(data.file) == 1 then
-      vim.cmd.enew()
+      vim.cmd("enew")
       vim.cmd.bw(data.buf)
       vim.cmd.cd(data.file)
-      require("nvim-tree.api").tree.open()
+      require("nvim-tree.api").tree.toggle()
+      -- Move focus back to the file
+      vim.cmd.wincmd("p")
     end
   end,
 })

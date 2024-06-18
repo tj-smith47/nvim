@@ -5,12 +5,13 @@ return {
     config = function()
       require("nvim-tree").setup({
         disable_netrw = true,
-        filters = {
-          -- git_ignored = false,
-        },
+        -- filters = {
+        --   git_ignored = false,
+        -- },
         view = {
           width = 35,
         },
+
         -- For project.nvim (Telescope)
         respect_buf_cwd = true,
         sync_root_with_cwd = true,
@@ -19,7 +20,6 @@ return {
           update_root = true,
         },
       })
-      -- vim.cmd([[:Alpha]])
     end,
   },
 }

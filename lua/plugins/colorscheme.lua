@@ -4,13 +4,10 @@ return {
     "Mofiqul/dracula.nvim",
     lazy = false,
     priority = 1025,
-    event = { "VimEnter", "BufRead", "BufNew", "BufNewFile", "UIEnter", "BufEnter" },
+    event = { "VimEnter", "BufRead", "BufNew", "BufNewFile", "BufEnter", "InsertLeave" },
     config = function()
       require("dracula").setup()
-      vim.cmd([[
-        syntax enable
-        colorscheme dracula
-      ]])
+      vim.cmd.colorscheme("dracula")
     end,
   },
 }

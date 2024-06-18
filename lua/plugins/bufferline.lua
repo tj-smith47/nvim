@@ -18,6 +18,12 @@ return {
           text_align = "center",
           separator = true,
         },
+        {
+          filetype = "alpha",
+          text = "Dashboard",
+          text_align = "center",
+          separator = true,
+        },
       },
       separator_style = "slant",
       themable = true,

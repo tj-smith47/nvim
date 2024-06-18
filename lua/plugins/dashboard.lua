@@ -398,6 +398,7 @@ return {
 
           require("nvim-tree.api").tree.open()
           pcall(vim.cmd.AlphaRedraw)
+          vim.cmd([[wincmd p]])
         end,
       })
     end
