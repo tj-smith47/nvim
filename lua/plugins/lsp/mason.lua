@@ -55,7 +55,7 @@ return {
         init_options = {
           linters = {
             pycodestyle = {
-              enabled = false,
+              ignore = { "E501" },
             },
             pylsp = {
               plugins = {
@@ -70,6 +70,11 @@ return {
                   ignore = { "E501" },
                 },
               },
+            },
+          },
+          formatters = {
+            pycodestyle = {
+              enable = false,
             },
           },
         },
