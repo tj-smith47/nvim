@@ -118,7 +118,20 @@ return {
     })
 
     -- Useful LSP Updates
-    require("fidget").setup({})
+    require("fidget").setup({
+      notification = {
+        window = {
+          align = "top",
+          border = "rounded",
+          winblend = 50,
+          x_padding = 4,
+          y_padding = 2,
+        },
+        view = {
+          stack_upwards = false,
+        },
+      },
+    })
 
     -- Setup Handlers
     vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = "rounded" })

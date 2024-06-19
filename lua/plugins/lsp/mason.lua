@@ -60,7 +60,14 @@ return {
             pylsp = {
               plugins = {
                 pycodestyle = {
-                  enabled = false,
+                  ignore = { "E501" },
+                },
+              },
+            },
+            pyright = {
+              plugins = {
+                pycodestyle = {
+                  ignore = { "E501" },
                 },
               },
             },
@@ -105,8 +112,15 @@ return {
         pylsp = {
           plugins = {
             pycodestyle = {
-              enabled = false,
+              ignore = { "E501" },
             },
+          },
+        },
+      },
+      pyright = {
+        plugins = {
+          pycodestyle = {
+            ignore = { "E501" },
           },
         },
       },

@@ -11,7 +11,7 @@ return {
     end,
   },
   { -- Open URL under cursor w/ `gx`
-    "sontungexpt/url-open",
+    "https://github.com/sontungexpt/url-open",
     event = "VeryLazy",
     cmd = "URLOpenUnderCursor",
     config = function()
@@ -19,7 +19,16 @@ return {
       if not status_ok then
         return
       end
-      url_open.setup({})
+      url_open.setup({
+        extra_patterns = {
+          {
+            pattern = '["]([^%s]*)["]:%s*"[^"]*%d[%d%.]*"',
+            prefix = "https://github.com/",
+            suffix = "",
+            excluded_file_patterns = nil,
+          },
+        },
+      })
     end,
   },
   { "rrethy/vim-illuminate" },
