@@ -2,8 +2,32 @@ return {
   -- Vim UX Plugins
   { -- Format on Save
     "elentok/format-on-save.nvim",
+    dependencies = {
+      "rcarriga/nvim-notify",
+    },
     config = function()
-      require("format-on-save").setup({
+      local fmt_on_save = require("format-on-save")
+      local formatters = require("format-on-save.formatters")
+
+      fmt_on_save.setup({
+        error_notifier = require("notify"),
+        stderr_loglevel = vim.log.levels.OFF,
+        formatter_by_ft = {
+          python = {
+            formatters.remove_trailing_whitespace,
+            formatters.black,
+            formatters.ruff,
+          },
+          go = {
+            formatters.shell({
+              cmd = { "goimports-reviser", "-rm-unused", "-set-alias", "-format", "%" },
+              tempfile = function()
+                return vim.fn.expand("%") .. ".formatter-temp"
+              end,
+            }),
+            formatters.shell({ cmd = { "gofumpt" } }),
+          },
+        },
         experiments = {
           partial_update = "diff", -- or 'line-by-line'
         },

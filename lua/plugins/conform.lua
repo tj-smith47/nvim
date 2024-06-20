@@ -21,7 +21,7 @@ return {
           -- markdown = { "mdformat" },
           python = function(bufnr)
             if require("conform").get_formatter_info("ruff_format", bufnr).available then
-              return { "ruff_organize_imports", "ruff_format" }
+              return { "ruff_organize_imports", "ruff_format", "black" }
             else
               return { "isort", "black" }
             end
@@ -51,16 +51,16 @@ return {
       end, { desc = "Format file or range (in visual mode)" })
     end,
   },
-  {
-    "cappyzawa/trim.nvim",
-    event = { "BufReadPre", "BufWritePre" },
-    config = function()
-      require("trim").setup({
-        python = false,
-        patterns = {
-          [[%s/\(\n\n\)\n\+/\1/]], -- replace multiple blank lines with a single line
-        },
-      })
-    end,
-  },
+  -- {
+  --   "cappyzawa/trim.nvim",
+  --   event = { "BufReadPre", "BufWritePre" },
+  --   config = function()
+  --     require("trim").setup({
+  --       python = false,
+  --       patterns = {
+  --         [[%s/\(\n\n\)\n\+/\1/]], -- replace multiple blank lines with a single line
+  --       },
+  --     })
+  --   end,
+  -- },
 }

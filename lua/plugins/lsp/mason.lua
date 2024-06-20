@@ -17,7 +17,7 @@ return {
         "black",
         "ruff",
         "isort",
-        "pylsp",
+        "python-lsp-server",
         -- JavaScript
         "eslint",
         "prettier",
@@ -74,7 +74,7 @@ return {
           },
           formatters = {
             pycodestyle = {
-              enable = false,
+              ignore = { "E501" },
             },
           },
         },

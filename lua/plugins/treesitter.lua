@@ -23,6 +23,9 @@ return {
       autopairs = {
         enable = true,
       },
+      endwise = {
+        enable = true,
+      },
       ensure_installed = {
         "bash",
         "c",
@@ -54,10 +57,10 @@ return {
       incremental_selection = {
         enable = false,
         keymaps = {
-          init_selection = "<c-space>",
-          node_incremental = "<c-space>",
-          scope_incremental = "<c-s>",
-          node_decremental = "<c-backspace>",
+          init_selection = false,
+          node_incremental = false,
+          scope_incremental = false,
+          node_decremental = false,
         },
       },
       textobjects = {
@@ -119,7 +122,7 @@ return {
     },
     config = function(_, opts)
       require("nvim-treesitter.configs").setup(opts)
-      require("dap-python").setup("~/.asdf/shims/python3")
+      require("dap-python").setup(vim.fn.exepath("python3"))
       require("nvim-dap-virtual-text").setup()
       require("dapui").setup()
     end,

@@ -3,20 +3,29 @@ local function augroup(name)
 end
 
 -- [[ Format on save: Go ]]
-vim.api.nvim_create_autocmd("BufWritePre", {
-  group = augroup("go"),
-  callback = function()
-    require("go.format").goimports()
-  end,
-  pattern = "*.go",
-})
+-- vim.api.nvim_create_autocmd("BufWritePre", {
+--   group = augroup("go"),
+--   callback = function()
+--     require("go.format").goimports()
+--   end,
+--   pattern = "*.go",
+-- })
 
 -- [[ Format on save: Python ]]
-vim.api.nvim_create_autocmd({ "BufWritePost" }, {
-  group = augroup("black"),
-  command = "silent !ruff --fix %",
-  pattern = "*.py",
-})
+-- vim.api.nvim_create_autocmd({ "BufWritePost" }, {
+--   group = augroup("black"),
+--   command = "silent !ruff --fix %",
+--   pattern = "*.py",
+-- })
+
+-- Automatically update changed file in Vim
+-- Triger `autoread` when files changes on disk
+-- https://unix.stackexchange.com/questions/149209/refresh-changed-content-of-file-opened-in-vim/383044#383044
+-- https://vi.stackexchange.com/questions/13692/prevent-focusgained-autocmd-running-in-command-line-editing-mode
+-- vim.api.nvim_create_autocmd({ "FocusGained", "BufEnter", "CursorHold", "CursorHoldI" }, {
+--   group = augroup("refresh_file"),
+--   command = [[silent! if mode() != 'c' && !bufexists("[Command Line]") | checktime | endif]],
+-- })
 
 -- [[ Format on save: Terraform, TypeScript, Lua ]]
 vim.api.nvim_create_autocmd({ "BufWritePre" }, {

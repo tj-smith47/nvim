@@ -26,7 +26,6 @@ return {
       "Bilal2453/luvit-meta",
       lazy = true,
     }, -- optional `vim.uv` typings
-    "j-hui/fidget.nvim",
   },
   config = function()
     local keymap = vim.keymap -- for conciseness
@@ -117,29 +116,14 @@ return {
       end,
     })
 
-    -- Useful LSP Updates
-    require("fidget").setup({
-      notification = {
-        window = {
-          align = "top",
-          border = "rounded",
-          winblend = 50,
-          x_padding = 4,
-          y_padding = 2,
-        },
-        view = {
-          stack_upwards = false,
-        },
-      },
-    })
-
     -- Setup Handlers
-    vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = "rounded" })
+    vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = "rounded", source = true })
     vim.lsp.handlers["textDocument/signatureHelp"] =
-      vim.lsp.with(vim.lsp.handlers.signature_help, { border = "rounded" })
+      vim.lsp.with(vim.lsp.handlers.signature_help, { border = "rounded", source = true })
 
     -- Setup Diagnostics
     vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
+      source = true,
       underline = false,
       update_in_insert = false,
       virtual_text = false,
@@ -162,7 +146,8 @@ return {
     vim.diagnostic.config({
       float = {
         border = "rounded",
-        style = "minimal",
+        source = true,
+        -- style = "minimal",
       },
       severity_sort = true,
       underline = true,

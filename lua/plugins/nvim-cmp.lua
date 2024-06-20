@@ -3,52 +3,101 @@ return {
   "hrsh7th/nvim-cmp",
   event = "InsertEnter",
   dependencies = {
+    -- TODO: Lookup https://github.com/garyhurtz/cmp_kitty
+    "amarakon/nvim-cmp-buffer-lines",
+    {
+      "David-Kunz/cmp-npm",
+      dependencies = { "nvim-lua/plenary.nvim" },
+      ft = "json",
+      config = function()
+        require("cmp-npm").setup({})
+      end,
+    },
+    "dmitmel/cmp-cmdline-history",
+    "FelipeLema/cmp-async-path",
     "hrsh7th/cmp-buffer", -- source for text in buffer
     "hrsh7th/cmp-cmdline",
+    "hrsh7th/cmp-copilot",
     "hrsh7th/cmp-nvim-lsp",
+    "hrsh7th/cmp-nvim-lsp-document-symbol",
     "hrsh7th/cmp-nvim-lsp-signature-help",
     "hrsh7th/cmp-nvim-lua",
-    "mfussenegger/nvim-dap",
-    "mfussenegger/nvim-dap-python",
-    "rcarriga/nvim-dap-ui",
-    "hrsh7th/nvim-cmp",
-    "hrsh7th/cmp-path", -- source for file system paths
-    {
+    -- "hrsh7th/cmp-path", -- source for file system paths
+    { -- Snippets engine
       "L3MON4D3/LuaSnip",
-      -- follow latest release.
-      version = "v2.*", -- Replace <CurrentMajor> by the latest released major (first number of latest release)
-      -- install jsregexp (optional!).
+      version = "v2.*",
       build = "make install_jsregexp",
       dependencies = {
         "saadparwaiz1/cmp_luasnip", -- for autocompletion
-        "rafamadriz/friendly-snippets", -- useful snippets
+        {
+          "doxnit/cmp-luasnip-choice",
+          config = function()
+            require("cmp_luasnip_choice").setup({
+              -- Automatically open nvim-cmp on choice node (default: true)
+              auto_open = false,
+            })
+          end,
+        },
+        "rafamadriz/friendly-snippets",
       },
     },
+    { -- Autocomplete for new nvim plugins as deps
+      "KadoBOT/cmp-plugins",
+      config = function()
+        require("cmp-plugins").setup({
+          files = { ".*\\.lua" }, -- default
+        })
+      end,
+    },
+    "mfussenegger/nvim-dap",
+    "mfussenegger/nvim-dap-python",
+    "SergioRibera/cmp-dotenv",
+    "rcarriga/nvim-dap-ui",
     "ray-x/lsp_signature.nvim",
-    "onsails/lspkind.nvim", -- vs-code like pictograms
+    { -- vs-code like pictograms
+      "onsails/lspkind.nvim",
+    },
+    { -- Python package versions completions
+      "vrslev/cmp-pypi",
+      dependencies = { "nvim-lua/plenary.nvim" },
+      ft = "toml",
+    },
   },
   config = function()
     local cmp = require("cmp")
-
     local luasnip = require("luasnip")
-
     local lspkind = require("lspkind")
+    local cmp_autopairs = require("nvim-autopairs.completion.cmp")
 
     -- loads vscode style snippets from installed plugins (e.g. friendly-snippets)
     require("luasnip.loaders.from_vscode").lazy_load()
     require("dapui").setup()
 
     cmp.setup({
-      completion = {
-        completeopt = "menu,menuone,preview,noselect",
+      -- completion = {
+      --   completeopt = "menu,menuone,preview,noselect",
+      -- },
+      experimental = {
+        ghost_text = false,
       },
-      window = {
-        completion = cmp.config.window.bordered(),
-        documentation = cmp.config.window.bordered(),
-      },
-      snippet = { -- configure how nvim-cmp interacts with snippet engine
-        expand = function(args)
-          luasnip.lsp_expand(args.body)
+      -- configure lspkind for vs-code like pictograms in completion menu
+      formatting = {
+        fields = {
+          "abbr",
+          "kind",
+          "menu",
+        },
+        expandable_indicator = true,
+        format = function(entry, vim_item)
+          if vim.tbl_contains({ "path" }, entry.source.name) then
+            local icon, hl_group = require("nvim-web-devicons").get_icon(entry:get_completion_item().label)
+            if icon then
+              vim_item.kind = icon
+              vim_item.kind_hl_group = hl_group
+              return vim_item
+            end
+          end
+          return lspkind.cmp_format({})(entry, vim_item)
         end,
       },
       mapping = cmp.mapping.preset.insert({
@@ -94,58 +143,76 @@ return {
         end, { "i", "s" }),
       }),
 
+      -- configure how nvim-cmp interacts with snippet engine
+      snippet = {
+        expand = function(args)
+          luasnip.lsp_expand(args.body)
+        end,
+      },
+
       -- sources for autocompletion
       sources = cmp.config.sources({
         { name = "nvim_lsp" },
-        { name = "luasnip" }, -- snippets
-        { name = "nvim_lsp_signature_help" },
-        { name = "lazydev" },
-        { name = "nvim_dap" },
-        { name = "nvim_dap_python" },
         { name = "nvim_lua" },
-      }, {
-        { name = "path" }, -- file system paths
+        { name = "luasnip" },
+        { name = "luasnip_choice" },
+        { name = "nvim_lsp_signature_help" },
+        { name = "copilot" },
+        -- { name = "lazydev" },
+        -- { name = "nvim_dap" },
+        { name = "nvim_dap_python" },
+        { name = "dotenv" },
+        { name = "pypi", keyword_length = 4 },
+        { name = "npm", keyword_length = 4 },
+        { name = "plugins" },
         { name = "buffer" }, -- text within current buffer
+        { name = "cmdline" }, -- command line history
+        { name = "async_path" }, -- file system paths
       }),
 
-      experimental = {
-        ghost_text = false,
-      },
-      -- configure lspkind for vs-code like pictograms in completion menu
-      formatting = {
-        fields = {
-          "abbr",
-          "kind",
-          "menu",
+      view = {
+        docs = {
+          auto_open = true,
         },
-        expandable_indicator = true,
-        format = lspkind.cmp_format({
-          maxwidth = 50,
-          ellipsis_char = "...",
-        }),
+      },
+      window = {
+        completion = cmp.config.window.bordered(),
+        documentation = cmp.config.window.bordered(),
       },
     })
 
+    cmp.event:on("confirm_done", cmp_autopairs.on_confirm_done())
+
     cmp.setup.cmdline({ "/", "?" }, {
       mapping = cmp.mapping.preset.cmdline(), -- Tab for selection (arrows needed for selecting past items)
-      sources = { { name = "buffer" } },
+      sources = {
+        { name = "nvim_lsp_document_symbol" },
+        {
+          name = "buffer",
+          option = { keyword_pattern = [[\k\+]] },
+        },
+        { name = "buffer-lines" },
+      },
     })
 
     cmp.setup.cmdline({ ":" }, {
       mapping = cmp.mapping.preset.cmdline(), -- Tab for selection (arrows needed for selecting past items)
-      sources = { { name = "cmdline" }, { name = "path" } },
+      sources = {
+        { name = "cmdline_history" },
+        { name = "async_path" },
+      },
     })
 
-    vim.diagnostic.config({
-      float = {
-        border = "rounded",
-        source = true,
-        style = "minimal",
-      },
-      severity_sort = true,
-      underline = true,
-      update_in_insert = false,
-      virtual_text = false,
-    })
+    -- vim.diagnostic.config({
+    --   float = {
+    --     border = "rounded",
+    --     source = true,
+    --     style = "minimal",
+    --   },
+    --   severity_sort = true,
+    --   underline = true,
+    --   update_in_insert = false,
+    --   virtual_text = false,
+    -- })
   end,
 }
