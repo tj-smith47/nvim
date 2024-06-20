@@ -10,7 +10,6 @@ return {
       local formatters = require("format-on-save.formatters")
 
       fmt_on_save.setup({
-        error_notifier = require("notify"),
         stderr_loglevel = vim.log.levels.OFF,
         formatter_by_ft = {
           python = {

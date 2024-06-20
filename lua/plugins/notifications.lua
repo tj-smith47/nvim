@@ -88,18 +88,40 @@ return {
           },
           hover = {
             enabled = true,
+            view = "notify",
           },
           signature = {
             enabled = true,
+            view = "notify",
           },
         },
         views = {
           mini = {
+            size = {
+              width = 120,
+            },
             win_options = {
               winblend = 50,
-              size = {
-                min_width = 200,
-              },
+            },
+          },
+          confirm = {
+            size = {
+              width = 120,
+            },
+          },
+          cmdline = {
+            size = {
+              width = 120,
+            },
+          },
+          cmdline_input = {
+            size = {
+              width = 120,
+            },
+          },
+          cmdline_popup = {
+            size = {
+              width = 120,
             },
           },
         },
@@ -116,32 +138,32 @@ return {
       })
     end,
   },
-  {
-    "j-hui/fidget.nvim",
-    config = function()
-      require("fidget").setup({
-        integration = {
-          ["nvim-tree"] = {
-            enable = true, -- Integrate with nvim-tree/nvim-tree.lua (if installed)
-          },
-        },
-        notification = {
-          override_vim_notify = false,
-          -- Conditionally redirect notifications to another backend
-          redirect = function(msg, level, opts)
-            if opts and opts.on_open then
-              return require("fidget.integration.nvim-notify").delegate(msg, level, opts)
-            end
-          end,
-          window = {
-            align = "bottom",
-            border = "rounded",
-            winblend = 50,
-            x_padding = 4,
-            y_padding = 2,
-          },
-        },
-      })
-    end,
-  },
+  -- {
+  --   "j-hui/fidget.nvim",
+  --   config = function()
+  --     require("fidget").setup({
+  --       integration = {
+  --         ["nvim-tree"] = {
+  --           enable = true, -- Integrate with nvim-tree/nvim-tree.lua (if installed)
+  --         },
+  --       },
+  --       notification = {
+  --         override_vim_notify = true,
+  --         -- Conditionally redirect notifications to another backend
+  --         redirect = function(msg, level, opts)
+  --           if opts and opts.on_open then
+  --             return require("fidget.integration.nvim-notify").delegate(msg, level, opts)
+  --           end
+  --         end,
+  --         window = {
+  --           align = "bottom",
+  --           border = "rounded",
+  --           winblend = 50,
+  --           x_padding = 4,
+  --           y_padding = 2,
+  --         },
+  --       },
+  --     })
+  --   end,
+  -- },
 }
