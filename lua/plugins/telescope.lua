@@ -17,6 +17,7 @@ return {
       end,
     },
     "nvim-telescope/telescope-file-browser.nvim",
+    "nvim-telescope/telescope-ui-select.nvim",
     "jvgrootveld/telescope-zoxide",
     "nvim-tree/nvim-web-devicons",
     "folke/todo-comments.nvim",
@@ -72,12 +73,18 @@ return {
             ["<C-q>"] = { action = z_utils.create_basic_command("split") },
           },
         },
+        ["ui-select"] = {
+          require("telescope.themes").get_dropdown({
+            -- even more opts
+          }),
+        },
       },
     })
 
     telescope.load_extension("fzf")
     telescope.load_extension("notify")
     telescope.load_extension("zoxide")
+    telescope.load_extension("ui-select")
 
     require("project_nvim").setup()
     telescope.load_extension("projects")
