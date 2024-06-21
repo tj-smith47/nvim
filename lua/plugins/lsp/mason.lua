@@ -52,32 +52,32 @@ return {
       cssls = {},
       cssmodules_ls = {},
       diagnosticls = {
-        init_options = {
-          linters = {
-            pycodestyle = {
-              ignore = { "E501" },
-            },
-            pylsp = {
-              plugins = {
-                pycodestyle = {
-                  ignore = { "E501" },
-                },
-              },
-            },
-            pyright = {
-              plugins = {
-                pycodestyle = {
-                  ignore = { "E501" },
-                },
-              },
-            },
-          },
-          formatters = {
-            pycodestyle = {
-              ignore = { "E501" },
-            },
-          },
-        },
+        -- init_options = {
+        --   linters = {
+        --     pycodestyle = {
+        --       ignore = { "E501", "W503" },
+        --     },
+        --     pylsp = {
+        --       plugins = {
+        --         pycodestyle = {
+        --           ignore = { "E501", "W503" },
+        --         },
+        --       },
+        --     },
+        --     pyright = {
+        --       plugins = {
+        --         pycodestyle = {
+        --           ignore = { "E501", "W503" },
+        --         },
+        --       },
+        --     },
+        --   },
+        --   formatters = {
+        --     pycodestyle = {
+        --       ignore = { "E501", "W503" },
+        --     },
+        --   },
+        -- },
       },
       docker_compose_language_service = {},
       dockerls = {},
@@ -117,18 +117,12 @@ return {
         pylsp = {
           plugins = {
             pycodestyle = {
-              ignore = { "E501" },
+              ignore = { "E501", "W503" },
             },
           },
         },
       },
-      pyright = {
-        plugins = {
-          pycodestyle = {
-            ignore = { "E501" },
-          },
-        },
-      },
+      pyright = {},
       rubocop = {},
       ruby_lsp = {},
       ruff = {},

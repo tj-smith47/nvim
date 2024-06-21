@@ -35,6 +35,8 @@ return {
         "go",
         "lua",
         "javascript",
+        "markdown",
+        "markdown_inline",
         "python",
         "rust",
         "ruby",

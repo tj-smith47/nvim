@@ -15,6 +15,15 @@ return {
     },
     "dmitmel/cmp-cmdline-history",
     "FelipeLema/cmp-async-path",
+    -- {
+    --   "garyhurtz/cmp_kitty",
+    --   dependencies = {
+    --     { "hrsh7th/nvim-cmp" },
+    --   },
+    --   init = function()
+    --     require("cmp_kitty"):setup()
+    --   end,
+    -- },
     "hrsh7th/cmp-buffer", -- source for text in buffer
     "hrsh7th/cmp-cmdline",
     "hrsh7th/cmp-copilot",
@@ -97,7 +106,7 @@ return {
               return vim_item
             end
           end
-          return lspkind.cmp_format({})(entry, vim_item)
+          return lspkind.cmp_format()(entry, vim_item)
         end,
       },
       mapping = cmp.mapping.preset.insert({
@@ -153,18 +162,23 @@ return {
       -- sources for autocompletion
       sources = cmp.config.sources({
         { name = "nvim_lsp" },
-        { name = "nvim_lua" },
         { name = "luasnip" },
         { name = "luasnip_choice" },
         { name = "nvim_lsp_signature_help" },
-        { name = "copilot" },
-        -- { name = "lazydev" },
-        -- { name = "nvim_dap" },
+        { name = "nvim_lua" },
+        { name = "copilot", priority = 1 },
+        { name = "lazydev" },
+      }, {
+        { name = "nvim_dap" },
         { name = "nvim_dap_python" },
+      }, {
+        { name = "plugins" },
         { name = "dotenv" },
+      }, {
         { name = "pypi", keyword_length = 4 },
         { name = "npm", keyword_length = 4 },
-        { name = "plugins" },
+      }, {
+        -- { name = "cmp_kitty" },
         { name = "buffer" }, -- text within current buffer
         { name = "cmdline" }, -- command line history
         { name = "async_path" }, -- file system paths
@@ -198,6 +212,7 @@ return {
     cmp.setup.cmdline({ ":" }, {
       mapping = cmp.mapping.preset.cmdline(), -- Tab for selection (arrows needed for selecting past items)
       sources = {
+        { name = "cmdline" },
         { name = "cmdline_history" },
         { name = "async_path" },
       },

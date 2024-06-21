@@ -14,6 +14,11 @@ vim.keymap.set("n", "]d", vim.diagnostic.goto_next)
 vim.keymap.set("n", "<leader>e", vim.diagnostic.open_float)
 -- vim.keymap.set("n", "<leader>q", vim.diagnostic.setloclist)
 
+-- Executor keymaps
+vim.api.nvim_set_keymap("n", "<leader>er", ":ExecutorRun<CR>", {})
+vim.api.nvim_set_keymap("n", "<leader>ex", ":ExecutorSetCommand", {})
+vim.api.nvim_set_keymap("n", "<leader>ev", ":ExecutorToggleDetail<CR>", {})
+
 -- Nvim Tree keymaps
 -- vim.keymap.set("n", "<leader>t", require("nvim-tree.api").tree.toggle, { desc = "Nvim [T]ree Toggle" })
 

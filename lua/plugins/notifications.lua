@@ -1,10 +1,12 @@
+local cmdline_opts = {
+  border = {
+    style = "rounded",
+  },
+}
 return {
   {
     "folke/noice.nvim",
     event = "VeryLazy",
-    opts = {
-      -- add any options here
-    },
     dependencies = {
       "MunifTanjim/nui.nvim",
       {
@@ -31,111 +33,109 @@ return {
       --   end,
       -- },
     },
-    condig = function()
-      local cmdline_opts = {
-        border = {
-          style = "rounded",
+    opts = {
+      lsp_doc_border = true,
+      cmdline = {
+        view = "cmdline_popup",
+        format = {
+          cmdline = { pattern = "^:", icon = "_", opts = cmdline_opts },
+          search_down = { view = "cmdline", kind = "Search", pattern = "^/", icon = "🔎 ", ft = "regex" },
+          search_up = { view = "cmdline", kind = "Search", pattern = "^%?", icon = "🔎 ", ft = "regex" },
+          input = { icon = "✏️ ", ft = "text", opts = cmdline_opts },
+          calculator = { pattern = "^=", icon = "", lang = "vimnormal", opts = cmdline_opts },
+          substitute = {
+            pattern = "^:%%?s/",
+            icon = "🔁",
+            ft = "regex",
+            opts = { border = { text = { top = " sub (old/new/) " } } },
+          },
+          filter = { pattern = "^:%s*!", icon = "$", ft = "sh", opts = cmdline_opts },
+          filefilter = { kind = "Filter", pattern = "^:%s*%%%s*!", icon = "📄 $", ft = "sh", opts = cmdline_opts },
+          selectionfilter = {
+            kind = "Filter",
+            pattern = "^:%s*%'<,%'>%s*!",
+            icon = " $",
+            ft = "sh",
+            opts = cmdline_opts,
+          },
+          lua = { pattern = "^:%s*lua%s+", icon = "", conceal = true, ft = "lua", opts = cmdline_opts },
+          -- rename = {
+          --   pattern = "^:%s*IncRename%s+",
+          --   icon = "✏️ ",
+          --   conceal = true,
+          --   opts = {
+          --     relative = "cursor",
+          --     size = { min_width = 20 },
+          --     position = { row = -3, col = 0 },
+          --     buf_options = { filetype = "text" },
+          --     border = { text = { top = " rename " } },
+          --   },
+          -- },
+          help = { pattern = "^:%s*h%s+", icon = "💡", opts = cmdline_opts },
         },
-        size = {
-          min_width = 200,
+      },
+      lsp = {
+        progress = {
+          enabled = true,
+          view = "notify",
         },
-      }
-      require("notify").setup()
-      require("noice").setup({
+        hover = {
+          enabled = true,
+          view = "notify",
+        },
+        signature = {
+          enabled = true,
+          view = "notify",
+        },
+      },
+      views = {
+        --   mini = {
+        --     size = {
+        --       width = 100,
+        --     },
+        --   },
+        confirm = {
+          size = {
+            width = 100,
+          },
+        },
         cmdline = {
-          view = "cmdline_popup",
-          format = {
-            cmdline = { pattern = "^:", icon = "", opts = cmdline_opts },
-            search_down = { view = "cmdline", kind = "Search", pattern = "^/", icon = "🔎 ", ft = "regex" },
-            search_up = { view = "cmdline", kind = "Search", pattern = "^%?", icon = "🔎 ", ft = "regex" },
-            input = { icon = "✏️ ", ft = "text", opts = cmdline_opts },
-            calculator = { pattern = "^=", icon = "", lang = "vimnormal", opts = cmdline_opts },
-            substitute = {
-              pattern = "^:%%?s/",
-              icon = "🔁",
-              ft = "regex",
-              opts = { border = { text = { top = " sub (old/new/) " } } },
-            },
-            filter = { pattern = "^:%s*!", icon = "$", ft = "sh", opts = cmdline_opts },
-            filefilter = { kind = "Filter", pattern = "^:%s*%%%s*!", icon = "📄 $", ft = "sh", opts = cmdline_opts },
-            selectionfilter = {
-              kind = "Filter",
-              pattern = "^:%s*%'<,%'>%s*!",
-              icon = " $",
-              ft = "sh",
-              opts = cmdline_opts,
-            },
-            lua = { pattern = "^:%s*lua%s+", icon = "", conceal = true, ft = "lua", opts = cmdline_opts },
-            -- rename = {
-            --   pattern = "^:%s*IncRename%s+",
-            --   icon = "✏️ ",
-            --   conceal = true,
-            --   opts = {
-            --     relative = "cursor",
-            --     size = { min_width = 20 },
-            --     position = { row = -3, col = 0 },
-            --     buf_options = { filetype = "text" },
-            --     border = { text = { top = " rename " } },
-            --   },
-            -- },
-            help = { pattern = "^:%s*h%s+", icon = "💡", opts = cmdline_opts },
+          size = {
+            width = 0.47,
           },
         },
-        lsp = {
-          progress = {
-            enabled = true,
-            view = "notify",
-          },
-          hover = {
-            enabled = true,
-            view = "notify",
-          },
-          signature = {
-            enabled = true,
-            view = "notify",
+        cmdline_input = {
+          size = {
+            width = 0.47,
           },
         },
-        views = {
-          mini = {
-            size = {
-              width = 120,
-            },
-            win_options = {
-              winblend = 50,
-            },
-          },
-          confirm = {
-            size = {
-              width = 120,
-            },
-          },
-          cmdline = {
-            size = {
-              width = 120,
-            },
-          },
-          cmdline_input = {
-            size = {
-              width = 120,
-            },
-          },
-          cmdline_popup = {
-            size = {
-              width = 120,
-            },
+        cmdline_popup = {
+          size = {
+            width = 0.47,
           },
         },
-        routes = {
-          -- { filter = { find = "E162" }, view = "mini" },
-          { filter = { event = "msg_show", kind = "", find = "written" }, view = "mini" },
-          { filter = { event = "msg_show", find = "search hit BOTTOM" }, skip = true },
-          { filter = { event = "msg_show", find = "search hit TOP" }, skip = true },
-          { filter = { event = "emsg", find = "E23" }, skip = true },
-          { filter = { event = "emsg", find = "E20" }, skip = true },
-          { filter = { find = "No signature help" }, skip = true },
-          { filter = { find = "E37" }, skip = true },
+      },
+      routes = {
+        -- { filter = { find = "E162" }, view = "mini" },
+        { filter = { event = "msg_show", kind = "", find = "written" }, view = "mini" },
+        { filter = { event = "msg_show", find = "search hit BOTTOM" },  skip = true },
+        { filter = { event = "msg_show", find = "search hit TOP" },     skip = true },
+        { filter = { event = "emsg", find = "E23" },                    skip = true },
+        { filter = { event = "emsg", find = "E20" },                    skip = true },
+        {
+          filter = {
+            event = "notify",
+            find = "No information available",
+          },
+          skip = true,
         },
-      })
+        { filter = { find = "No signature help" }, skip = true },
+        { filter = { find = "E37" },               skip = true },
+      },
+    },
+    condig = function(_, opts)
+      require("notify").setup()
+      require("noice").setup(opts)
     end,
   },
   -- {
