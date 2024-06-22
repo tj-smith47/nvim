@@ -166,7 +166,7 @@ return {
         { name = "luasnip_choice" },
         { name = "nvim_lsp_signature_help" },
         { name = "nvim_lua" },
-        { name = "copilot", priority = 1 },
+        { name = "copilot" },
         { name = "lazydev" },
       }, {
         { name = "nvim_dap" },
@@ -179,8 +179,8 @@ return {
         { name = "npm", keyword_length = 4 },
       }, {
         -- { name = "cmp_kitty" },
-        { name = "buffer" }, -- text within current buffer
         { name = "cmdline" }, -- command line history
+        { name = "buffer" }, -- text within current buffer
         { name = "async_path" }, -- file system paths
       }),
 
@@ -218,16 +218,16 @@ return {
       },
     })
 
-    -- vim.diagnostic.config({
-    --   float = {
-    --     border = "rounded",
-    --     source = true,
-    --     style = "minimal",
-    --   },
-    --   severity_sort = true,
-    --   underline = true,
-    --   update_in_insert = false,
-    --   virtual_text = false,
-    -- })
+    vim.diagnostic.config({
+      float = {
+        border = "rounded",
+        source = true,
+        style = "minimal",
+      },
+      severity_sort = true,
+      underline = true,
+      update_in_insert = false,
+      virtual_text = false,
+    })
   end,
 }

@@ -2,9 +2,6 @@ return {
   -- Vim UX Plugins
   { -- Format on Save
     "elentok/format-on-save.nvim",
-    dependencies = {
-      "rcarriga/nvim-notify",
-    },
     config = function()
       local fmt_on_save = require("format-on-save")
       local formatters = require("format-on-save.formatters")

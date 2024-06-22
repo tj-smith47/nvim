@@ -3,12 +3,13 @@ return {
   "nvim-telescope/telescope.nvim",
   branch = "0.1.x",
   dependencies = {
+    "folke/noice.nvim",
     { -- Fuzzy Finder Algorithm
       "nvim-telescope/telescope-fzf-native.nvim",
       build = "make",
       cond = vim.fn.executable("make") == 1,
     },
-    {
+    { -- Project Viewer
       "ahmedkhalf/project.nvim",
       event = "VeryLazy",
       main = "project_nvim",
@@ -74,17 +75,16 @@ return {
           },
         },
         ["ui-select"] = {
-          require("telescope.themes").get_dropdown({
-            -- even more opts
-          }),
+          require("telescope.themes").get_dropdown(),
         },
       },
     })
 
     telescope.load_extension("fzf")
     telescope.load_extension("notify")
-    telescope.load_extension("zoxide")
     telescope.load_extension("ui-select")
+    telescope.load_extension("noice")
+    telescope.load_extension("zoxide")
 
     require("project_nvim").setup()
     telescope.load_extension("projects")

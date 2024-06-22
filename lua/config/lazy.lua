@@ -24,7 +24,7 @@ lazy.setup({ { import = "plugins" }, { import = "plugins.lsp" } }, {
   change_detection = { enabled = false },
   checker = {
     enabled = true,
-    notify = false,
+    notify = true,
   },
   defaults = { lazy = false },
   install = { colorscheme = { "dracula" } },

@@ -2,6 +2,9 @@ local cmdline_opts = {
   border = {
     style = "rounded",
   },
+  size = {
+    min_width = 75,
+  },
 }
 return {
   {
@@ -34,17 +37,30 @@ return {
       -- },
     },
     opts = {
-      lsp_doc_border = true,
       cmdline = {
         view = "cmdline_popup",
         format = {
           cmdline = { pattern = "^:", icon = "_", opts = cmdline_opts },
-          search_down = { view = "cmdline", kind = "Search", pattern = "^/", icon = "🔎 ", ft = "regex" },
-          search_up = { view = "cmdline", kind = "Search", pattern = "^%?", icon = "🔎 ", ft = "regex" },
+          search_down = {
+            view = "cmdline",
+            kind = "Search",
+            pattern = "^/",
+            icon = "🔎 ",
+            ft = "regex",
+            opts = cmdline_opts,
+          },
+          search_up = {
+            view = "cmdline",
+            kind = "Search",
+            pattern = "^%?",
+            icon = "🔎 ",
+            ft = "regex",
+            opte = cmdline_opts,
+          },
           input = { icon = "✏️ ", ft = "text", opts = cmdline_opts },
           calculator = { pattern = "^=", icon = "", lang = "vimnormal", opts = cmdline_opts },
           substitute = {
-            pattern = "^:%%?s/",
+            pattern = "^:'<'>s/",
             icon = "🔁",
             ft = "regex",
             opts = { border = { text = { top = " sub (old/new/) " } } },
@@ -58,7 +74,7 @@ return {
             ft = "sh",
             opts = cmdline_opts,
           },
-          lua = { pattern = "^:%s*lua%s+", icon = "", conceal = true, ft = "lua", opts = cmdline_opts },
+          lua = { pattern = "^:%s*lua%s+", icon = "", ft = "lua", opts = cmdline_opts },
           -- rename = {
           --   pattern = "^:%s*IncRename%s+",
           --   icon = "✏️ ",
@@ -76,17 +92,36 @@ return {
       },
       lsp = {
         progress = {
-          enabled = true,
+          enabled = false,
           view = "notify",
         },
+        override = {
+          -- override the default lsp markdown formatter with Noice
+          ["vim.lsp.util.convert_input_to_markdown_lines"] = false,
+          -- override the lsp markdown formatter with Noice
+          ["vim.lsp.util.stylize_markdown"] = false,
+          -- override cmp documentation with Noice (needs the other options to work)
+          ["cmp.entry.get_documentation"] = false,
+        },
         hover = {
-          enabled = true,
+          enabled = false,
+          view = "notify",
+        },
+        message = {
+          enabled = false,
           view = "notify",
         },
         signature = {
-          enabled = true,
+          enabled = false,
           view = "notify",
         },
+      },
+      -- messages = {
+      --   view_search = "notify",
+      -- },
+      presets = {
+        -- command_palette = true,
+        lsp_doc_border = true,
       },
       views = {
         --   mini = {
@@ -94,34 +129,42 @@ return {
         --       width = 100,
         --     },
         --   },
-        confirm = {
+        popupmenu = {
+          enabled = false,
           size = {
-            width = 100,
+            height = "auto",
+            width = 120,
           },
         },
-        cmdline = {
-          size = {
-            width = 0.47,
-          },
-        },
+        -- cmdline = {
+        --   size = {
+        --     width = 0.47,
+        --   },
+        -- },
         cmdline_input = {
+          anchor = "auto",
           size = {
-            width = 0.47,
+            width = 120,
+            height = "auto",
           },
         },
-        cmdline_popup = {
-          size = {
-            width = 0.47,
-          },
-        },
+        -- cmdline_popup = {
+        --   position = {
+        --     row = "50%",
+        --     col = "80%",
+        --   },
+        -- },
       },
+      -- status = {
+      --   lsp_progress = { event = "lsp", kind = "progress" },
+      -- },
       routes = {
         -- { filter = { find = "E162" }, view = "mini" },
-        { filter = { event = "msg_show", kind = "", find = "written" }, view = "mini" },
-        { filter = { event = "msg_show", find = "search hit BOTTOM" },  skip = true },
-        { filter = { event = "msg_show", find = "search hit TOP" },     skip = true },
-        { filter = { event = "emsg", find = "E23" },                    skip = true },
-        { filter = { event = "emsg", find = "E20" },                    skip = true },
+        { filter = { event = "msg_show", kind = "", find = "written" }, view = "notify" },
+        { filter = { event = "msg_show", find = "search hit BOTTOM" }, skip = true },
+        { filter = { event = "msg_show", find = "search hit TOP" }, skip = true },
+        -- { filter = { event = "emsg", find = "E23" }, skip = true },
+        -- { filter = { event = "emsg", find = "E20" }, skip = true },
         {
           filter = {
             event = "notify",
@@ -130,12 +173,14 @@ return {
           skip = true,
         },
         { filter = { find = "No signature help" }, skip = true },
-        { filter = { find = "E37" },               skip = true },
+        { filter = { find = "E37" }, skip = true },
       },
     },
     condig = function(_, opts)
       require("notify").setup()
       require("noice").setup(opts)
+      vim.api.nvim_set_hl(0, "NoicePopupBorder", { fg = "#FFF" })
+      vim.api.nvim_set_hl(0, "NoiceCmdlinePopupBorder", { fg = "#FFF", bg = "NONE" })
     end,
   },
   -- {
