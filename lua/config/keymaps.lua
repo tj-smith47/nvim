@@ -19,6 +19,9 @@ vim.api.nvim_set_keymap("n", "<leader>er", ":ExecutorRun<CR>", {})
 vim.api.nvim_set_keymap("n", "<leader>ex", ":ExecutorSetCommand", {})
 vim.api.nvim_set_keymap("n", "<leader>ev", ":ExecutorToggleDetail<CR>", {})
 
+-- Dismiss Notifications
+vim.api.nvim_set_keymap("n", "<Esc><Esc>", ":lua require('notify').dismiss()<CR>", {})
+
 -- Nvim Tree keymaps
 -- vim.keymap.set("n", "<leader>t", require("nvim-tree.api").tree.toggle, { desc = "Nvim [T]ree Toggle" })
 

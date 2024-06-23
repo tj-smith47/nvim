@@ -47,38 +47,10 @@ return {
       bashls = {},
       clangd = {},
       cmake = {},
-      -- csharp_ls = {},
       css_variables = {},
       cssls = {},
       cssmodules_ls = {},
-      diagnosticls = {
-        -- init_options = {
-        --   linters = {
-        --     pycodestyle = {
-        --       ignore = { "E501", "W503" },
-        --     },
-        --     pylsp = {
-        --       plugins = {
-        --         pycodestyle = {
-        --           ignore = { "E501", "W503" },
-        --         },
-        --       },
-        --     },
-        --     pyright = {
-        --       plugins = {
-        --         pycodestyle = {
-        --           ignore = { "E501", "W503" },
-        --         },
-        --       },
-        --     },
-        --   },
-        --   formatters = {
-        --     pycodestyle = {
-        --       ignore = { "E501", "W503" },
-        --     },
-        --   },
-        -- },
-      },
+      diagnosticls = {},
       docker_compose_language_service = {},
       dockerls = {},
       elixirls = {},
@@ -148,9 +120,9 @@ return {
           capabilities = capabilities,
           settings = servers[server_name],
         })
-        -- require("lsp_signature").setup({
-        --   bind = true, -- This is mandatory, otherwise border config won't get registered.
-        -- })
+        require("lsp_signature").setup({
+          bind = true, -- This is mandatory, otherwise border config won't get registered.
+        })
       end,
     })
 

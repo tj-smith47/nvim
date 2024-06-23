@@ -8,33 +8,39 @@ local cmdline_opts = {
 }
 return {
   {
+    "rcarriga/nvim-notify",
+    event = "UIEnter",
+    config = function()
+      local notify = require("notify")
+      -- print = function(...)
+      --   local print_safe_args = {}
+      --   local _ = { ... }
+      --   for i = 1, #_ do
+      --     table.insert(print_safe_args, tostring(_[i]))
+      --   end
+      --   notify(table.concat(print_safe_args, " "), "info")
+      -- end
+      vim.notify = notify
+      notify.setup({
+        timeout = 5000,
+        top_down = true,
+        stages = "slide",
+        fps = 60,
+      })
+    end,
+  },
+  {
+    "mrded/nvim-lsp-notify",
+    dependencies = { "rcarriga/nvim-notify" },
+    -- NOTE: calling `opts = {}` automatically calls the `setup()` fn
+    opts = {},
+  },
+  {
     "folke/noice.nvim",
     event = "VeryLazy",
     dependencies = {
       "MunifTanjim/nui.nvim",
-      {
-        "rcarriga/nvim-notify",
-        event = "UIEnter",
-        config = function()
-          local notify = require("notify")
-          notify.setup({
-            timeout = 5000,
-            top_down = true,
-            stages = "slide",
-            fps = 60,
-          })
-          vim.notify = notify
-        end,
-      },
-      -- {
-      --   "mrded/nvim-lsp-notify",
-      --   dependencies = { "rcarriga/nvim-notify" },
-      --   config = function()
-      --     require("lsp-notify").setup({
-      --       -- notify = require("notify"),
-      --     })
-      --   end,
-      -- },
+      "rcarriga/nvim-notify",
     },
     opts = {
       cmdline = {
@@ -60,7 +66,7 @@ return {
           input = { icon = "✏️ ", ft = "text", opts = cmdline_opts },
           calculator = { pattern = "^=", icon = "", lang = "vimnormal", opts = cmdline_opts },
           substitute = {
-            pattern = "^:'<'>s/",
+            pattern = "^:%%?s/",
             icon = "🔁",
             ft = "regex",
             opts = { border = { text = { top = " sub (old/new/) " } } },
@@ -101,14 +107,14 @@ return {
           -- override the lsp markdown formatter with Noice
           ["vim.lsp.util.stylize_markdown"] = false,
           -- override cmp documentation with Noice (needs the other options to work)
-          ["cmp.entry.get_documentation"] = false,
+          ["cmp.entry.get_documentation"] = true,
         },
         hover = {
           enabled = false,
           view = "notify",
         },
         message = {
-          enabled = false,
+          enabled = true,
           view = "notify",
         },
         signature = {
@@ -116,9 +122,9 @@ return {
           view = "notify",
         },
       },
-      -- messages = {
-      --   view_search = "notify",
-      -- },
+      messages = {
+        enabled = true,
+      },
       presets = {
         -- command_palette = true,
         lsp_doc_border = true,
@@ -163,7 +169,7 @@ return {
         { filter = { event = "msg_show", kind = "", find = "written" }, view = "notify" },
         { filter = { event = "msg_show", find = "search hit BOTTOM" }, skip = true },
         { filter = { event = "msg_show", find = "search hit TOP" }, skip = true },
-        -- { filter = { event = "emsg", find = "E23" }, skip = true },
+        { filter = { event = "emsg", find = "E23" }, skip = true },
         -- { filter = { event = "emsg", find = "E20" }, skip = true },
         {
           filter = {
@@ -172,14 +178,21 @@ return {
           },
           skip = true,
         },
+        {
+          filter = {
+            event = "notify",
+            find = "No matching notification found to replace",
+          },
+          skip = true,
+        },
         { filter = { find = "No signature help" }, skip = true },
-        { filter = { find = "E37" }, skip = true },
+        { filter = { event = "emsg", find = "" }, skip = true },
       },
     },
     condig = function(_, opts)
       require("notify").setup()
       require("noice").setup(opts)
-      vim.api.nvim_set_hl(0, "NoicePopupBorder", { fg = "#FFF" })
+      vim.api.nvim_set_hl(0, "NoicePopupBorder", { fg = "#FFF", bg = "NONE" })
       vim.api.nvim_set_hl(0, "NoiceCmdlinePopupBorder", { fg = "#FFF", bg = "NONE" })
     end,
   },
