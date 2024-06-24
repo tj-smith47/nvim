@@ -228,7 +228,6 @@ return {
         completion = cmp.config.window.bordered({
           winhighlight = "Normal:NoiceCompletionItemMenu,FloatBorder:NoiceCmdLinePopupBorder,CursorLine:PmenuSel,Search:None",
           col_offset = -4,
-          row_offset = 4,
         }),
         documentation = cmp.config.window.bordered(),
       },
