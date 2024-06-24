@@ -220,9 +220,9 @@ return {
       }),
 
       view = {
-        docs = {
-          auto_open = true,
-        },
+        -- docs = {
+        --   auto_open = true,
+        -- },
       },
       window = {
         completion = cmp.config.window.bordered({

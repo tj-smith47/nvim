@@ -29,12 +29,12 @@ return {
       })
     end,
   },
-  {
-    "mrded/nvim-lsp-notify",
-    dependencies = { "rcarriga/nvim-notify" },
-    -- NOTE: calling `opts = {}` automatically calls the `setup()` fn
-    opts = {},
-  },
+  -- {
+  --   "mrded/nvim-lsp-notify",
+  --   dependencies = { "rcarriga/nvim-notify" },
+  --   -- NOTE: calling `opts = {}` automatically calls the `setup()` fn
+  --   opts = {},
+  -- },
   {
     "folke/noice.nvim",
     event = "VeryLazy",
@@ -177,11 +177,11 @@ return {
             winhighlight = { Normal = "Normal", FloatBorder = "DiagnosticInfo" },
           },
         },
-        hover = {
-          border = {
-            style = "single",
-          },
-        },
+        -- hover = {
+        --   border = {
+        --     style = "single",
+        --   },
+        -- },
         confirm = {
           border = {
             style = "single",
