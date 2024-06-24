@@ -120,9 +120,9 @@ return {
           capabilities = capabilities,
           settings = servers[server_name],
         })
-        require("lsp_signature").setup({
-          bind = true, -- This is mandatory, otherwise border config won't get registered.
-        })
+        -- require("lsp_signature").setup({
+        --   bind = true, -- This is mandatory, otherwise border config won't get registered.
+        -- })
       end,
     })
 

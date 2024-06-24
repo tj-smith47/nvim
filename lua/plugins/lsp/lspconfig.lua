@@ -274,7 +274,7 @@ return {
       float = {
         border = "rounded",
         source = true,
-        -- style = "minimal",
+        style = "minimal",
       },
       severity_sort = true,
       underline = true,

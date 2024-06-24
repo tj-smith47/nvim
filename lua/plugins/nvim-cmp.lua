@@ -83,9 +83,6 @@ return {
     require("dapui").setup()
 
     cmp.setup({
-      -- completion = {
-      --   completeopt = "menu,menuone,preview,noselect",
-      -- },
       experimental = {
         ghost_text = false,
       },
@@ -196,13 +193,13 @@ return {
 
       -- sources for autocompletion
       sources = cmp.config.sources({
-        { name = "nvim_lsp" },
-        { name = "luasnip" },
-        { name = "luasnip_choice" },
-        { name = "nvim_lsp_signature_help" },
-        { name = "nvim_lua" },
-        { name = "copilot" },
-        { name = "lazydev" },
+        { name = "nvim_lsp", priority = 9 },
+        { name = "luasnip", priority = 8 },
+        { name = "luasnip_choice", priority = 7 },
+        { name = "nvim_lsp_signature_help", priority = 6 },
+        { name = "nvim_lua", priority = 5 },
+        { name = "copilot", priority = 10 },
+        { name = "lazydev", priority = 4 },
       }, {
         { name = "nvim_dap" },
         { name = "nvim_dap_python" },
@@ -273,8 +270,8 @@ return {
     vim.diagnostic.config({
       float = {
         border = "rounded",
-        source = true,
-        -- style = "minimal",
+        source = "if_many",
+        style = "minimal",
       },
       severity_sort = true,
       underline = true,
