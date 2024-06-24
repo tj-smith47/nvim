@@ -97,16 +97,51 @@ return {
           "menu",
         },
         expandable_indicator = true,
-        format = function(entry, vim_item)
+        format = function(entry, item)
           if vim.tbl_contains({ "path" }, entry.source.name) then
             local icon, hl_group = require("nvim-web-devicons").get_icon(entry:get_completion_item().label)
             if icon then
-              vim_item.kind = icon
-              vim_item.kind_hl_group = hl_group
-              return vim_item
+              item.kind = icon
+              item.kind_hl_group = hl_group
+              return item
             end
           end
-          return lspkind.cmp_format()(entry, vim_item)
+          if
+            vim.tbl_contains({ "cmdline" }, entry.source.name)
+            or vim.tbl_contains({ "cmdline_history" }, entry.source.name)
+          then
+            -- Get the completion entry text shown in the completion window.
+            local content = item.abbr
+            local icon = item.kind
+
+            -- Set the fixed completion window width.
+            local fixed_width = 119
+            local kind_offset = 10
+            local scrollbar_offset = 1
+            vim.o.pumwidth = fixed_width
+
+            -- Get the width of the current window.
+            local win_width = vim.api.nvim_win_get_width(0)
+
+            -- Set the max content width based on either: 'fixed_width'
+            -- or a percentage of the window width, in this case 20%.
+            -- We subtract 10 from 'fixed_width' to leave room for 'kind' fields.
+            local max_content_width = fixed_width and fixed_width - kind_offset or math.floor(win_width * 0.2)
+
+            -- Truncate the completion entry text if it's longer than the
+            -- max content width. We subtract 3 from the max content width
+            -- to account for the "..." that will be appended to it.
+            if #content > max_content_width then
+              item.abbr = vim.fn.strcharpart(content, 0, max_content_width - 3) .. "..."
+            else
+              item.abbr = content .. (" "):rep(max_content_width - #content)
+            end
+
+            if #icon < kind_offset then
+              item.kind = (" "):rep(kind_offset - #icon - scrollbar_offset) .. icon
+            end
+          end
+          return lspkind.cmp_format()(entry, item)
         end,
       },
       mapping = cmp.mapping.preset.insert({
@@ -190,10 +225,28 @@ return {
         },
       },
       window = {
-        completion = cmp.config.window.bordered(),
+        completion = cmp.config.window.bordered({
+          winhighlight = "Normal:NoiceCompletionItemMenu,FloatBorder:NoiceCmdLinePopupBorder,CursorLine:PmenuSel,Search:None",
+          col_offset = -4,
+          row_offset = 4,
+        }),
         documentation = cmp.config.window.bordered(),
       },
     })
+
+    -- local api = require("cmp.utils.api")
+    -- local config = require("cmp.config")
+    -- local window = require("cmp.utils.window")
+    -- local completion = config.get().window.completion
+    -- local border_info = window.get_border_info({ style = completion })
+    --
+    -- local delta = 0
+    -- if not config.get().view.entries.follow_cursor then
+    --   local cursor_before_line = api.get_cursor_before_line()
+    --   delta = vim.fn.strdisplaywidth(cursor_before_line:sub(-4))
+    -- end
+    -- local pos = api.get_screen_cursor()
+    -- local row, col = pos[1], pos[2] - delta - 1
 
     cmp.event:on("confirm_done", cmp_autopairs.on_confirm_done())
 
@@ -222,7 +275,7 @@ return {
       float = {
         border = "rounded",
         source = true,
-        style = "minimal",
+        -- style = "minimal",
       },
       severity_sort = true,
       underline = true,

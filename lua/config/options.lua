@@ -45,10 +45,11 @@ opt.cursorline = true -- highlight the current cursor line
 -- opt.foldenable = true
 
 -- line wrapping
-opt.wrap = false -- disable line wrapping
+-- opt.wrap = false -- disable line wrapping
 
 -- misc
 -- opt.clipboard:append("unnamedplus")       -- use system clipboard as default register
+
 opt.completeopt = "menu,menuone,noselect" -- set completeopt for a custom experience
 opt.mouse = "a" -- enable mouse mode
 opt.swapfile = false -- disable swap file

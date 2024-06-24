@@ -80,7 +80,7 @@ return {
             ft = "sh",
             opts = cmdline_opts,
           },
-          lua = { pattern = "^:%s*lua%s+", icon = "", ft = "lua", opts = cmdline_opts },
+          lua = { pattern = "^:%s*lua%s+", icon = "(lua)", ft = "lua", opts = cmdline_opts },
           rename = {
             pattern = "^:%s*IncRename%s+",
             icon = "✏️ ",
@@ -126,40 +126,76 @@ return {
         enabled = true,
       },
       presets = {
-        -- command_palette = true,
+        command_palette = false,
         lsp_doc_border = true,
       },
       views = {
-        --   mini = {
-        --     size = {
-        --       width = 100,
-        --     },
-        --   },
+        cmdline_popup = {
+          position = {
+            row = "50%",
+            col = "50%",
+          },
+          size = {
+            width = 120,
+            height = "auto",
+          },
+        },
+        cmdline_popupmenu = {
+          -- relative = "editor",
+          position = {
+            row = "60%",
+            col = "50%",
+          },
+          size = {
+            width = 60,
+            height = "auto",
+            -- max_height = 15,
+          },
+          border = {
+            style = "none",
+            padding = { 0, 3 },
+          },
+          win_options = {
+            winhighlight = { NormalFloat = "NoiceCompletionItemMenu", FloatBorder = "NoiceCmdLinePopupBorder" },
+          },
+        },
         popupmenu = {
-          enabled = false,
-          size = {
-            height = "auto",
-            width = 120,
+          -- relative = "editor",
+          position = {
+            row = "60%",
+            col = "50%",
           },
-        },
-        -- cmdline = {
-        --   size = {
-        --     width = 0.47,
-        --   },
-        -- },
-        cmdline_input = {
-          anchor = "auto",
           size = {
             width = 120,
-            height = "auto",
+            height = 10,
+          },
+          border = {
+            style = "rounded",
+            padding = { 0, 1 },
+          },
+          win_options = {
+            winhighlight = { Normal = "Normal", FloatBorder = "DiagnosticInfo" },
           },
         },
-        -- cmdline_popup = {
-        --   position = {
-        --     row = "50%",
-        --     col = "80%",
-        --   },
-        -- },
+        hover = {
+          border = {
+            style = "single",
+          },
+        },
+        confirm = {
+          border = {
+            style = "single",
+          },
+        },
+        popup = {
+          position = {
+            row = "60%",
+            col = "50%",
+          },
+          border = {
+            style = "single",
+          },
+        },
       },
       -- status = {
       --   lsp_progress = { event = "lsp", kind = "progress" },

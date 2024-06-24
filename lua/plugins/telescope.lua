@@ -13,17 +13,22 @@ return {
       "ahmedkhalf/project.nvim",
       event = "VeryLazy",
       main = "project_nvim",
+      opts = {},
       setup = function()
         require("project_nvim.project").init()
       end,
     },
     "nvim-telescope/telescope-file-browser.nvim",
     "nvim-telescope/telescope-ui-select.nvim",
+    "jonarrien/telescope-cmdline.nvim",
     "jvgrootveld/telescope-zoxide",
     "nvim-tree/nvim-web-devicons",
     "folke/todo-comments.nvim",
     "nvim-lua/plenary.nvim",
   },
+  -- keys = {
+  --   { ":", "<cmd>Telescope cmdline<cr>", desc = "Cmdline" },
+  -- },
   config = function()
     local telescope = require("telescope")
     local actions = require("telescope.actions")
@@ -74,20 +79,32 @@ return {
             ["<C-q>"] = { action = z_utils.create_basic_command("split") },
           },
         },
+        -- cmdline = {
+        --   picker = {
+        --     layout_config = {
+        --       width = 120,
+        --       height = 25,
+        --     },
+        --   },
+        --   mappings = {
+        --     complete = "<Tab>",
+        --     run_selection = "<C-CR>",
+        --     run_input = "<CR>",
+        --   },
+        -- },
         ["ui-select"] = {
-          require("telescope.themes").get_dropdown(),
+          require("telescope.themes").get_cursor({}),
         },
       },
     })
 
+    telescope.load_extension("cmdline")
     telescope.load_extension("fzf")
-    telescope.load_extension("notify")
-    telescope.load_extension("ui-select")
     telescope.load_extension("noice")
-    telescope.load_extension("zoxide")
-
-    require("project_nvim").setup()
+    telescope.load_extension("notify")
     telescope.load_extension("projects")
+    telescope.load_extension("ui-select")
+    telescope.load_extension("zoxide")
 
     -- set keymaps
     local keymap = vim.keymap -- for conciseness
