@@ -137,7 +137,7 @@ return {
               item.abbr = content .. (" "):rep(max_content_width - #content)
             end
 
-            if #icon < kind_offset then
+            if icon and #icon < kind_offset then
               item.kind = (" "):rep(kind_offset - #icon - scrollbar_offset) .. icon
             end
           end
