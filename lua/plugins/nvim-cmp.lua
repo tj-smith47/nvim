@@ -103,39 +103,39 @@ return {
               return item
             end
           end
-          if
-            vim.tbl_contains({ "cmdline" }, entry.source.name)
-            or vim.tbl_contains({ "cmdline_history" }, entry.source.name)
-          then
-            -- Get the completion entry text shown in the completion window.
-            local content = item.abbr
-            local icon = item.kind
+          if vim.tbl_contains({ "cmdline" }, entry.source.name) then
+            local buffer = vim.api.nvim_get_current_buf()
+            if type(buffer) == "noice" then
+              -- Get the completion entry text shown in the completion window.
+              local content = item.abbr
+              local icon = item.kind
 
-            -- Set the fixed completion window width.
-            local fixed_width = 119
-            local kind_offset = 10
-            local scrollbar_offset = 1
-            vim.o.pumwidth = fixed_width
+              -- Set the fixed completion window width.
+              local fixed_width = 119
+              local kind_offset = 10
+              local scrollbar_offset = 1
+              vim.o.pumwidth = fixed_width
 
-            -- Get the width of the current window.
-            local win_width = vim.api.nvim_win_get_width(0)
+              -- Get the width of the current window.
+              local win_width = vim.api.nvim_win_get_width(0)
 
-            -- Set the max content width based on either: 'fixed_width'
-            -- or a percentage of the window width, in this case 20%.
-            -- We subtract 10 from 'fixed_width' to leave room for 'kind' fields.
-            local max_content_width = fixed_width and fixed_width - kind_offset or math.floor(win_width * 0.2)
+              -- Set the max content width based on either: 'fixed_width'
+              -- or a percentage of the window width, in this case 20%.
+              -- We subtract 10 from 'fixed_width' to leave room for 'kind' fields.
+              local max_content_width = fixed_width and fixed_width - kind_offset or math.floor(win_width * 0.2)
 
-            -- Truncate the completion entry text if it's longer than the
-            -- max content width. We subtract 3 from the max content width
-            -- to account for the "..." that will be appended to it.
-            if #content > max_content_width then
-              item.abbr = vim.fn.strcharpart(content, 0, max_content_width - 3) .. "..."
-            else
-              item.abbr = content .. (" "):rep(max_content_width - #content)
-            end
+              -- Truncate the completion entry text if it's longer than the
+              -- max content width. We subtract 3 from the max content width
+              -- to account for the "..." that will be appended to it.
+              if #content > max_content_width then
+                item.abbr = vim.fn.strcharpart(content, 0, max_content_width - 3) .. "..."
+              else
+                item.abbr = content .. (" "):rep(max_content_width - #content)
+              end
 
-            if icon and #icon < kind_offset then
-              item.kind = (" "):rep(kind_offset - #icon - scrollbar_offset) .. icon
+              if icon and #icon < kind_offset then
+                item.kind = (" "):rep(kind_offset - #icon - scrollbar_offset) .. icon
+              end
             end
           end
           return lspkind.cmp_format()(entry, item)
@@ -155,7 +155,8 @@ return {
         ["<C-j>"] = cmp.mapping.select_next_item(), -- next suggestion
 
         -- Copilot integration
-        ["<C-g>"] = cmp.mapping(function(fallback)
+        -- ["<C-g>"] = cmp.mapping(function(fallback)
+        ["<Tab>"] = cmp.mapping(function(fallback)
           vim.api.nvim_feedkeys(
             vim.fn["copilot#Accept"](vim.api.nvim_replace_termcodes("<Tab>", true, true, true)),
             "n",
@@ -197,18 +198,18 @@ return {
         { name = "luasnip", priority = 8 },
         { name = "luasnip_choice", priority = 7 },
         { name = "nvim_lsp_signature_help", priority = 6 },
-        { name = "nvim_lua", priority = 5 },
-        { name = "copilot", priority = 10 },
-        { name = "lazydev", priority = 4 },
+        { name = "nvim_lua", priority = 5, ft = "lua" },
+        { name = "copilot", priority = 3 },
+        { name = "lazydev", priority = 4, ft = "lua" },
       }, {
         { name = "nvim_dap" },
-        { name = "nvim_dap_python" },
+        { name = "nvim_dap_python", ft = "python" },
       }, {
-        { name = "plugins" },
+        { name = "plugins", ft = "lua" },
         { name = "dotenv" },
       }, {
-        { name = "pypi", keyword_length = 4 },
-        { name = "npm", keyword_length = 4 },
+        { name = "pypi", keyword_length = 4, ft = "toml" },
+        { name = "npm", keyword_length = 4, ft = "json" },
       }, {
         -- { name = "cmp_kitty" },
         { name = "cmdline" }, -- command line history

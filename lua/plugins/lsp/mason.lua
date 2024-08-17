@@ -89,18 +89,16 @@ return {
         pylsp = {
           plugins = {
             pycodestyle = {
-              ignore = { "E501", "W503" },
+              ignore = { "E501", "E711", "W503" },
             },
           },
         },
       },
       pyright = {},
       rubocop = {},
-      ruby_lsp = {},
       ruff = {},
       ruff_lsp = {},
       solargraph = {},
-      sorbet = {},
       sqlls = {},
       tailwindcss = {},
       terraformls = {},

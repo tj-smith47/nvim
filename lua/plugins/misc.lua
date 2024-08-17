@@ -14,15 +14,15 @@ return {
             formatters.black,
             formatters.ruff,
           },
-          go = {
-            formatters.shell({
-              cmd = { "goimports-reviser", "-rm-unused", "-set-alias", "-format", "%" },
-              tempfile = function()
-                return vim.fn.expand("%") .. ".formatter-temp"
-              end,
-            }),
-            formatters.shell({ cmd = { "gofumpt" } }),
-          },
+          -- go = {
+          --   formatters.shell({
+          --     cmd = { "goimports-reviser", "-rm-unused", "-set-alias", "-format", "%" },
+          --     tempfile = function()
+          --       return vim.fn.expand("%") .. ".formatter-temp"
+          --     end,
+          --   }),
+          --   formatters.shell({ cmd = { "gofumpt" } }),
+          -- },
         },
         experiments = {
           partial_update = "diff", -- or 'line-by-line'

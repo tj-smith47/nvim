@@ -22,8 +22,11 @@ vim.api.nvim_set_keymap("n", "<leader>ev", ":ExecutorToggleDetail<CR>", {})
 -- Dismiss Notifications
 vim.api.nvim_set_keymap("n", "<Esc><Esc>", ":lua require('notify').dismiss()<CR>", {})
 
+-- Git Blame
+vim.keymap.set("n", "gb", ":GitBlameLineToggle<CR>", { desc = "[G]it [B]lame Toggle" })
+
 -- Nvim Tree keymaps
--- vim.keymap.set("n", "<leader>t", require("nvim-tree.api").tree.toggle, { desc = "Nvim [T]ree Toggle" })
+vim.keymap.set("n", "<leader>t", require("nvim-tree.api").tree.toggle, { desc = "Nvim [T]ree Toggle" })
 
 -- Open URL (custom)
 vim.keymap.set({ "n", "v" }, "gx", "<esc>:URLOpenUnderCursor<cr>")

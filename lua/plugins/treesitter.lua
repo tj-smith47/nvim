@@ -125,7 +125,7 @@ return {
     config = function(_, opts)
       require("nvim-treesitter.configs").setup(opts)
       require("dap-python").setup(vim.fn.exepath("python3"))
-      require("nvim-dap-virtual-text").setup()
+      -- require("nvim-dap-virtual-text").setup()
       require("dapui").setup()
     end,
   },

@@ -3,13 +3,13 @@ local function augroup(name)
 end
 
 -- [[ Format on save: Go ]]
--- vim.api.nvim_create_autocmd("BufWritePre", {
---   group = augroup("go"),
---   callback = function()
---     require("go.format").goimports()
---   end,
---   pattern = "*.go",
--- })
+vim.api.nvim_create_autocmd("BufWritePre", {
+  group = augroup("go"),
+  callback = function()
+    require("go.format").goimports()
+  end,
+  pattern = "*.go",
+})
 
 -- [[ Format on save: Python ]]
 -- vim.api.nvim_create_autocmd({ "BufWritePost" }, {
@@ -22,10 +22,10 @@ end
 -- Triger `autoread` when files changes on disk
 -- https://unix.stackexchange.com/questions/149209/refresh-changed-content-of-file-opened-in-vim/383044#383044
 -- https://vi.stackexchange.com/questions/13692/prevent-focusgained-autocmd-running-in-command-line-editing-mode
--- vim.api.nvim_create_autocmd({ "FocusGained", "BufEnter", "CursorHold", "CursorHoldI" }, {
---   group = augroup("refresh_file"),
---   command = [[silent! if mode() != 'c' && !bufexists("[Command Line]") | checktime | endif]],
--- })
+vim.api.nvim_create_autocmd({ "FocusGained", "BufEnter", "CursorHold", "CursorHoldI" }, {
+  group = augroup("refresh_file"),
+  command = [[silent! if mode() != 'c' && !bufexists("[Command Line]") | checktime | endif]],
+})
 
 -- [[ Format on save: Terraform, TypeScript, Lua ]]
 vim.api.nvim_create_autocmd({ "BufWritePre" }, {
@@ -39,8 +39,25 @@ vim.api.nvim_create_autocmd({ "BufWritePre" }, {
 vim.api.nvim_create_autocmd({ "BufReadPre", "BufWritePre" }, {
   group = augroup("disable_format_on_save"),
   command = "setlocal formatprg=",
-  pattern = { "*.cm", ".cm/*.cm" },
+  pattern = { "*.cm", "**/*.cm" },
 })
+-- vim.api.nvim_create_user_command("FormatDisable", function(args)
+--   if args.bang then
+--     -- FormatDisable! will disable formatting just for this buffer
+--     vim.b.disable_autoformat = true
+--   else
+--     vim.g.disable_autoformat = true
+--   end
+-- end, {
+--   desc = "Disable autoformat-on-save",
+--   bang = true,
+-- })
+-- vim.api.nvim_create_user_command("FormatEnable", function()
+--   vim.b.disable_autoformat = false
+--   vim.g.disable_autoformat = false
+-- end, {
+--   desc = "Re-enable autoformat-on-save",
+-- })
 
 -- [[ Highlight on yank ]]
 vim.api.nvim_create_autocmd("TextYankPost", {

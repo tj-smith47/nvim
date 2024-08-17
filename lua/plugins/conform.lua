@@ -12,15 +12,15 @@ return {
           css = { "stylelint", "prettier" },
           cm = {},
           elixir = { "mix" },
-          go = { "goimports", "gofumpt" },
+          -- go = { "goimports", "gofumpt" },
           html = { "htmlbeautifier" },
-          javascript = { "prettierd", "prettier" },
-          javascriptreact = { "prettierd", "prettier" },
+          -- javascript = { "prettierd", "prettier" },
+          -- javascriptreact = { "prettierd", "prettier" },
           json = { "fixjson", "jq" },
           lua = { "stylua" },
           -- markdown = { "mdformat" },
           python = function(bufnr)
-            if require("conform").get_formatter_info("ruff_format", bufnr).available then
+            if confirm.get_formatter_info("ruff_format", bufnr).available then
               return { "ruff_organize_imports", "ruff_format", "black" }
             else
               return { "isort", "black" }

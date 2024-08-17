@@ -279,7 +279,7 @@ return {
       return {
         -- dash.button("SPC j", "󰈚   Restore Session", ":SessionRestore<cr>"),
         dash.button(">", "  Toggle file explorer", "<cmd>NvimTreeFocus<CR>"),
-        dash.button("e", "   New File", ":ene <BAR> startinsert <CR>"),
+        dash.button("i", "   New File", ":ene <BAR> startinsert <CR>"),
         dash.button("f", "   Find File", ":cd $HOME/dotfiles | Telescope find_files<CR>"),
         dash.button("g", "󰱼   Find Word", ":Telescope live_grep<CR>"),
         dash.button("p", "   Projects", "<cmd>Telescope projects<CR>"),

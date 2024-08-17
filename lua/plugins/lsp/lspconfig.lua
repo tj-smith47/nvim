@@ -110,17 +110,40 @@ return {
           print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
         end, opts) -- workspace list folders
 
-        -- Create a command `:Format` local to the LSP buffer
-        -- vim.api.nvim_buf_create_user_command(bufnr, "Format", function(_)
-        --   vim.lsp.buf.format()
-        -- end, { desc = "Format current buffer with LSP" })
+        -- Set User Config
+        vim.diagnostic.config({
+          float = {
+            border = "rounded",
+            source = true,
+            style = "minimal",
+          },
+          severity_sort = true,
+          underline = true,
+          update_in_insert = false,
+          virtual_text = false,
+        })
       end,
     })
 
+    vim.diagnostic.config({
+      float = {
+        border = "rounded",
+        source = true,
+        style = "minimal",
+      },
+      severity_sort = true,
+      underline = true,
+      update_in_insert = false,
+      virtual_text = false,
+    })
+
     -- Setup Handlers
-    vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = "rounded", silent = true })
-    vim.lsp.handlers["textDocument/signatureHelp"] =
-      vim.lsp.with(vim.lsp.handlers.signature_help, { border = "rounded", source = true })
+    vim.lsp.handlers["textDocument/hover"] =
+      vim.lsp.with(vim.lsp.handlers.hover, { float = { border = "rounded" }, silent = true, virtual_text = false })
+    vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(
+      vim.lsp.handlers.signature_help,
+      { float = { border = "rounded" }, source = true, virtual_text = false }
+    )
     -- LSP integration
     -- Make sure to also have the snippet with the common helper functions in your config!
 
@@ -268,18 +291,5 @@ return {
       local hl = "DiagnosticSign" .. type
       vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = "" })
     end
-
-    -- Set User Config
-    vim.diagnostic.config({
-      float = {
-        border = "rounded",
-        source = true,
-        style = "minimal",
-      },
-      severity_sort = true,
-      underline = true,
-      update_in_insert = false,
-      virtual_text = false,
-    })
   end,
 }
