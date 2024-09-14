@@ -78,7 +78,13 @@ return {
             path = vim.split(package.path, ";"),
           },
           telemetry = { enable = false },
-          workspace = { checkThirdParty = false },
+          workspace = {
+            checkThirdParty = false,
+            library = {
+              vim.env.VIMRUNTIME,
+              "~/.local/share/nvim/lazy/dracula.nvim",
+            },
+          },
         },
       },
       -- markdown_oxide = {},
@@ -89,12 +95,16 @@ return {
         pylsp = {
           plugins = {
             pycodestyle = {
-              ignore = { "E501", "E711", "W503" },
+              ignore = { "E501", "E711", "E741", "W503" },
             },
           },
         },
       },
-      pyright = {},
+      pyright = {
+        analysis = {
+          autoImport = true,
+        },
+      },
       rubocop = {},
       ruff = {},
       ruff_lsp = {},
@@ -103,7 +113,6 @@ return {
       tailwindcss = {},
       terraformls = {},
       tflint = {},
-      tsserver = {},
       vimls = {},
       yamlls = {},
     }
@@ -145,7 +154,9 @@ return {
         { "lua-language-server", auto_update = true },
         { "luacheck", auto_update = true },
         { "misspell", auto_update = true },
+        { "mypy", auto_update = true },
         { "prettier", auto_update = true },
+        { "python-lsp-server", auto_update = true },
         { "revive", auto_update = true },
         { "ruff", auto_update = true },
         { "stylua", auto_update = true },
@@ -153,6 +164,8 @@ return {
         { "shfmt", auto_update = true },
         { "staticcheck", auto_update = true },
         { "stylua", auto_update = true },
+        { "tree-sitter-cli", auto_update = true },
+        { "typescript-language-server", auto_update = true },
         { "vim-language-server", auto_update = true },
         { "vint", auto_update = true },
       },

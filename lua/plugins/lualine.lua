@@ -1,12 +1,16 @@
 return {
   { -- Fancier statusline
     "nvim-lualine/lualine.nvim",
-    dependencies = { "nvim-tree/nvim-web-devicons", "Mofiqul/dracula.nvim" },
+    dependencies = { "nvim-tree/nvim-web-devicons", "maxmx03/dracula.nvim" },
     opts = {
       options = {
-        icons_enabled = true,
-        theme = "dracula-nvim",
         component_separators = "|",
+        icons_enabled = true,
+        refresh = {
+          statusline = 1000,
+        },
+        theme = vim.g.colors_name,
+        -- theme = "dracula-nvim",
         section_separators = "",
       },
       sections = {

@@ -200,10 +200,10 @@ return {
         { name = "nvim_lsp_signature_help", priority = 6 },
         { name = "nvim_lua", priority = 5, ft = "lua" },
         { name = "copilot", priority = 3 },
+        { name = "nvim_dap_python", ft = "python" },
         { name = "lazydev", priority = 4, ft = "lua" },
       }, {
         { name = "nvim_dap" },
-        { name = "nvim_dap_python", ft = "python" },
       }, {
         { name = "plugins", ft = "lua" },
         { name = "dotenv" },

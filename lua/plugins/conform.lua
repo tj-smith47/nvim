@@ -1,7 +1,7 @@
 return {
   {
     "stevearc/conform.nvim",
-    event = { "BufReadPre", "BufNewFile" },
+    event = { "BufReadPre", "BufNewFile", "BufWritePre" },
     config = function()
       local conform = require("conform")
 
@@ -20,8 +20,8 @@ return {
           lua = { "stylua" },
           -- markdown = { "mdformat" },
           python = function(bufnr)
-            if confirm.get_formatter_info("ruff_format", bufnr).available then
-              return { "ruff_organize_imports", "ruff_format", "black" }
+            if conform.get_formatter_info("ruff_format", bufnr).available then
+              return { "ruff_organize_imports", "black", "ruff_format" }
             else
               return { "isort", "black" }
             end

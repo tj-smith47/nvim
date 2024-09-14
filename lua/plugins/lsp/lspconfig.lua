@@ -7,6 +7,7 @@ return {
       "antosha417/nvim-lsp-file-operations",
       config = true,
     },
+    "stevanmilic/nvim-lspimport",
     "williamboman/mason.nvim",
     "williamboman/mason-lspconfig.nvim",
     "mfussenegger/nvim-dap",

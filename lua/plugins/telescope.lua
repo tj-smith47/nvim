@@ -18,6 +18,10 @@ return {
         require("project_nvim.project").init()
       end,
     },
+    {
+      "isak102/telescope-git-file-history.nvim",
+      dependencies = { "tpope/vim-fugitive" },
+    },
     "nvim-telescope/telescope-file-browser.nvim",
     "nvim-telescope/telescope-ui-select.nvim",
     "jonarrien/telescope-cmdline.nvim",
@@ -100,6 +104,7 @@ return {
 
     telescope.load_extension("cmdline")
     telescope.load_extension("fzf")
+    telescope.load_extension("git_file_history")
     telescope.load_extension("noice")
     telescope.load_extension("notify")
     telescope.load_extension("projects")
