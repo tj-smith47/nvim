@@ -3,31 +3,26 @@ local cmdline_opts = {
     style = "rounded",
   },
   size = {
-    min_width = 75,
+    min_width = 60,
   },
 }
 return {
   {
     "rcarriga/nvim-notify",
     event = "UIEnter",
-    config = function()
-      local notify = require("notify")
-      -- print = function(...)
-      --   local print_safe_args = {}
-      --   local _ = { ... }
-      --   for i = 1, #_ do
-      --     table.insert(print_safe_args, tostring(_[i]))
-      --   end
-      --   notify(table.concat(print_safe_args, " "), "info")
-      -- end
-      vim.notify = notify
-      notify.setup({
-        timeout = 5000,
-        top_down = true,
-        stages = "slide",
-        fps = 60,
-      })
-    end,
+    opts = {
+      timeout = 5000,
+      top_down = true,
+      stages = "slide",
+      fps = 60,
+      background_colour = "#11111b",
+      max_height = function()
+        return math.floor(vim.o.lines * 0.50)
+      end,
+      max_width = function()
+        return math.floor(vim.o.columns * 0.50)
+      end,
+    },
   },
   -- {
   --   "mrded/nvim-lsp-notify",
@@ -110,7 +105,7 @@ return {
           ["cmp.entry.get_documentation"] = true,
         },
         hover = {
-          enabled = false,
+          enabled = true,
           view = "notify",
         },
         message = {
@@ -119,6 +114,9 @@ return {
         },
         signature = {
           enabled = false,
+          auto_open = {
+            enabled = false,
+          },
           view = "notify",
         },
       },
@@ -136,7 +134,8 @@ return {
             col = "50%",
           },
           size = {
-            width = 120,
+            width = 100,
+            min_width = 60,
             height = "auto",
           },
         },
@@ -147,7 +146,8 @@ return {
             col = "50%",
           },
           size = {
-            width = 60,
+            width = 96,
+            min_width = 56,
             height = "auto",
             -- max_height = 15,
           },
@@ -166,7 +166,7 @@ return {
             col = "50%",
           },
           size = {
-            width = 120,
+            max_width = 100,
             height = 10,
           },
           border = {
@@ -226,7 +226,7 @@ return {
       },
     },
     condig = function(_, opts)
-      require("notify").setup()
+      -- require("notify").setup()
       require("noice").setup(opts)
       vim.api.nvim_set_hl(0, "NoicePopupBorder", { fg = "#FFF", bg = "NONE" })
       vim.api.nvim_set_hl(0, "NoiceCmdlinePopupBorder", { fg = "#FFF", bg = "NONE" })

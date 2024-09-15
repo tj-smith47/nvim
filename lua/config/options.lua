@@ -78,6 +78,7 @@ opt.splitbelow = true -- split horizontal window to the bottom
 
 -- ui
 opt.background = "dark" -- colorschemes that can be light or dark will be made dark
+opt.guifont = "FiraCode Nerd Font Mono"
 opt.pumheight = 10 -- pop-up menu height
 opt.signcolumn = "yes" -- show sign column so that text doesn't shift
 opt.termguicolors = true
@@ -88,3 +89,9 @@ if not ok then
 end
 
 vim.notify = nvim_notify
+vim.diagnostic.config({
+  inlay_hint = {
+    enabled = false,
+  },
+  virtual_text = false,
+})

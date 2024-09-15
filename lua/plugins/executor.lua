@@ -4,9 +4,7 @@ return {
     "MunifTanjim/nui.nvim",
   },
   lazy = true,
-  config = function()
-    require("executor").setup({
-      use_split = false,
-    })
-  end,
+  opts = {
+    use_split = false,
+  },
 }

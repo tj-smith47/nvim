@@ -9,22 +9,16 @@ return {
     event = "CmdlineEnter",
     ft = { "go", "gomod" },
     opts = {
+      dap_debug = true,
+      diagnostic = {
+        update_in_insert = false,
+        virtual_text = false,
+      },
       goimports = "goimports",
       gofmt = "gofumpt",
-      diagnostics = {
-        update_in_insert = false,
-        enable = true,
-        linters = { "golangci-lint" },
-        lint_debounce = "500ms",
-        golint = true,
-        goimport = true,
-        govet = false,
-        staticcheck = false,
+      lsp_inlay_hints = {
+        enable = false,
       },
     },
-    config = function(_, opts)
-      -- checkhealth doesn't like this
-      require("go").setup(opts)
-    end,
   },
 }

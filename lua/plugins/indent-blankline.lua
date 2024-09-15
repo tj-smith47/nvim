@@ -38,8 +38,5 @@ return {
         show_end = false,
       },
     },
-    config = function(_, opts)
-      require("ibl").setup(opts)
-    end,
   },
 }

@@ -14,13 +14,21 @@ vim.keymap.set("n", "]d", vim.diagnostic.goto_next)
 vim.keymap.set("n", "<leader>e", vim.diagnostic.open_float)
 -- vim.keymap.set("n", "<leader>q", vim.diagnostic.setloclist)
 
+-- Dismiss Notifications
+vim.api.nvim_set_keymap("n", "<Esc><Esc>", ":lua require('notify').dismiss()<CR>", {})
+
 -- Executor keymaps
 vim.api.nvim_set_keymap("n", "<leader>er", ":ExecutorRun<CR>", {})
 vim.api.nvim_set_keymap("n", "<leader>ex", ":ExecutorSetCommand", {})
 vim.api.nvim_set_keymap("n", "<leader>ev", ":ExecutorToggleDetail<CR>", {})
 
--- Dismiss Notifications
-vim.api.nvim_set_keymap("n", "<Esc><Esc>", ":lua require('notify').dismiss()<CR>", {})
+-- Format keymaps
+vim.keymap.set({ "n", "v" }, "<leader>mp", function()
+  conform.format({
+    lsp_format = "fallback",
+    timeout_ms = 1000,
+  })
+end, { desc = "Format file or range (in visual mode)" })
 
 -- Git Blame
 vim.keymap.set("n", "gb", ":GitBlameLineToggle<CR>", { desc = "[G]it [B]lame Toggle" })

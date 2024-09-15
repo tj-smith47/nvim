@@ -14,9 +14,6 @@ return {
       event = "VeryLazy",
       main = "project_nvim",
       opts = {},
-      setup = function()
-        require("project_nvim.project").init()
-      end,
     },
     {
       "isak102/telescope-git-file-history.nvim",
@@ -24,6 +21,7 @@ return {
     },
     "nvim-telescope/telescope-file-browser.nvim",
     "nvim-telescope/telescope-ui-select.nvim",
+    "someone-stole-my-name/yaml-companion.nvim",
     "jonarrien/telescope-cmdline.nvim",
     "jvgrootveld/telescope-zoxide",
     "nvim-tree/nvim-web-devicons",
@@ -97,7 +95,7 @@ return {
         --   },
         -- },
         ["ui-select"] = {
-          require("telescope.themes").get_cursor({}),
+          require("telescope.themes").get_dropdown({}),
         },
       },
     })
@@ -109,6 +107,7 @@ return {
     telescope.load_extension("notify")
     telescope.load_extension("projects")
     telescope.load_extension("ui-select")
+    telescope.load_extension("yaml_schema")
     telescope.load_extension("zoxide")
 
     -- set keymaps

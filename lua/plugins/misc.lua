@@ -53,8 +53,7 @@ return {
   },
   { "rrethy/vim-illuminate" },
   { -- Detect / adjust tabbing automatically
-    -- (expandtab, shiftwidth, tabstop, textwidth,
-    --  endofline, fileformat, filenencoding, bomb)
+    -- (expandtab, shiftwidth, tabstop, textwidth,  endofline, fileformat, filenencoding, bomb)
     "tpope/vim-sleuth",
   },
 }

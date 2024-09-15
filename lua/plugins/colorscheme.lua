@@ -19,21 +19,21 @@ return {
           variables = {},
           constants = {},
         },
-        transparent = false,
-        on_colors = function(colors, color)
-          ---@type dracula.palette
-          return {
-            -- override or create new colors
-            mycolor = "#ffffff",
-          }
-        end,
-        on_highlights = function(colors, color)
-          ---@type dracula.highlights
-          return {
-            ---@type vim.api.keyset.highlight
-            Normal = { fg = colors.mycolor },
-          }
-        end,
+        transparent = true,
+        -- on_colors = function(colors, color)
+        --   ---@type dracula.palette
+        --   return {
+        --     -- override or create new colors
+        --     mycolor = "#ffffff",
+        --   }
+        -- end,
+        -- on_highlights = function(colors, color)
+        --   ---@type dracula.highlights
+        --   return {
+        --     ---@type vim.api.keyset.highlight
+        --     Normal = { fg = colors.mycolor },
+        --   }
+        -- end,
         plugins = {
           ["nvim-treesitter"] = true,
           ["rainbow-delimiters"] = true,

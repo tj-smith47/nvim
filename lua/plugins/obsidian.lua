@@ -17,7 +17,4 @@ return {
       nvim_cmp = true,
     },
   },
-  config = function(_, opts)
-    require("obsidian").setup(opts)
-  end,
 }

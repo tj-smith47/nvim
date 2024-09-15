@@ -16,6 +16,7 @@ return {
         -- Python
         "black",
         "ruff",
+        "ruff_lsp",
         "isort",
         "python-lsp-server",
         -- JavaScript
@@ -45,6 +46,7 @@ return {
       arduino_language_server = {},
       awk_ls = {},
       bashls = {},
+      biome = {},
       clangd = {},
       cmake = {},
       css_variables = {},
@@ -127,9 +129,6 @@ return {
           capabilities = capabilities,
           settings = servers[server_name],
         })
-        -- require("lsp_signature").setup({
-        --   bind = true, -- This is mandatory, otherwise border config won't get registered.
-        -- })
       end,
     })
 
@@ -150,7 +149,7 @@ return {
         { "gopls", auto_update = true },
         { "gotests", auto_update = true },
         { "impl", auto_update = true },
-        -- { "json-to-struct", auto_update = true },
+        { "json-to-struct", auto_update = true },
         { "lua-language-server", auto_update = true },
         { "luacheck", auto_update = true },
         { "misspell", auto_update = true },

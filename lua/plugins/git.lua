@@ -18,9 +18,6 @@ return {
         changedelete = { text = "~" },
       },
     },
-    config = function(_, opts)
-      require("gitsigns").setup(opts)
-    end,
   },
   {
     "kessejones/git-blame-line.nvim",
@@ -31,12 +28,9 @@ return {
       },
       view = {
         left_padding_size = 5,
-        enable_cursor_hold = false,
+        enable_cursor_hold = true,
       },
     },
-    config = function(_, opts)
-      require("git-blame-line").setup()
-    end,
   },
   {
     "sindrets/diffview.nvim",

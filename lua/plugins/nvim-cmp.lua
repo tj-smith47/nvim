@@ -1,20 +1,18 @@
 return {
   -- Autocompletion Plugins
   "hrsh7th/nvim-cmp",
-  event = "InsertEnter",
+  event = { "InsertEnter", "CmdLineEnter" },
   dependencies = {
-    -- TODO: Lookup https://github.com/garyhurtz/cmp_kitty
     "amarakon/nvim-cmp-buffer-lines",
     {
       "David-Kunz/cmp-npm",
       dependencies = { "nvim-lua/plenary.nvim" },
       ft = "json",
-      config = function()
-        require("cmp-npm").setup({})
-      end,
+      opts = {},
     },
     "dmitmel/cmp-cmdline-history",
     "FelipeLema/cmp-async-path",
+    -- TODO: Lookup https://github.com/garyhurtz/cmp_kitty
     -- {
     --   "garyhurtz/cmp_kitty",
     --   dependencies = {
@@ -26,12 +24,12 @@ return {
     -- },
     "hrsh7th/cmp-buffer", -- source for text in buffer
     "hrsh7th/cmp-cmdline",
+    "hrsh7th/cmp-emoji",
     "hrsh7th/cmp-copilot",
     "hrsh7th/cmp-nvim-lsp",
     "hrsh7th/cmp-nvim-lsp-document-symbol",
     "hrsh7th/cmp-nvim-lsp-signature-help",
     "hrsh7th/cmp-nvim-lua",
-    -- "hrsh7th/cmp-path", -- source for file system paths
     { -- Snippets engine
       "L3MON4D3/LuaSnip",
       version = "v2.*",
@@ -40,29 +38,45 @@ return {
         "saadparwaiz1/cmp_luasnip", -- for autocompletion
         {
           "doxnit/cmp-luasnip-choice",
-          config = function()
-            require("cmp_luasnip_choice").setup({
-              -- Automatically open nvim-cmp on choice node (default: true)
-              auto_open = false,
-            })
-          end,
+          opts = {
+            auto_open = false,
+          },
         },
         "rafamadriz/friendly-snippets",
       },
     },
     { -- Autocomplete for new nvim plugins as deps
       "KadoBOT/cmp-plugins",
-      config = function()
-        require("cmp-plugins").setup({
-          files = { ".*\\.lua" }, -- default
-        })
-      end,
+      opts = {
+        files = {
+          ".*\\.lua",
+        },
+      },
     },
     "mfussenegger/nvim-dap",
     "mfussenegger/nvim-dap-python",
     "SergioRibera/cmp-dotenv",
     "rcarriga/nvim-dap-ui",
-    "ray-x/lsp_signature.nvim",
+    {
+      "ray-x/lsp_signature.nvim",
+      opts = {
+        auto_open = false,
+        bind = true,
+        doc_lines = 2,
+        floating_window = true,
+        handler_opts = {
+          border = "single",
+        },
+        hint_enable = true,
+        hint_prefix = " ",
+        hint_scheme = "String",
+        hi_parameter = "Search",
+        max_height = 12,
+        max_width = 120,
+        transpancy = 50,
+        zindex = 200,
+      },
+    },
     { -- vs-code like pictograms
       "onsails/lspkind.nvim",
     },
@@ -70,6 +84,7 @@ return {
       "vrslev/cmp-pypi",
       dependencies = { "nvim-lua/plenary.nvim" },
       ft = "toml",
+      opts = {},
     },
   },
   config = function()
@@ -79,6 +94,7 @@ return {
     local cmp_autopairs = require("nvim-autopairs.completion.cmp")
 
     -- loads vscode style snippets from installed plugins (e.g. friendly-snippets)
+    require("luasnip.loaders.from_lua").load()
     require("luasnip.loaders.from_vscode").lazy_load()
     require("dapui").setup()
 
@@ -86,6 +102,7 @@ return {
       experimental = {
         ghost_text = false,
       },
+      completion = { completeopt = "menu,menuone" },
       -- configure lspkind for vs-code like pictograms in completion menu
       formatting = {
         fields = {
@@ -200,13 +217,13 @@ return {
         { name = "nvim_lsp_signature_help", priority = 6 },
         { name = "nvim_lua", priority = 5, ft = "lua" },
         { name = "copilot", priority = 3 },
-        { name = "nvim_dap_python", ft = "python" },
+        { name = "nvim_dap_python", priority = 5, ft = "python" },
+        { name = "nvim_dap", priority = 5 },
         { name = "lazydev", priority = 4, ft = "lua" },
+        { name = "plugins", priority = 5, ft = "lua" },
       }, {
-        { name = "nvim_dap" },
-      }, {
-        { name = "plugins", ft = "lua" },
         { name = "dotenv" },
+        { name = "emoji" },
       }, {
         { name = "pypi", keyword_length = 4, ft = "toml" },
         { name = "npm", keyword_length = 4, ft = "json" },
@@ -225,9 +242,12 @@ return {
       window = {
         completion = cmp.config.window.bordered({
           winhighlight = "Normal:NoiceCompletionItemMenu,FloatBorder:NoiceCmdLinePopupBorder,CursorLine:PmenuSel,Search:None",
-          col_offset = -4,
+          col_offset = -2,
+          side_padding = 0,
         }),
-        documentation = cmp.config.window.bordered(),
+        documentation = cmp.config.window.bordered({
+          winhighlight = "Normal:NoiceCompletionItemMenu,FloatBorder:NoiceCmdLinePopupBorder,CursorLine:PmenuSel,Search:None",
+        }),
       },
     })
 
@@ -245,8 +265,6 @@ return {
     -- local pos = api.get_screen_cursor()
     -- local row, col = pos[1], pos[2] - delta - 1
 
-    cmp.event:on("confirm_done", cmp_autopairs.on_confirm_done())
-
     cmp.setup.cmdline({ "/", "?" }, {
       mapping = cmp.mapping.preset.cmdline(), -- Tab for selection (arrows needed for selecting past items)
       sources = {
@@ -257,6 +275,12 @@ return {
         },
         { name = "buffer-lines" },
       },
+      view = {
+        docs = {
+          max_width = 120,
+          min_width = 60,
+        },
+      },
     })
 
     cmp.setup.cmdline({ ":" }, {
@@ -266,18 +290,14 @@ return {
         { name = "cmdline_history" },
         { name = "async_path" },
       },
+      view = {
+        docs = {
+          max_width = 120,
+          min_width = 60,
+        },
+      },
     })
 
-    vim.diagnostic.config({
-      float = {
-        border = "rounded",
-        source = "if_many",
-        style = "minimal",
-      },
-      severity_sort = true,
-      underline = true,
-      update_in_insert = false,
-      virtual_text = false,
-    })
+    cmp.event:on("confirm_done", cmp_autopairs.on_confirm_done())
   end,
 }
