@@ -84,7 +84,6 @@ return {
       "vrslev/cmp-pypi",
       dependencies = { "nvim-lua/plenary.nvim" },
       ft = "toml",
-      opts = {},
     },
   },
   config = function()
