@@ -28,7 +28,7 @@ return {
       },
       view = {
         left_padding_size = 5,
-        enable_cursor_hold = true,
+        enable_cursor_hold = false,
       },
     },
   },

@@ -12,11 +12,11 @@ vim.api.nvim_create_autocmd("BufWritePre", {
 })
 
 -- [[ Format on save: Python ]]
-vim.api.nvim_create_autocmd({ "BufWritePost" }, {
-  group = augroup("black"),
-  command = "silent !ruff check --fix %",
-  pattern = "*.py",
-})
+-- vim.api.nvim_create_autocmd({ "BufWritePost" }, {
+--   group = augroup("black"),
+--   command = "silent !ruff check --fix %",
+--   pattern = "*.py",
+-- })
 
 -- Automatically update changed file in Vim
 -- Triger `autoread` when files changes on disk

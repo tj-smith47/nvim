@@ -8,6 +8,22 @@ return {
   },
   { -- File Explorer
     "nvim-tree/nvim-tree.lua",
+    dependencies = {
+      {
+        "SmiteshP/nvim-navic",
+        dependencies = {
+          "neovim/nvim-lspconfig",
+        },
+        opts = {
+          lsp = {
+            auto_attach = true,
+            preference = {
+              "pyright",
+            },
+          },
+        },
+      },
+    },
     opts = {
       disable_netrw = true,
       -- filters = {
@@ -48,20 +64,6 @@ return {
       update_focused_file = {
         -- enable = true,
         -- update_root = true,
-      },
-    },
-  },
-  {
-    "SmiteshP/nvim-navic",
-    dependencies = {
-      "neovim/nvim-lspconfig",
-    },
-    opts = {
-      lsp = {
-        auto_attach = true,
-        preference = {
-          "pyright",
-        },
       },
     },
   },

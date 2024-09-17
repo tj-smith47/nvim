@@ -2,7 +2,9 @@ return {
   { -- Test Coverage
     "andythigpen/nvim-coverage",
     dependencies = "nvim-lua/plenary.nvim",
-    opts = {},
+    config = function()
+      require("coverage").setup()
+    end,
   },
 
   --  { -- Test Runner
