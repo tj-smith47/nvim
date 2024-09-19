@@ -24,7 +24,7 @@ vim.api.nvim_set_keymap("n", "<leader>ev", ":ExecutorToggleDetail<CR>", {})
 
 -- Format keymaps
 vim.keymap.set({ "n", "v" }, "<leader>mp", function()
-  conform.format({
+  require("conform").format({
     lsp_format = "fallback",
     timeout_ms = 1000,
   })

@@ -16,8 +16,8 @@ return {
         elixir = { "mix" },
         -- go = { "goimports", "gofumpt" },
         html = { "htmlbeautifier" },
-        javascript = { "biome" },
-        javascriptreact = { "biome" },
+        -- javascript = { "biome" },
+        -- javascriptreact = { "biome" },
         json = { "fixjson", "jq" },
         lua = { "stylua" },
         -- markdown = { "mdformat" },
@@ -31,8 +31,8 @@ return {
         ruby = { "rubocop" },
         sql = { "sqlfmt", "pg_format" },
         terraform = { "terraform_fmt" },
-        typescript = { "biome" },
-        typescriptreact = { "biome" },
+        -- typescript = { "biome" },
+        -- typescriptreact = { "biome" },
         -- yaml = { "yamlfmt" },
         -- Use the "_" filetype to run formatters on filetypes that don't
         -- have other formatters configured.

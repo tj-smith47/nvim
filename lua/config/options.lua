@@ -88,6 +88,7 @@ if not ok then
   return
 end
 
+-- Configs
 vim.notify = nvim_notify
 vim.diagnostic.config({
   inlay_hint = {
