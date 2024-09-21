@@ -119,7 +119,7 @@ return {
             float = {
               border = "rounded",
               source = true,
-              style = "minimal",
+              -- style = "minimal",
             },
             inlay_hints = { enabled = false },
             severity_sort = true,
@@ -132,7 +132,7 @@ return {
 
       -- Setup Handlers
       vim.lsp.handlers["textDocument/hover"] =
-        vim.lsp.with(vim.lsp.handlers.hover, { float = { border = "rounded" }, silent = true, virtual_text = false })
+        vim.lsp.with(vim.lsp.handlers.hover, { float = { border = "rounded" }, virtual_text = false })
       vim.lsp.handlers["textDocument/diagnostic"] =
         vim.lsp.with(vim.lsp.diagnostic.on_diagnostic, { float = { border = "rounded" }, virtual_text = false })
       vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(

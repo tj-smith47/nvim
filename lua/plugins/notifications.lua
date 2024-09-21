@@ -106,7 +106,11 @@ return {
         },
         hover = {
           enabled = true,
-          view = "notify",
+          border = {
+            style = "rounded",
+            background_colour = "#11111b",
+          },
+          -- view = "mini",
         },
         message = {
           enabled = true,
