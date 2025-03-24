@@ -1,6 +1,7 @@
 return {
   "williamboman/mason.nvim",
   dependencies = {
+    "strozw/github-actions-languageserver.nvim",
     "williamboman/mason-lspconfig.nvim",
     "WhoIsSethDaniel/mason-tool-installer.nvim",
   },
@@ -16,7 +17,6 @@ return {
         -- Python
         "black",
         "ruff",
-        "ruff_lsp",
         "isort",
         "python-lsp-server",
         -- JavaScript
@@ -42,8 +42,8 @@ return {
 
     -- Language Servers
     local servers = {
-      angularls = {},
-      arduino_language_server = {},
+      -- angularls = {},
+      -- arduino_language_server = {},
       awk_ls = {},
       bashls = {},
       biome = {},
@@ -54,17 +54,31 @@ return {
       cssmodules_ls = {},
       diagnosticls = {},
       docker_compose_language_service = {},
-      dockerls = {},
+      -- dockerls = {
+      --   settings = {
+      --     docker = {
+      --       languageserver = {
+      --         formatter = {
+      --           enable = false,
+      --           ignoreMultilineInstructions = true,
+      --         },
+      --       },
+      --     },
+      --   },
+      -- },
       elixirls = {},
-      emmet_ls = {},
+      -- emmet_ls = {},
       erlangls = {},
       eslint = {},
       golangci_lint_ls = {},
+      -- github_actions_languageserver = {
+      --   init_params = {},
+      -- },
       gopls = {},
       graphql = {},
       html = {},
       htmx = {},
-      jinja_lsp = {},
+      -- jinja_lsp = {},
       jqls = {},
       jsonls = {},
       lua_ls = {
@@ -91,8 +105,8 @@ return {
       },
       -- markdown_oxide = {},
       marksman = {},
-      powershell_es = {},
-      prismals = {},
+      -- powershell_es = {},
+      -- prismals = {},
       pylsp = {
         pylsp = {
           plugins = {
@@ -109,7 +123,6 @@ return {
       },
       rubocop = {},
       ruff = {},
-      ruff_lsp = {},
       solargraph = {},
       sqlls = {},
       tailwindcss = {},
@@ -122,6 +135,8 @@ return {
     mason_lspconfig.setup({
       ensure_installed = vim.tbl_keys(servers),
     })
+
+    require("github-actions-languageserver").setup()
 
     mason_lspconfig.setup_handlers({
       function(server_name)
@@ -158,7 +173,6 @@ return {
       { "python-lsp-server", auto_update = true },
       { "revive", auto_update = true },
       { "ruff", auto_update = true },
-      { "ruff_lsp", auto_update = true },
       { "shellcheck", auto_update = true },
       { "shfmt", auto_update = true },
       { "staticcheck", auto_update = true },

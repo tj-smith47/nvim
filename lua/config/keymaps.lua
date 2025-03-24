@@ -18,9 +18,9 @@ vim.keymap.set("n", "<leader>e", vim.diagnostic.open_float)
 vim.api.nvim_set_keymap("n", "<Esc><Esc>", ":lua require('notify').dismiss()<CR>", {})
 
 -- Executor keymaps
-vim.api.nvim_set_keymap("n", "<leader>er", ":ExecutorRun<CR>", {})
-vim.api.nvim_set_keymap("n", "<leader>ex", ":ExecutorSetCommand", {})
-vim.api.nvim_set_keymap("n", "<leader>ev", ":ExecutorToggleDetail<CR>", {})
+-- vim.api.nvim_set_keymap("n", "<leader>er", ":ExecutorRun<CR>", {})
+-- vim.api.nvim_set_keymap("n", "<leader>ex", ":ExecutorSetCommand", {})
+-- vim.api.nvim_set_keymap("n", "<leader>ev", ":ExecutorToggleDetail<CR>", {})
 
 -- Format keymaps
 vim.keymap.set({ "n", "v" }, "<leader>mp", function()
