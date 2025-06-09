@@ -117,7 +117,7 @@ return {
           view = "notify",
         },
         signature = {
-          enabled = false,
+          enabled = true,
           auto_open = {
             enabled = false,
           },
@@ -156,7 +156,7 @@ return {
             -- max_height = 15,
           },
           border = {
-            style = "none",
+            style = "rounded",
             padding = { 0, 3 },
           },
           win_options = {

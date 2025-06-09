@@ -9,8 +9,8 @@ return {
     "cS",
     "ds",
     "dS",
-    { "gs", mode = { "x" } },
-    { "gS", mode = { "x" } },
+    { "gs",    mode = { "x" } },
+    { "gS",    mode = { "x" } },
     { "<C-g>", mode = "i" },
   },
   config = function()
@@ -27,7 +27,7 @@ return {
               return { { result .. "<" }, { ">" } }
             end
           end,
-          find = function()
+          fetch = function()
             return require("nvim-surround.config").get_selection({
               pattern = "[^=%s%(%)]+%b<>",
             })

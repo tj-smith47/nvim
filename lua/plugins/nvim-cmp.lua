@@ -210,27 +210,27 @@ return {
 
       -- sources for autocompletion
       sources = cmp.config.sources({
-        { name = "nvim_lsp", priority = 9 },
-        { name = "luasnip", priority = 8 },
-        { name = "luasnip_choice", priority = 7 },
+        { name = "nvim_lsp",                priority = 9 },
+        { name = "luasnip",                 priority = 8 },
+        { name = "luasnip_choice",          priority = 7 },
         { name = "nvim_lsp_signature_help", priority = 6 },
-        { name = "nvim_lua", priority = 5, ft = "lua" },
-        { name = "copilot", priority = 3 },
-        { name = "nvim_dap_python", priority = 5, ft = "python" },
-        { name = "nvim_dap", priority = 5 },
-        { name = "lazydev", priority = 4, ft = "lua" },
-        { name = "plugins", priority = 5, ft = "lua" },
+        { name = "nvim_lua",                priority = 5, ft = "lua" },
+        { name = "copilot",                 priority = 3 },
+        { name = "nvim_dap_python",         priority = 5, ft = "python" },
+        { name = "nvim_dap",                priority = 5 },
+        { name = "lazydev",                 priority = 4, ft = "lua" },
+        { name = "plugins",                 priority = 5, ft = "lua" },
       }, {
         { name = "dotenv" },
         { name = "emoji" },
       }, {
         { name = "pypi", keyword_length = 4, ft = "toml" },
-        { name = "npm", keyword_length = 4, ft = "json" },
+        { name = "npm",  keyword_length = 4, ft = "json" },
       }, {
         -- { name = "cmp_kitty" },
         { name = "cmdline" }, -- command line history
-        { name = "buffer" }, -- text within current buffer
-        { name = "async_path" }, -- file system paths
+        { name = "buffer" },  -- text within current buffer
+        -- { name = "async_path" }, -- file system paths
       }),
 
       view = {
@@ -240,12 +240,14 @@ return {
       },
       window = {
         completion = cmp.config.window.bordered({
-          winhighlight = "Normal:NoiceCompletionItemMenu,FloatBorder:NoiceCmdLinePopupBorder,CursorLine:PmenuSel,Search:None",
+          winhighlight =
+          "Normal:NoiceCompletionItemMenu,FloatBorder:NoiceCmdLinePopupBorder,CursorLine:PmenuSel,Search:None",
           col_offset = -2,
           side_padding = 0,
         }),
         documentation = cmp.config.window.bordered({
-          winhighlight = "Normal:NoiceCompletionItemMenu,FloatBorder:NoiceCmdLinePopupBorder,CursorLine:PmenuSel,Search:None",
+          winhighlight =
+          "Normal:NoiceCompletionItemMenu,FloatBorder:NoiceCmdLinePopupBorder,CursorLine:PmenuSel,Search:None",
         }),
       },
     })
