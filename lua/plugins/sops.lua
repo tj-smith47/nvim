@@ -1,7 +1,10 @@
 return {
   {
     "lucidph3nx/nvim-sops",
-    event = { "BufEnter" },
     opts = {},
+  },
+  {
+    "trixnz/sops.nvim",
+    lazy = false,
   },
 }

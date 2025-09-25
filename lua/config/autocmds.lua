@@ -39,7 +39,7 @@ vim.api.nvim_create_autocmd({ "BufWritePre" }, {
 vim.api.nvim_create_autocmd({ "BufReadPre", "BufWritePre" }, {
   group = augroup("disable_format_on_save"),
   command = "setlocal formatprg=",
-  pattern = { "*.cm", "**/*.cm" },
+  pattern = { "*.cm", "**/*.cm", "*.ts" },
 })
 
 -- [[ Highlight on yank ]]

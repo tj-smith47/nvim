@@ -134,9 +134,9 @@ return {
 
       -- Setup Handlers
       vim.lsp.handlers["textDocument/hover"] =
-        vim.lsp.with(vim.lsp.handlers.hover, { float = { border = "rounded" }, virtual_text = false })
+          vim.lsp.with(vim.lsp.handlers.hover, { float = { border = "rounded" }, virtual_text = false })
       vim.lsp.handlers["textDocument/diagnostic"] =
-        vim.lsp.with(vim.lsp.diagnostic.on_diagnostic, { float = { border = "rounded" }, virtual_text = false })
+          vim.lsp.with(vim.lsp.diagnostic.on_diagnostic, { float = { border = "rounded" }, virtual_text = false })
       vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(
         vim.lsp.handlers.signature_help,
         { float = { border = "rounded" }, source = true, virtual_text = false }
@@ -343,7 +343,7 @@ return {
         -- arduino_language_server = {},
         awk_ls = {},
         bashls = {},
-        biome = {},
+        -- biome = {},
         -- clangd = {},
         -- cmake = {},
         css_variables = {},
@@ -366,7 +366,7 @@ return {
         elixirls = {},
         -- emmet_ls = {},
         erlangls = {},
-        eslint = {},
+        -- eslint = {},
         golangci_lint_ls = {},
         -- github_actions_languageserver = {
         --   init_params = {},
@@ -440,45 +440,45 @@ return {
       local mason_tool_installer = require("mason-tool-installer")
 
       local ensure_installed = {
-        { "bash-language-server", auto_update = true },
-        { "black", auto_update = true },
-        { "editorconfig-checker", auto_update = true },
+        { "bash-language-server",       auto_update = true },
+        { "black",                      auto_update = true },
+        { "editorconfig-checker",       auto_update = true },
         -- { "eslint_d", auto_update = false, version = "13.1.2" },
-        { "gofumpt", auto_update = true },
-        { "golangci-lint", auto_update = true },
-        { "golines", auto_update = true },
-        { "gomodifytags", auto_update = true },
-        { "gopls", auto_update = true },
-        { "gotests", auto_update = true },
-        { "impl", auto_update = true },
-        { "isort", auto_update = true },
-        { "json-to-struct", auto_update = true },
-        { "lua-language-server", auto_update = true },
-        { "luacheck", auto_update = true },
-        { "misspell", auto_update = true },
-        { "mypy", auto_update = true },
-        { "prettier", auto_update = true },
-        { "pylint", auto_update = true },
-        { "python-lsp-server", auto_update = true },
-        { "revive", auto_update = true },
-        { "ruff", auto_update = true },
-        { "shellcheck", auto_update = true },
-        { "shfmt", auto_update = true },
-        { "staticcheck", auto_update = true },
-        { "stylua", auto_update = true },
-        { "tree-sitter-cli", auto_update = true },
+        { "gofumpt",                    auto_update = true },
+        { "golangci-lint",              auto_update = true },
+        { "golines",                    auto_update = true },
+        { "gomodifytags",               auto_update = true },
+        { "gopls",                      auto_update = true },
+        { "gotests",                    auto_update = true },
+        { "impl",                       auto_update = true },
+        { "isort",                      auto_update = true },
+        { "json-to-struct",             auto_update = true },
+        { "lua-language-server",        auto_update = true },
+        { "luacheck",                   auto_update = true },
+        { "misspell",                   auto_update = true },
+        { "mypy",                       auto_update = true },
+        { "prettier",                   auto_update = true },
+        { "pylint",                     auto_update = true },
+        { "python-lsp-server",          auto_update = true },
+        { "revive",                     auto_update = true },
+        { "ruff",                       auto_update = true },
+        { "shellcheck",                 auto_update = true },
+        { "shfmt",                      auto_update = true },
+        { "staticcheck",                auto_update = true },
+        { "stylua",                     auto_update = true },
+        { "tree-sitter-cli",            auto_update = true },
         { "typescript-language-server", auto_update = true },
-        { "vim-language-server", auto_update = true },
-        { "vint", auto_update = true },
+        { "vim-language-server",        auto_update = true },
+        { "vint",                       auto_update = true },
       }
 
       local darwin_install = {
-        { "ansible-lint", auto_update = true },
-        { "biome", auto_update = true },
+        { "ansible-lint",     auto_update = true },
+        -- { "biome",            auto_update = true },
         { "js-debug-adapter", auto_update = true },
-        { "markmap-cli", auto_update = true },
-        { "semgrep", auto_update = true },
-        { "sqlfluff", auto_update = true },
+        { "markmap-cli",      auto_update = true },
+        { "semgrep",          auto_update = true },
+        { "sqlfluff",         auto_update = true },
       }
 
       local os = vim.loop.os_uname().sysname
