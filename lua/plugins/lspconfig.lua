@@ -11,7 +11,6 @@ return {
       "mason-org/mason.nvim",
       "mason-org/mason-lspconfig.nvim",
       "mfussenegger/nvim-dap",
-      "strozw/github-actions-languageserver.nvim",
       "WhoIsSethDaniel/mason-tool-installer.nvim",
       {
         "folke/lazydev.nvim",
@@ -367,10 +366,10 @@ return {
         -- emmet_ls = {},
         erlangls = {},
         -- eslint = {},
+        gh_actions_ls = {
+          init_options = {},
+        },
         golangci_lint_ls = {},
-        -- github_actions_languageserver = {
-        --   init_params = {},
-        -- },
         gopls = {},
         graphql = {},
         html = {},
@@ -434,8 +433,6 @@ return {
         ensure_installed = vim.tbl_keys(servers),
       })
 
-      require("github-actions-languageserver").setup()
-
       -- [[ Mason Tool Installer ]]
       local mason_tool_installer = require("mason-tool-installer")
 
@@ -465,7 +462,7 @@ return {
         { "shellcheck",                 auto_update = true },
         { "shfmt",                      auto_update = true },
         { "staticcheck",                auto_update = true },
-        { "stylua",                     auto_update = true },
+        -- { "stylua",                     auto_update = true },
         { "tree-sitter-cli",            auto_update = true },
         { "typescript-language-server", auto_update = true },
         { "vim-language-server",        auto_update = true },

@@ -19,7 +19,7 @@ return {
         -- javascript = { "biome" },
         -- javascriptreact = { "biome" },
         json = { "fixjson", "jq" },
-        lua = { "stylua" },
+        -- lua = { "stylua" },
         -- markdown = { "mdformat" },
         python = function(bufnr)
           if require("conform").get_formatter_info("ruff_format", bufnr).available then
